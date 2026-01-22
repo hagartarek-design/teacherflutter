@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="google-signin-client_id" content="748588866035-dn3vn5ca4icqdr40aj48bq9gcitqm40r.apps.googleusercontent.com">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+  <!-- <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-signin-client_id" content="804258373122-mh7aii3bsqnj63ojn5mnogu2vggu1t2s.apps.googleusercontent.com">
+  <title>Flutter Web</title>
+  <script src="https://apis.google.com/js/platform.js" async defer></script> -->
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="flutterwallet">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>flutterwallet</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <script src="https://apis.google.com/js/api.js" async defer></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+ <!-- <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyB3GugaoJde4oK5L0zoCWcTaxekERJ-5D4",
+      authDomain: "teacher-7f249.firebaseapp.com",
+      projectId: "teacher-7f249",
+      storageBucket: "teacher-7f249.firebasestorage.app",
+      messagingSenderId: "804258373122",
+      appId: "1:804258373122:web:ed0282d576266e3e1e111b"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig); -->
+  <!-- </script> -->
+  <script src="flutter_bootstrap.js" async></script>
+ <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyBQ6Ofa213SFlOgiMYS_uBLZ0LX317l3bU",
+    authDomain: "students-e7907.firebaseapp.com",
+    projectId: "students-e7907",
+    storageBucket: "students-e7907.firebasestorage.app",
+    messagingSenderId: "64872570774",
+    appId: "1:64872570774:web:dad36ad23957204bf9c7b7",
+    measurementId: "G-2WN6PKQMMN"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+
+</script>
+<script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"></script>
+
+</body>
+</html>

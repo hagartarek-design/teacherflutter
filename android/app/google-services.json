@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "804258373122",
+    "project_id": "teacher-7f249",
+    "storage_bucket": "teacher-7f249.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804258373122:android:38b42bb330cfd2d01e111b",
+        "android_client_info": {
+          "package_name": "com.m.flutterwallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "804258373122-mh7aii3bsqnj63ojn5mnogu2vggu1t2s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAc03opfxtcGtjrJ60i0OeCXRPLvoWVeG8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804258373122-j062cocfrfddq103m6ms16mqtmdp1a62.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
