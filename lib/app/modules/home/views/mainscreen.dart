@@ -1331,12 +1331,13 @@
 //     );
 //   }
 // }
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
-import 'package:flutterwallet/app/modules/home/views/sections.dart';
+import 'package:flutterwallet/app/modules/home/views/DashboardScreen.dart';
 import 'package:flutterwallet/app/modules/home/views/stable_app_bar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:ui' as ui;
@@ -1347,18 +1348,152 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:flutterwallet/app/modules/home/views/img.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../../Applinks.dart';
 import '../controllers/home_controller.dart';
 import '../modules/file.dart';
 import '../modules/students.dart';
-class Mainscreen extends StatelessWidget {
-   Mainscreen({super.key});
+// class Mainscreen extends StatelessWidget {
+//    Mainscreen({super.key});
+
+class Mainscreen extends StatefulWidget {
+  const Mainscreen({super.key});
+
+  @override
+  State<Mainscreen> createState() => _MainscreenState();
+}
+
+class _MainscreenState extends State<Mainscreen> {
+ final HomeController controller = Get.find<HomeController>();
+@override
+void initState() {
+  super.initState();
+  print('Mainscreen - بدء التشغيل');
+  
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    controller.currentScreen.value = '/Mainscreen';
+    
+    controller.startTokenMonitoring();
+  });
+}
+
+@override
+void dispose() {
+  print(' Mainscreen - التخلص');
+  
+  
+  super.dispose();
+}
+
+  Future<void> _checkTokenAndAutoLogout() async {
+    print('🔍 Mainscreen - التحقق من التوكن (بدون تجديد)');
+    
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    
+    if (token == null || token.isEmpty) {
+      print('⚠️ Mainscreen - لا يوجد توكن');
+      _autoLogout('لا يوجد توكن');
+      return;
+    }
+    
+    try {
+      final expiryDate = JwtDecoder.getExpirationDate(token);
+      final remaining = expiryDate.difference(DateTime.now());
+      
+      print('⏳ Mainscreen - الوقت المتبقي: ${remaining.inMinutes} دقيقة و${remaining.inSeconds % 60} ثانية');
+      
+      if (remaining.isNegative || remaining.inSeconds < 30) {
+        print('⏰ Mainscreen - التوكن منتهي أو شبه منتهي');
+        _autoLogout('التوكن منتهي الصلاحية');
+        return;
+      }
+      
+      print('🚫 Mainscreen - لا تجديد للتوكن هنا، فقط تحقق للتسجيل الخروج');
+      
+      if (remaining.inMinutes < 2) {
+        print('⚠️ Mainscreen - التوكن سينتهي قريباً - سيتم الخروج تلقائياً');
+        
+        Get.snackbar(
+          'تحذير',
+          'التوكن سينتهي خلال ${remaining.inMinutes} دقيقة - سيتم الخروج تلقائياً',
+          duration: Duration(seconds: 5),
+          backgroundColor: Colors.orange,
+        );
+        
+        Future.delayed(Duration(minutes: 1), () {
+          if (mounted && controller.currentScreen.value == '/Mainscreen') {
+            _autoLogout('التوكن على وشك الانتهاء');
+          }
+        });
+      }
+      
+    } catch (e) {
+      print('❌ Mainscreen - خطأ في فحص التوكن: $e');
+      _autoLogout('خطأ في فحص التوكن');
+    }
+  }
+void _autoLogout(String reason) async {
+  print('🚪 Mainscreen - تسجيل خروج تلقائي: $reason');
+  
+  try {
+    Get.snackbar(
+      'جلسة منتهية',
+      'تم تسجيل الخروج تلقائياً ($reason)',
+      duration: Duration(seconds: 3),
+      backgroundColor: Colors.red,
+      snackPosition: SnackPosition.TOP,
+      margin: EdgeInsets.all(20),
+      borderRadius: 10,
+    );
+    
+    await Future.delayed(Duration(seconds: 3));
+    
+    if (mounted && controller.currentScreen.value == '/Mainscreen') {
+      print('🔄 تنفيذ تسجيل الخروج...');
+      
+      await safeLogout();
+    }
+  } catch (e) {
+    print('❌ خطأ في _autoLogout: $e');
+    
+    try {
+      Get.offAllNamed('/HomeView');
+    } catch (e2) {
+      print('❌ حتى المحاولة الطارئة فشلت: $e2');
+    }
+  }
+}
+
+Future<void> safeLogout() async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    
+   controller. token = '';
+    controller. update();
+   controller.  stopAutoRefresh();
+    
+    await Future.delayed(Duration(milliseconds: 500));
+    
+    Get.offAllNamed(
+      '/HomeView',
+      predicate: (route) => false,
+    );
+  } catch (e) {
+    print('❌ خطأ في safeLogout: $e');
+    Get.offAllNamed('/HomeView');
+  }
+}
+
 
 
 int value=0; 
-  String selectedValue = "السنة الدراسية"; // Default text
-  String selectedValue3 = "اسم الكورس"; // Default text
+  String selectedValue = "السنة الدراسية"; 
+  
+  String selectedValue3 = "اسم الكورس"; 
 HomeController homeController =HomeController();
   final List<String> dropdownItems = [
     "السنة الدراسية",
@@ -1377,11 +1512,152 @@ HomeController homeController =HomeController();
   final ValueNotifier<DateTime> focusedDay = ValueNotifier(DateTime.now());
   String? selectedValue2;
   final List<String> options = ['Option 1', 'Option 2', 'Option 3'];
+  // final HomeController controller = Get.find<HomeController>();
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   controller.isDashboardOpen.value = false;
+
+  //   // Start token auto-refresh if token exists
+  //   if (controller.token.isNotEmpty) {
+  //     controller.startAutoRefresh(controller.token);
+  //   }
+  // }
+
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  // }
   @override
   Widget build(BuildContext context) {
+   Timer? _refreshTimer;
+  
+  void stopAutoRefresh() {
+    print('⏹️ إيقاف التجديد التلقائي');
+    _refreshTimer?.cancel();
+    _refreshTimer = null;
+  }
     HomeController controller=HomeController();
      controller.isDashboardOpen.value = false;
+     void _autoLogout(String reason) async {
+  print('🚪 Mainscreen - تسجيل خروج تلقائي: $reason');
+  
+  // أولاً، أظهر رسالة التنبيه
+  Get.snackbar(
+    'جلسة منتهية',
+    'تم تسجيل الخروج تلقائياً ($reason)',
+    duration: Duration(seconds: 3),
+    backgroundColor: Colors.red,
+    snackPosition: SnackPosition.TOP,
+  );
+  
+  // انتظر حتى تختفي الرسالة
+  await Future.delayed(Duration(seconds: 3));
+  
+  // تحقق إذا كانت الصفحة لا تزال نشطة
+  if (mounted && controller.currentScreen.value == '/Mainscreen') {
+    print('🔄 تنفيذ تسجيل الخروج...');
+    
+    // استخدم Get.offAllNamed للتأكد من إزالة جميع الصفحات
+    await controller.logout();
+  }
+}Future<void> logout() async {
+  try {
+    print('🚪 بدء تسجيل الخروج...');
+    
+    // أولاً، أزل البيانات المحلية
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
+    await prefs.remove('userId');
+    await prefs.remove('userType');
+    
+ controller.   token = '';
+ controller.   update();
+    
+    // إيقاف أي مؤقتات
+    stopAutoRefresh();
+    
+    // إعادة تعيين حالة الصفحة
+   controller. currentScreen.value = '/HomeView';
+    
+    // الانتقال إلى شاشة تسجيل الدخول مع إزالة جميع الصفحات
+    print('🔄 الانتقال إلى HomeView...');
+    
+    // استخدم Get.offAllNamed مع preventDuplicates: false
+    await Future.delayed(Duration(milliseconds: 500));
+    
+    Get.offAllNamed(
+      '/HomeView',
+      predicate: (route) => false, // إزالة جميع الصفحات من الستاك
+    );
+    
+    print('✅ تم تسجيل الخروج بنجاح');
+    
+  } catch (e) {
+    print('❌ خطأ في تسجيل الخروج: $e');
+    
+    // محاولة بديلة في حالة الخطأ
+    try {
+      Get.offAllNamed('/HomeView');
+    } catch (e2) {
+      print('❌ حتى المحاولة البديلة فشلت: $e2');
+    }
+  }
+}
+
+
+// دالة safeLogout جديدة في HomeController
+Future<void> safeLogout() async {
+  try {
+    // تنظيف البيانات المحلية
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    
+   controller.  token = '';
+   controller.  update();
+    stopAutoRefresh();
+    
+    // الانتقال الآمن
+    await Future.delayed(Duration(milliseconds: 500));
+    
+    Get.offAllNamed(
+      '/HomeView',
+      predicate: (route) => false,
+    );
+  } catch (e) {
+    print('❌ خطأ في safeLogout: $e');
+    Get.offAllNamed('/HomeView');
+  }
+}
+// في HomeController
+Future<void> safeNavigate(String route) async {
+  try {
+    // توقف عن أي مؤقتات
+    stopAutoRefresh();
+    
+    // انتظر لحظة لضمان استقرار الواجهة
+    await Future.delayed(Duration(milliseconds: 300));
+    
+    // استخدم Get.offAllNamed للتأكد من التنظيف الكامل
+    Get.offAllNamed(
+      route,
+      predicate: (route) => route.isFirst, // إبقاء الصفحة الأولى فقط
+    );
+  } catch (e) {
+    print('❌ خطأ في safeNavigate: $e');
+    
+    // محاولة بديلة باستخدام Navigator
+    try {
+      Navigator.of(Get.context!).pushNamedAndRemoveUntil(
+        route,
+        (route) => false,
+      );
+    } catch (e2) {
+      print('❌ حتى المحاولة البديلة فشلت: $e2');
+    }
+  }
+}
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     double containerWidth = screenWidth * 0.25; // Adjust to 25% of screen width

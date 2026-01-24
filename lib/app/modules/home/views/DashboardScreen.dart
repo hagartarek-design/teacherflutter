@@ -9,6 +9,7 @@ import 'package:flutterwallet/app/modules/home/views/videodialog.dart';
 import 'package:get/get.dart';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:path/path.dart' as path;
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,52 +39,67 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-
-
-   final HomeController controller = Get.find<HomeController>();
-
+  // final HomeController controller = Get.find<HomeController>();
+//   final HomeController controller = Get.find<HomeController>();
+// class _DashboardScreenState extends State<DashboardScreen> {
+  final HomeController controller = Get.find<HomeController>();
+  
   @override
   void initState() {
     super.initState();
-
-    // Dashboard is open → allow token refresh
+    // print(' DashboardScreen - بدء التشغيل');
+    
+    controller.currentScreen.value = '/DashboardScreen';
     controller.isDashboardOpen.value = true;
-
-    if (controller.token.isNotEmpty) {
-      controller.startAutoRefresh(controller.token);
-    } else {
-      controller.logout();
-    }
+    controller.isDashboardActive.value = true;
+    
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initializeDashboardWithRefresh();
+    });
   }
 
   @override
   void dispose() {
-    // Dashboard closed → stop token refresh
-    controller.isDashboardOpen.value = false;
+    // print(' DashboardScreen - التخلص');
+    
+    controller.stopDashboardTimer();
+    controller.isDashboardActive.value = false;
+    
     super.dispose();
   }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Center(child: Text("Dashboard Screen")),
-//     );
-//   }
-// }
-
-// void dispose() {
-//   final controller = Get.find<HomeController>();
-
-//   if (controller.isDashboardOpen.value) {
-//     controller.isDashboardOpen.value = false;
-//     controller.logout();
-//   }
-
-//   super.dispose();
-// }
-
-
-
+  Future<void> _initializeDashboardWithRefresh() async {
+    // print(' تهيئة Dashboard مع نظام تجديد التوكن التلقائي');
+    
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    
+    if (token == null || token.isEmpty) {
+      // print(' لا يوجد توكن حالي في Dashboard');
+      return;
+    }
+    
+    try {
+      final expiryDate = JwtDecoder.getExpirationDate(token);
+      final remaining = expiryDate.difference(DateTime.now());
+      
+      // print(' صلاحية التوكن الحالي في Dashboard: ${remaining.inMinutes} دقيقة');
+      
+      if (remaining.isNegative) {
+        // print(' التوكن منتهي - جدد فوراً');
+        await controller.refreshAccessToken();
+      } else {
+        if (controller.isDashboardActive.value) {
+          controller.startDashboardTimer();
+        }
+      }
+      
+    } catch (e) {
+      // print(' خطأ في فحص التوكن في Dashboard: $e');
+    }
+    
+    // print(' Dashboard جاهز مع نظام تجديد تلقائي');
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,7 +132,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
       flex: 1,
       child: Column(
         children: [
-          
+Column(
+  children: [
+    Text('Dashboard Screen'),
+    SizedBox(height: 20),
+    ElevatedButton(
+      onPressed: () async {
+        final prefs = await SharedPreferences.getInstance();
+        final token = prefs.getString('token');
+        final expiry = JwtDecoder.getExpirationDate(token!);
+        final remaining = expiry.difference(DateTime.now());
+        
+        // print(' الوقت المتبقي: ${remaining.inMinutes} دقيقة و${remaining.inSeconds % 60} ثانية');
+        
+        if (JwtDecoder.isExpired(token)) {
+          // print(' التوكن منتهي!');
+        } else {
+          // print('التوكن ساري');
+        }
+      },
+      child: Text('تحقق من صلاحية التوكن'),
+    ),
+    SizedBox(height: 20),
+    ElevatedButton(
+      onPressed: () {
+        // محاكاة انتهاء التوكن
+        // controller.handleTokenExpired();
+      },
+      child: Text('محاكاة انتهاء التوكن'),
+    ),
+  ],
+),
           Container(
             color: Colors.white,
             height: 96,
@@ -196,7 +242,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     SizedBox(width: 4),
-                  //  Image.asset('icons/✏️ Digit.png',width: 24,height: 24,)
+                  //  Image.asset('icons/ Digit.png',width: 24,height: 24,)
                   ],
                 ),
               ],

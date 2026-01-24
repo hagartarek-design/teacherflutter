@@ -5,10 +5,11 @@ import 'package:flutterwallet/app/modules/home/views/borderright.dart';
 import 'package:flutterwallet/app/modules/home/views/dialog_quizes.dart';
 import 'package:flutterwallet/app/modules/home/views/dropdown.dart';
 import 'package:flutterwallet/app/modules/home/views/onlinequizes.dart';
-import 'package:flutterwallet/app/modules/home/views/sections.dart';
+import 'package:flutterwallet/app/modules/home/views/DashboardScreen.dart';
 import 'package:flutterwallet/app/modules/home/views/stable_app_bar.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui' as ui;
 
 import 'stabledropdown.dart';
@@ -23,9 +24,48 @@ class _DashboardScreen2State extends State<DashboardScreen2> {
 
 
 
-  final HomeController controller = HomeController();
+ final HomeController controller = Get.find<HomeController>();
+  bool _isInitialized = false;
+  bool _isDisposed = false;
 
-  bool clicked=false;
+  @override
+  void initState() {
+    super.initState();
+    print('🚀 DashboardScreen2 - initState');
+    
+    Future.delayed(Duration(milliseconds: 100), () {
+      if (!_isDisposed && !_isInitialized) {
+        _initializeDashboard();
+      }
+    });
+  }
+
+  Future<void> _initializeDashboard() async {
+    if (_isInitialized || _isDisposed) return;
+    
+    print('🔧 بدء تهيئة DashboardScreen2');
+    _isInitialized = true;
+    
+    // تأكد أن isDashboardOpen = true
+    controller.isDashboardOpen.value = true;
+    print('✅ تم تعيين isDashboardOpen = true في DashboardScreen2');
+    
+    print('✅ DashboardScreen2 مهيأ بنجاح');
+  }
+
+  @override
+  void dispose() {
+    print('❌ DashboardScreen2 - dispose');
+    _isDisposed = true;
+    
+    final nextRoute = Get.currentRoute;
+    if (!nextRoute.contains('Dashboard')) {
+      controller.isDashboardOpen.value = false;
+    }
+    
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
 

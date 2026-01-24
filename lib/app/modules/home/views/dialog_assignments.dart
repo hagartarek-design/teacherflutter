@@ -272,7 +272,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
-import 'package:flutterwallet/app/modules/home/views/Quizes.dart';
+import 'package:flutterwallet/app/modules/home/views/DashboardScreen2.dart';
 import 'package:flutterwallet/app/modules/home/views/assignments%20copy.dart';
 import 'package:flutterwallet/app/modules/home/views/calenderpick.dart';
 import 'package:flutterwallet/app/modules/home/views/calenderpick2.dart';

@@ -2,11 +2,9 @@
 import 'dart:async';
 import 'dart:math';import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
-import 'package:google_sign_in_web/google_sign_in_web.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart'; 
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/modules/assignments.dart';
@@ -16,7 +14,7 @@ import 'package:flutterwallet/app/modules/home/modules/questions.dart';
 import 'package:flutterwallet/app/modules/home/modules/sections.dart';
 import 'package:flutterwallet/app/modules/home/views/assignments%20copy.dart';
 // import 'package:flutterwallet/app/modules/home/views/HomeViewscreen.dart';
-import 'package:flutterwallet/app/modules/home/views/sections.dart';
+import 'package:flutterwallet/app/modules/home/views/DashboardScreen.dart';
 import 'package:flutterwallet/app/modules/home/views/service.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http_parser/http_parser.dart' as http_parser;
@@ -29,52 +27,29 @@ import 'package:mime/mime.dart';
 import 'package:file_picker/file_picker.dart';
 
 // import 'package:google_sign_in/google_sign_in.dart';
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
-import 'package:path/path.dart';
-import 'package:mime/mime.dart';
-import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/modules/users_info.dart';
-import 'package:flutterwallet/app/modules/home/views/login.dart';
 import 'package:get_storage/get_storage.dart';
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/widgets.dart';
-import 'package:flutterwallet/app/google_auth.dart';
 import 'package:flutterwallet/app/modules/home/modules/course_attend.dart';
 import 'package:flutterwallet/app/modules/home/modules/course_info.dart';
 import 'package:flutterwallet/app/modules/home/modules/exam.dart';
 import 'package:flutterwallet/app/modules/home/modules/file.dart';
 import 'package:flutterwallet/app/modules/home/modules/wallet%20copy.dart';
 import 'package:flutterwallet/app/modules/home/modules/wallet.dart';
-import 'package:flutterwallet/app/modules/home/views/students.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../../Applinks.dart';
 import 'dart:html'as html;
-import 'package:http/http.dart' as http;
-
 import '../modules/students.dart';
 class HomeController extends GetxController {
-// List<dynamic> students1 = [];
-//   List<dynamic> allStudents1 = [];
-  // int currentPage = 1;
-  // int totalPages = 1;
+
   int itemsPerPage = 10;
   int showDegreeafter = 0;
   int showdegreeEveryQues = 0;
 
-  // void updateToggleValues(int after, int every) {
-  //   showDegreeafter = after;
-  //   showdegreeEveryQues = every;
-  // }
+ 
   String? selectedGrade;
   String? selectedName;
   
@@ -82,84 +57,17 @@ class HomeController extends GetxController {
   List<String> names = ['Math', 'physics','English','chemistery'];
   
 List <Course>allStudents1=[];
-  // Future<void> fetchStudentsByGroup(int groupId) async {
-  //   try {
-  //     final response = await http.get(
-  //       Uri.parse('${Applinks.baseurl}/courses/bystudent/$groupId'),
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       allStudents1 = json.decode(response.body);
-  //       coursemanager = allStudents1;
-  //       totalPages = (allStudents1.length / itemsPerPage).ceil();
-  //       update();
-  //     } else {
-  //       throw Exception('Failed to load students');
-  //     }
-  //   } catch (e) {
-  //     print('Error fetching students: $e');
-  //   }
-  // }
-
-  // Future<void> searchStudents({
-  //   required int groupId,
-  //   required String query,
-  // }) async {
-  //   try {
-  //     final response = await http.get(
-  //       Uri.parse('${Applinks.baseurl}/courses/bystudent/$groupId?search=$query'),
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       coursemanager = json.decode(response.body);
-  //       update();
-  //     } else {
-  //       throw Exception('Failed to search students');
-  //     }
-  //   } catch (e) {
-  //     print('Error searching students: $e');
-  //   }
-  // }
-
-  // void controlcenter1(int page, String groupId) {
-  //   currentPage = page;
-  //   fetchStudentsByGroup(int.parse(groupId));
-  //   update();
-  // }
-
-// final GoogleSignIn _googleSignIn = GoogleSignIn(
-//   scopes: ['email'], // Add other required scopes if needed
-// );
-
-//  signInWithGoogle() async {
-//   try {
-    
-//     final GoogleSignInAccount? googleUser = await _googleSignIn.signIn(); // ✅ Correct usage
-
-//     if (googleUser == null) {
-//       print("User canceled login");
-//       return;
-//     }
-
-//     final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-    
-//     print("ID Token: ${googleAuth.idToken}");
-//     print("Access Token: ${googleAuth.accessToken}");
-//   } catch (error) {
-//     print("Error: $error");
-//   }
-// }
+ 
   File? _videoFile;
   Uint8List? _videoBytes;
   String? _videoName;
   bool _isUploading = false;
   final picker = ImagePicker();
-  // import 'package:file_picker/file_picker.dart';
 
 Future<PlatformFile?> pickVideoWebSafe() async {
   final result = await FilePicker.platform.pickFiles(
     type: FileType.video,
-    withData: true, // VERY IMPORTANT for Flutter Web
+    withData: true, 
   );
 
   if (result != null && result.files.single.bytes != null) {
@@ -179,54 +87,23 @@ void pickAndUpload() async {
   }
 }
 
-
-//  final  result;
-// PickedFile()async{
-// // import 'package:file_picker/file_picker.dart';
-
-// final result = await FilePicker.platform.pickFiles(
-//   type: FileType.custom,
-//   allowedExtensions: ['jpg','png','mp4'],
-// );
-
-// final path = result!.files.single.path!;
-// final file = File(path);
-
-// // after picking
-// pickedImage = File(resultImage.files.single.path!);
-// pickedVideo = File(resultVideo.files.single.path!);
-// }
-  // Future<void> pickVideo() async {
-  //   final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
-  //   if (pickedFile != null) {
-  //     // setState(() {
-  //       _videoFile = File(pickedFile.path);
-  //       _videoBytes = null; // Clear web data
-  //       _videoName = basename(pickedFile.path);
-  //     // });
-  //     print('📁 Video picked (Mobile): $_videoName');
-  //   } else {
-  //     print('❌ No video selected');
-  //   }
-  // }
-
   Future<void> pickVideoWeb() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.video);
     if (result != null && result.files.single.bytes != null) {
       // setState(() {
-        _videoFile = null; // Clear mobile data
+        _videoFile = null; 
         _videoBytes = result.files.single.bytes;
         _videoName = result.files.single.name;
       // });
-      print('📁 Video picked (Web): $_videoName');
+      // print(' Video picked (Web): $_videoName');
     } else {
-      print('❌ No video selected (Web)');
+      // print(' No video selected (Web)');
     }
   }
 
   Future<void> uploadVideo() async {
     if (_videoFile == null && _videoBytes == null) {
-      print('❌ Error: No video selected!');
+      // print(' Error: No video selected!');
       return;
     }
 
@@ -246,13 +123,13 @@ void pickAndUpload() async {
       String mimeType = lookupMimeType(_videoName ?? '') ?? 'video/mp4';
 
       if (kIsWeb && _videoBytes != null) {
-        print('🔄 Uploading video (Web)');
+        // print(' Uploading video (Web)');
         request.files.add(
           http.MultipartFile.fromBytes(
             'video',
             _videoBytes!,
             filename: _videoName,
-            contentType: MediaType.parse(mimeType), // ✅ FIXED
+            contentType: MediaType.parse(mimeType), 
           ),
         );
       } else if (_videoFile != null) {
@@ -261,22 +138,22 @@ void pickAndUpload() async {
           await http.MultipartFile.fromPath(
             'video',
             _videoFile!.path,
-            contentType: MediaType.parse(mimeType), // ✅ FIXED
+            contentType: MediaType.parse(mimeType),
           ),
         );
       } else {
-        print('❌ Unexpected error: No valid video file.');
+        print(' Unexpected error: No valid video file.');
         return;
       }
 
       var response = await request.send();
       if (response.statusCode == 201 || response.statusCode == 200) {
-        print('✅ Video uploaded successfully!');
+        // print(' Video uploaded successfully!');
       } else {
-        print('❌ Video upload failed: ${response.statusCode}');
+        // print(' Video upload failed: ${response.statusCode}');
       }
     } catch (e) {
-      print('❌ Error uploading video: $e');
+      // print(' Error uploading video: $e');
     } finally {
       // setState(() {
         _isUploading = false;
@@ -539,8 +416,7 @@ Future<void> uploadcard3offline(BuildContext context) async {
       return;
     }
 
-    // Ensure startdate is properly formatted
-    String formattedStartDate = startdate.toString(); // Or format it as needed
+    String formattedStartDate = startdate.toString(); 
 
     dio.FormData formData = dio.FormData.fromMap({
       "file": await dio.MultipartFile.fromBytes(
@@ -639,7 +515,7 @@ Future<void> uploadImage(Uint8List imageBytes, String fileName) async {
 update();
 users_info();
 allimages();
-      fullUrl.value = imageUrl; // Update ValueNotifier
+      fullUrl.value = imageUrl; 
     } else {
 
     }
@@ -709,96 +585,6 @@ update();
   //  File? pickedImage;
 // File? pickedVideo;
 String?photoUrl='';
-// String token='';
-// Future pickImage()async {
-//   FilePickerResult?result=await FilePicker.platform.pickFiles(type: FileType.image);
-//   if(result !=null){
-//     // setState(() {
-//       pickedImage=File(result.files.single.path!);
-//     // });
-//   }
-
-// }
-// Future pickVideo()async{
-//   FilePickerResult?result =await FilePicker.platform.pickFiles();
-//   if(result!=null){
-//     // setState(() {
-      
-//       pickedVideo=File(result.files.single.path!);
-//     // });
-//   }
-// }
-//  Timer? _refreshTimer;
-
-  // void startAutoRefresh(String token) {
-  //   stopAutoRefresh();
-
-  //   final expiry = JwtDecoder.getExpirationDate(token);
-  //   final remaining = expiry.difference(DateTime.now());
-
-  //   // نجدد قبل الانتهاء بدقيقة
-  //   final refreshTime = remaining - const Duration(minutes: 1);
-
-  //   if (refreshTime.isNegative) {
-  //     refreshToken();
-  //   } else {
-  //     _refreshTimer = Timer(refreshTime, refreshToken);
-  //   }
-  // }
-
-  // Future<void> refreshToken() async {
-  //   try {
-  //     final tokens = await getTokens();
-  //     final res = await Dio().post(
-  //       'http://localhost:3300/auth/refreshtoken',
-  //       data: {'refreshtoken': tokens!['refreshtoken']},
-  //     );
-
-  //     await saveTokens(
-  //       res.data['token'],
-  //       tokens['refreshtoken'],
-  //       tokens['userId'],
-  //     );
-
-  //     startAutoRefresh(res.data['token']);
-  //   } catch (e) {
-  //     logout();
-  //   }
-  // }
-
-  // void stopAutoRefresh() {
-  //   _refreshTimer?.cancel();
-  // }
-
-  // Future<void> logout() async {
-  //   stopAutoRefresh();
-  //   final prefs = await SharedPreferences.getInstance();
-  //   await prefs.clear();
-  //   Get.offAllNamed('/HomeView');
-  // }
-
-// Future<String> getInitialRoute() async {
-//   final tokens = await getTokens();
-//   if (tokens == null) return '/HomeView';
-
-//   final accessToken = tokens['token'];
-//   final refreshtoken = tokens['refreshtoken'];
-
-//   if (JwtDecoder.isExpired(accessToken)) {
-//     try {
-//       final res = await Dio().post(
-//         'http://localhost:3300/auth/refreshtoken',
-//         data: {'refreshtoken': refreshtoken},
-//       );
-//       await saveTokens(res.data['token'], refreshtoken, tokens['userId']);
-//       return '/Mainscreen';
-//     } catch (_) {
-//       return '/HomeView';
-//     }
-//   } else {
-//     return '/Mainscreen';
-//   }
-// }
 
 Timer?_logoutTimer;
 void startTokenTimer (String token){
@@ -818,7 +604,63 @@ void startTokenTimer (String token){
 //   Get .offAllNamed('/HomeView');
 
 // }
-//  Future<bool> signInWithGoogle(context) async {
+ Future<bool> signInWithGoogle(context) async {
+  try {
+    
+    GoogleAuthProvider googleProvider = GoogleAuthProvider();
+
+    UserCredential userCredential = await auth.signInWithPopup(googleProvider);
+
+    String? idToken = await userCredential.user?.getIdToken();
+    print("✅ ID Token: $idToken");
+
+    final response = await http.post(
+      Uri.parse('http://localhost:3300/auth/google-login'), 
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'idToken': idToken}),
+    );
+
+    if (response.statusCode == 200||response.statusCode==201)  {
+      final responseBody = jsonDecode(response.body);
+      print("🎉 Logged in successfully: ${responseBody['token']}");
+    
+      final data = jsonDecode(response.body);
+      final prefs = await SharedPreferences.getInstance();
+        final token = data['token'];
+    final refreshToken = data['refreshtoken'];
+    final userId = data['userId'];
+
+   await saveTokens(token, refreshToken, userId);
+        scheduleNextRefresh(data['token']);
+
+// final authController = Get.put(AuthController());
+// startTokenTimer(token);
+
+Get.offAllNamed('/Mainscreen');
+
+    return true;
+    
+    // refreshtoken=data['refreshtoken'];  
+    // token=data['token'];  
+    // userId=data['userId'];
+      
+    //   await prefs.setString('token', data['token']);
+    //   await prefs.setString('refreshtoken', data['refreshtoken']);
+      // await prefs.setString('userId', data['userId']);
+      return true;
+    
+    
+    } else {
+      print("❌ Server error: ${response.statusCode}");
+      return false;
+    }
+  } catch (e) {
+    print("❌ Sign-in error: $e");
+    return false;
+  }
+}
+ final FirebaseAuth auth = FirebaseAuth.instance;
+//   Future<bool> signInWithGoogle(context) async {
 //   try {
     
 //     GoogleAuthProvider googleProvider = GoogleAuthProvider();
@@ -851,6 +693,7 @@ void startTokenTimer (String token){
 
 // Get.offAllNamed('/Mainscreen');
 
+
 //     return true;
     
 //     // refreshtoken=data['refreshtoken'];  
@@ -872,62 +715,7 @@ void startTokenTimer (String token){
 //     return false;
 //   }
 // }
- final FirebaseAuth auth = FirebaseAuth.instance;
-  Future<bool> signInWithGoogle(context) async {
-  try {
-    
-    GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
-    UserCredential userCredential = await auth.signInWithPopup(googleProvider);
-
-    String? idToken = await userCredential.user?.getIdToken();
-    print("✅ ID Token: $idToken");
-
-    final response = await http.post(
-      Uri.parse('http://localhost:3300/auth/google-login'), 
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'idToken': idToken}),
-    );
-
-    if (response.statusCode == 200||response.statusCode==201)  {
-      final responseBody = jsonDecode(response.body);
-      print("🎉 Logged in successfully: ${responseBody['token']}");
-    
-      final data = jsonDecode(response.body);
-      final prefs = await SharedPreferences.getInstance();
-        final token = data['token'];
-    final refreshToken = data['refreshtoken'];
-    final userId = data['userId'];
-
-   await saveTokens(token, refreshToken, userId);
-
-// final authController = Get.put(AuthController());
-startTokenTimer(token);
-
-Get.offAllNamed('/Mainscreen');
-
-
-    return true;
-    
-    // refreshtoken=data['refreshtoken'];  
-    // token=data['token'];  
-    // userId=data['userId'];
-      
-    //   await prefs.setString('token', data['token']);
-    //   await prefs.setString('refreshtoken', data['refreshtoken']);
-      // await prefs.setString('userId', data['userId']);
-      return true;
-    
-    
-    } else {
-      print("❌ Server error: ${response.statusCode}");
-      return false;
-    }
-  } catch (e) {
-    print("❌ Sign-in error: $e");
-    return false;
-  }
-}
 // Future<UserCredential?>  signInWithGoogle() async {
 //   try {
 //     final GoogleAuthProvider googleProvider = GoogleAuthProvider();
@@ -1209,9 +997,7 @@ Future<void> uploadAll({
     ),
   );
 
-  // --------------------------------------
-  // 👉 Add video file -> field: "video"
-  // --------------------------------------
+  
   request.files.add(
     await http.MultipartFile.fromPath(
       'video',
@@ -1220,9 +1006,7 @@ Future<void> uploadAll({
     ),
   );
 
-  // --------------------------------------
-  // 👉 Send request
-  // --------------------------------------
+
   final response = await request.send();
 
   if (response.statusCode == 201 || response.statusCode == 200) {
@@ -1245,7 +1029,7 @@ Future<void> uploadLessonVideo(String filePath) async {
 
   request.files.add(
     await http.MultipartFile.fromPath(
-      "file",     // <-- MUST MATCH FileInterceptor('file')
+      "file",     
       filePath,
     ),
   );
@@ -1265,7 +1049,6 @@ Future<void> uploadLessonVideo(String filePath) async {
  
 }
 
-// Global variable for course data
  Course courseDatas=Course();
  Event eventData=Event();
 
@@ -1328,31 +1111,6 @@ print('let${uniqueimg.id}');
     }
   }
 
-//   Course uniquecourse=Course();
-//    Future<void> (String id) async {
-//     final url = Uri.parse('${Applinks.baseurl}/courses/findoneuser/$id');
-//     try {
-      
-//        final prefs = await SharedPreferences.getInstance();
-//   final token = prefs.getString('token');
-//       final response = await http.get(url,headers: {
-//         "Content-Type": "application/json",
-//         "Authorization": "Bearer $token",
-//       });
-
-//       if (response.statusCode == 200) {
-        
-//         final data =await json.decode(response.body);
-//         uniquecourse =await Course.fromJson(data);
-//         update();print('object:::${response.body}');
-//       } else {
-//       }
-//     } catch (e) {
-//       print('Error fetching coursessss : $e');
-// print('let${uniqueimg.id}');
-
-//     }
-//   }
 
 Future<void> fetchStudent(String userId, {int? page, }) async {
 
@@ -1804,80 +1562,6 @@ update();
 
 
 
-
-//    Future<void> fetchcoursedata3(String? type) async {
-//   final url = Uri.parse('${Applinks.baseurl}/courses/type?type=$type');
-
-//   try {
-//     final response = await http.get(url);
-
-//     if (response.statusCode == 200) {
-//       final data = json.decode(response.body);
-//       courses = Course.fromJson(data);
-// update();
-//       // Map the course_attend data
-//       List<Map<String, dynamic>> attendanceData = courses.course_attend!
-//           .map((attend) => {
-//                 'month': attend['month'],
-//                 'seen_amount': double.parse(attend['seen_amount']),
-//                 'pay_amount': double.parse(attend['pay_amount'])
-//               })
-//           .toList();
-
-//       update();
-//       print('Attendance Data: $attendanceData');
-//     } else {
-//       print('Error: ${response.statusCode}');
-//     }
-//   } catch (e) {
-//     print('Error fetching course data: $e');
-//   }
-// }
-
-
-  //  Future<void> eventDate(String ?eventDate, ) async {
-  //   final url = Uri.parse('${Applinks.baseurl}/events/date?eventdate=$eventDate');
-
-  //   try {
-  //     final response = await http.get(url);
-
-  //     if (
-  //       response.statusCode == 200
-  //       ||response.statusCode == 201
-  //     ) {
-        
-  //       final data =await json.decode(response.body);
-  //       eventData =await Event.fromJson(data);
-  //       update();
-  //       print('eventres:${data}');
-  //     } else {
-  //       print('Error: ${response.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     print('Error fetching course data: $e');
-  //   }
-  // }
-
-
-
-// Future <void> fetchcoursedata (String name ,String grade)async{
-
-//   final url =Uri.parse('${Applinks.baseurl}/courses/name?name=$name&grade=$grade');
-//   final response=await http.get(url);
-//   if(response.statusCode==200||response.statusCode==201){
-
-//    courseData= await json.decode(response.body);
-//    print ('mmmmmmmm');
-//    print('m${courseData}');
-//   }else{
-//    print('ll$courseData');
-// courseData= await json.decode(response.body);
-//    print ('mmmmmmmm');
-//    print('m${courseData}');
-   
-//   }
-// }
-//   // Map<String, dynamic>? courseData;
 String val='';
   final count = 0.obs;
   
@@ -1890,6 +1574,20 @@ var controllers = <TextEditingController>[].obs;
 
 
   void onInit() {
+         loadTokens();
+    
+    Future.delayed(Duration(seconds: 2), () {
+      if (token.isNotEmpty) {
+        fetchQuestions();
+        fetchAssignments();
+      }
+    });
+    
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      currentScreen.value = Get.currentRoute;
+      // print(' الصفحة الحالية الأولية: ${currentScreen.value}');
+    });
+  
     fetchAssignments();
     exampagination(page: 3);
     controllers.add(TextEditingController());
@@ -2250,32 +1948,6 @@ else{print('hhhhhhhhh');}
 }
 }
 
-
-// Future <void> addsection( String name,String price,) async{
-//   try{
-    
-//       final prefs = await SharedPreferences.getInstance();
-//     final token = prefs.getString('token');
-//     var body=json.encode({'name':name,"description":description});
-// var url ='${Applinks.baseurl}/bundles';
-// final response=await http .post(Uri.parse(url),body:body
-// ,headers: {
-//         "Content-Type": "application/json",
-//         "Authorization": "Bearer $token",
-//       }
-// );
-
-// if(response.statusCode==201||response.statusCode==200){
-//  print(response.statusCode); 
-//  update();
-//  response.body;
-// //  getallcourse();
-// }
-// else{print('hhhhhhhhh');}
-// }catch(e){
-//   print(e);
-// }
-// }
 TextEditingController oldPasswordcontroller=TextEditingController();
 TextEditingController newPasswordcontroller=TextEditingController();
 Future <void> updatePasword( ) async{
@@ -2424,44 +2096,44 @@ headers: {
 
 final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  Future<bool> login(context) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/login'),
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode({"email": emailController.text, "password": passwordController.text}),
-    );
-  if(response.statusCode==401){ 
-     ScaffoldMessenger.of(context).showSnackBar(
-  SnackBar(
-    content: Text("wrong password or email"),
-    duration: Duration(seconds: 2),
-    action: SnackBarAction(
-      label: "Undo",
-      onPressed: () {
+//   Future<bool> login(context) async {
+//     final response = await http.post(
+//       Uri.parse('$baseUrl/login'),
+//       headers: {"Content-Type": "application/json"},
+//       body: jsonEncode({"email": emailController.text, "password": passwordController.text}),
+//     );
+//   if(response.statusCode==401){ 
+//      ScaffoldMessenger.of(context).showSnackBar(
+//   SnackBar(
+//     content: Text("wrong password or email"),
+//     duration: Duration(seconds: 2),
+//     action: SnackBarAction(
+//       label: "Undo",
+//       onPressed: () {
     
-      },
-    ),
-  ),
-);
-    // print('object');
+//       },
+//     ),
+//   ),
+// );
+//     // print('object');
     
-    return false;
-  }
-    if (response.statusCode == 200||response.statusCode==201) {
-      final data = jsonDecode(response.body);
-      final prefs = await SharedPreferences.getInstance();
+//     return false;
+//   }
+//     if (response.statusCode == 200||response.statusCode==201) {
+//       final data = jsonDecode(response.body);
+//       final prefs = await SharedPreferences.getInstance();
       
-      await prefs.setString('token', data['token']); // حفظ التوكن
-      print(data);
-      return true;
-    }
+//       await prefs.setString('token', data['token']); // حفظ التوكن
+//       print(data);
+//       return true;
+//     }
 
-   else{ 
+//    else{ 
     
-    print('object');
+//     print('object');
     
-    return false;
-  }}
+//     return false;
+//   }}
 
 //   Future<bool> logout() async {
 //     final prefs = await SharedPreferences.getInstance();
@@ -2498,34 +2170,6 @@ final TextEditingController emailController = TextEditingController();
 
 
 
-
-
-
-
-
-
-
-// Future<void> saveTokens(String accessToken, String refreshToken, int userId) async {
-//   final prefs = await SharedPreferences.getInstance();
-//   await prefs.setString('accessToken', accessToken);
-//   await prefs.setString('refreshToken', refreshToken);
-//   await prefs.setInt('userId', userId);
-// }
-
-// Future<Map<String, dynamic>?> getTokens() async {
-//   final prefs = await SharedPreferences.getInstance();
-//   final accessToken = prefs.getString('accessToken');
-//   final refreshToken = prefs.getString('refreshToken');
-//   final userId = prefs.getInt('userId');
-//   if (accessToken != null && refreshToken != null && userId != null) {
-//     return {
-//       'accessToken': accessToken,
-//       'refreshToken': refreshToken,
-//       'userId': userId,
-//     };
-//   }
-//   return null;
-// }
 
 
 
@@ -2577,205 +2221,6 @@ Future<void> loginUser() async {
   }
 }
 
-// Future<bool> isLoggedIn() async {
-//   final prefs = await SharedPreferences.getInstance();
-//   String? token = prefs.getString('token');
-//   return token != null;
-// }
-
-     // final String? token = getToken(); 
-//  Uint8List? imageBytes;
-//   String? fileName;
-
-  // Future<void> pickImage() async {
-  //   html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
-  //   uploadInput.accept = 'image/*';
-  //   uploadInput.click();
-
-  //   uploadInput.onChange.listen((event) {
-  //     final file = uploadInput.files!.first;
-  //     final reader = html.FileReader();
-
-  //     reader.readAsArrayBuffer(file);
-  //     reader.onLoadEnd.listen((event) {
-  //       // setState(() {
-  //         imageBytes.value = reader.result as Uint8List?;
-  //         fileName.value = file.name;
-  //       // });
-  //     });
-  //   });
-  // }
-// String fullUrl='';
-// // String img='';
-//   Future<void> uploadImage() async {
-//     if (imageBytes == null) return;
-
-//     try {
-//       final prefs = await SharedPreferences.getInstance();
-//       final token = prefs.getString('token');
-
-//       if (token == null) {
-//         print('No token found');
-//         return;
-//       }
-
-//       dio.FormData formData = dio.FormData.fromMap({
-//         "file": dio.MultipartFile.fromBytes(
-//           imageBytes!,
-//           filename: fileName,
-//         ),
-//       });
-
-//       dio.Dio dioInstance = dio.Dio();
-//       dioInstance.options.headers["Authorization"] = "Bearer $token";
-
-//       dio.Response response = await dioInstance.patch(
-//         '${Applinks.baseurl}/users/upload', // Replace with your backend URL
-//         data: formData,
-//       );
-
-//       if (response.statusCode == 200) {
-//       String baseUrl = '${Applinks.baseurl}';  // Replace with actual API URL
-// String img = response.data['imagePath'];
-
-//  fullUrl
-//   = '$baseUrl/$img';
-// print('Image URL: $fullUrl');
-
-//         print('Upload successful: ${response.data['imagePath']}');
-//       } else {
-//         print('Upload failed: ${response.data}');
-//       }
-//     } catch (e) {
-//       print('Error: $e');
-//     }
-//   }
-// Future <void> addfile( String image,) async{
-  
-//   try{
-    
-//  String? token = await getToken();
-//     var body=json.encode({'image':image});
-// var url ='${Applinks.baseurl}/users/upload';
-// // String token = await Candidate().getToken();
-
-// final response=await http .patch(Uri.parse(url),body:body
-//   ,headers: {
-//           'Content-Type': 'application/json','Authorization':'Bearer ${token}'
-//       // ,'Authorization':'Bearer ${token}'  
-//       },
-// );
-// // String? token = response.headers['authorization'];
-
-// if(response.statusCode==201||response.statusCode==200){
-//  print(response.statusCode); 
-//  update();
-//  response.body;
-// //  getallcourse();
-// }
-// else{print('hhhhhhhhh');
-
-// print(response.statusCode);
-// }
-// }catch(e){
-//   print(e);
-// }
-// }
-  // Uint8List? imageBytes;
-  // String? fileName;
-  // String? fullUrl;
-
-  // Future<void> pickImage() async {
-  //   html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
-  //   uploadInput.accept = 'image/*';
-  //   uploadInput.click();
-
-  //   uploadInput.onChange.listen((event) {
-  //     final file = uploadInput.files!.first;
-  //     final reader = html.FileReader();
-
-  //     reader.readAsArrayBuffer(file);
-  //     reader.onLoadEnd.listen((event) {
-  //       // setState(() {
-  //         imageBytes = reader.result as Uint8List?;
-  //         fileName = file.name;
-  //       // });
-  //       print('Image selected: $fileName');
-  //     });
-  //   });
-  // }
-
-
-
-
-  // Future<void> pickAndUploadImage() async {
-  //   html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
-  //   uploadInput.accept = 'image/*';
-  //   uploadInput.click();
-
-  //   uploadInput.onChange.listen((event) async {
-  //     final file = uploadInput.files!.first;
-  //     final reader = html.FileReader();
-
-  //     reader.readAsArrayBuffer(file);
-  //     reader.onLoadEnd.listen((event) async {
-  //       // setState(() {
-  //         imageBytes = reader.result as Uint8List?;
-  //         fileName = file.name;
-  //       // });
-
-  //       print('Image selected: $fileName');
-
-  //       // Call upload function after image is picked
-  //       await uploadImage();
-  //     });
-  //   });
-  // }
-  // Future<void> uploadImage() async {
-  //   if (imageBytes == null) {
-  //     print('No image selected');
-  //     return;
-  //   }
-
-  //   try {
-  //     final prefs = await SharedPreferences.getInstance();
-  //     final token = prefs.getString('token');
-
-  //     if (token == null) {
-  //       print('No token found');
-  //       return;
-  //     }
-
-  //     dio.FormData formData = dio.FormData.fromMap({
-  //       "file": dio.MultipartFile.fromBytes(
-  //         imageBytes!,
-  //         filename: fileName,
-  //       ),
-  //     });
-
-  //     dio.Dio dioInstance = dio.Dio();
-  //     dioInstance.options.headers["Authorization"] = "Bearer $token";
-
-  //     dio.Response response = await dioInstance.patch(
-  //       '${Applinks.baseurl}/users/upload',
-  //       data: formData,
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       // setState(() {
-  //         String baseUrl = '${Applinks.baseurl}';
-  //         String img = response.data['imagePath'];
-  //         fullUrl = '$baseUrl/$img';
-  //       // });
-
-  //       print('Image uploaded: $fullUrl');
-  //     } else {
-  //       print('Upload failed: ${response.data}');
-  //     }
-  //   } catch (e) {
-  //     print('Error uploading image: $e');
-  //   }
-  // }
 
 Future<void> addFile(String image) async {
   try {
@@ -4097,131 +3542,253 @@ Future<void> uploadcard3online(BuildContext context) async {
 
   void increment() => count.value++;
 
+Future<String> _getCurrentRouteWithRetry({int maxRetries = 3}) async {
+  for (int i = 0; i < maxRetries; i++) {
+    try {
+      String route = Get.currentRoute;
+      if (route.isNotEmpty) {
+        return route;
+      }
+      
+      // انتظر قليلاً ثم حاول مرة أخرى
+      await Future.delayed(Duration(milliseconds: 50 * (i + 1)));
+    } catch (e) {
+      print('⚠️ محاولة $i فشلت: $e');
+      await Future.delayed(Duration(milliseconds: 50 * (i + 1)));
+    }
+  }
+  
+  print('⚠️ لم يتم الحصول على المسار الحالي بعد $maxRetries محاولات');
+  return '';
+}
+// Future<void> navigateWithinDashboard(String routeName) async {
+
+
+  void stopAutoRefresh() {
+    _refreshTimer?.cancel();
+    _refreshTimer = null;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void startAutoLogoutMonitor(String token) {
+  _refreshTimer?.cancel();
+  
+  try {
+    final expiryDate = JwtDecoder.getExpirationDate(token);
+    final remaining = expiryDate.difference(DateTime.now());
+    
+    print(' بدء مراقبة التسجيل الخروج - المتبقي: ${remaining.inMinutes} دقيقة');
+    
+    if (remaining.isNegative) {
+      print(' التوكن منتهي - تسجيل خروج فوري');
+      Future.delayed(Duration(seconds: 2), () {
+        logout();
+      });
+      return;
+    }
+    
+    if (remaining.inMinutes < 5) {
+      final logoutTime = remaining - Duration(minutes: 4);
+      
+      if (logoutTime.isNegative) {
+        print(' سأخرج بعد 30 ثانية');
+        _refreshTimer = Timer(Duration(seconds: 30), () {
+          logout();
+        });
+      } else {
+        // اخرج قبل دقيقة من الانتهاء
+        print(' سأخرج بعد ${logoutTime.inSeconds} ثانية');
+        _refreshTimer = Timer(logoutTime, () {
+          logout();
+        });
+      }
+    } else {
+      print(' الوقت كافي - لا حاجة للتسجيل الخروج القريب');
+    }
+    
+  } catch (e) {
+    print(' خطأ في startAutoLogoutMonitor: $e');
+  }
+}
+
+
   RxBool isDashboardOpen = false.obs;
-
+  RxString currentScreen = ''.obs;
   Timer? _refreshTimer;
-
+  
+  // التوكنات
   String token = '';
   String refreshToken = '';
   int userId = 0;
-
-  // ================= TOKENS =================
-
-  // Future<Map<String, dynamic>?> getTokens() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final t = prefs.getString('token');
-  //   final rt = prefs.getString('refreshtoken');
-  //   final uid = prefs.getInt('userId');
-
-  //   if (t == null || rt == null) return null;
-
-  //   token = t;
-  //   refreshToken = rt;
-  //   userId = uid ?? 0;
-
-  //   return {
-  //     'token': token,
-  //     'refreshtoken': refreshToken,
-  //     'userId': userId,
-  //   };
-  // }
-
-  // Future<void> saveTokens(
-  //     String t, String rt, int uid) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   await prefs.setString('token', t);
-  //   await prefs.setString('refreshtoken', rt);
-  //   await prefs.setInt('userId', uid);
-
-  //   token = t;
-  //   refreshToken = rt;
-  //   userId = uid;
-  // }
-  
-  // Future<String> getInitialRoute() async {
-  //   final tokens = await getTokens();
-  //   if (tokens == null) return '/HomeView';
-
-  //   if (JwtDecoder.isExpired(tokens['token'])) {
-  //     try {
-  //       await refreshAccessToken();
-  //       return '/Mainscreen';
-  //     } catch (_) {
-  //       return '/HomeView';
-  //     }
-  //   }
-
-  //   return '/Mainscreen';
-  // }
-
-  // RxBool isDashboardOpen = false.obs;
-  // Timer? _refreshTimer;
-
-  // String token = '';
-  // String refreshToken = '';
-  // int userId = 0;
-
-  // RxBool isDashboardOpen = false.obs;
-  // Timer? _refreshTimer;
-
-  // String token = '';
-  // String refreshToken = '';
-  // int userId = 0;
-
-  // ================= TOKENS =================
   Future<void> loadTokens() async {
     final prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token') ?? '';
     refreshToken = prefs.getString('refreshtoken') ?? '';
     userId = prefs.getInt('userId') ?? 0;
+    
+    if (token.isNotEmpty) {
+      print('🔑 تم تحميل التوكن - ${token.substring(0, 20)}...');
+      
+      // إذا كنا في Dashboard، ابدأ التجديد التلقائي
+      if (Get.currentRoute.contains('Dashboard')) {
+        isDashboardOpen.value = true;
+        scheduleNextRefresh(token);
+      }
+    }
   }
-
-  // Future<void> saveTokens(String t, String rt, int uid) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   await prefs.setString('token', t);
-  //   await prefs.setString('refreshtoken', rt);
-  //   await prefs.setInt('userId', uid);
-
-  //   token = t;
-  //   refreshToken = rt;
-  //   userId = uid;
-  // }
-
-  // Timer? _refreshTimer;
-  // RxBool isDashboardOpen = false.obs;
-
-  // String token = '';
-  // String refreshToken = '';
-  // int userId = 0;
-
-  // ================= TOKENS =================
-  Future<Map<String, dynamic>?> getTokens() async {
-    final prefs = await SharedPreferences.getInstance();
-    final t = prefs.getString('token');
-    final rt = prefs.getString('refreshtoken');
-    final uid = prefs.getInt('userId');
-
-    if (t == null || rt == null) return null;
-
-    token = t;
-    refreshToken = rt;
-    userId = uid ?? 0;
-
-    return {'token': token, 'refreshtoken': refreshToken, 'userId': userId};
-  }
-
+  
   Future<void> saveTokens(String t, String rt, int uid) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', t);
     await prefs.setString('refreshtoken', rt);
     await prefs.setInt('userId', uid);
-
+    
     token = t;
     refreshToken = rt;
     userId = uid;
+    
+    print('💾 تم حفظ التوكنات الجديدة');
   }
+  
+  // نظام التجديد الذكي بناءً على الصفحة الحالية
+Future<void> smartRefreshToken() async {
+  try {
+    print(' smartRefreshToken - بدء');
+    
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    
+    if (token == null || token.isEmpty) {
+      print(' لا يوجد توكن');
+      return;
+    }
+    
+    final expiryDate = JwtDecoder.getExpirationDate(token);
+    final remaining = expiryDate.difference(DateTime.now());
+    
+    print(' الوقت المتبقي: ${remaining.inMinutes} دقيقة و${remaining.inSeconds % 60} ثانية');
+    print(' الصفحة الحالية: ${currentScreen.value}');
+    print(' في Dashboard: ${isDashboardOpen.value}');
+    
+    if (currentScreen.value.contains('DashboardScreen') || isDashboardOpen.value) {
+      print(' في Dashboard - تحقق من الحاجة للتجديد');
+      
+      if (remaining.isNegative) {
+        print(' التوكن منتهي - جدد فوراً');
+        await refreshAccessToken();
+      } else if (remaining.inMinutes < 10) {
+        print(' بقي أقل من 10 دقائق - جدد التوكن');
+        await refreshAccessToken();
+      } else {
+        print(' التوكن ساري لوقت كافي في Dashboard');
+      }
+    } else {
+      print(' في صفحة أخرى - لا تجدد، فقط تحقق للتسجيل الخروج');
+      
+      if (remaining.isNegative || remaining.inSeconds < 30) {
+        print(' التوكن منتهي أو شبه منتهي - تسجيل خروج');
+        await logout();
+      } else {
+        print(' التوكن ساري في الصفحة الأخرى - لا تجديد');
+      }
+    }
+    
+  } catch (e) {
+    print(' خطأ في smartRefreshToken: $e');
+  }
+}Future<void> refreshAccessToken() async {
+  try {
+    print(' تجديد التوكن...');
+    
+    if (_lastRefreshTime != null) {
+      final timeSinceLastRefresh = DateTime.now().difference(_lastRefreshTime!);
+      if (timeSinceLastRefresh.inSeconds < 30) {
+        print('⏸️ تم التجديد مؤخراً - تأجيل');
+        
+        final waitTime = Duration(seconds: 30) - timeSinceLastRefresh;
+        _refreshTimer?.cancel();
+        _refreshTimer = Timer(waitTime, () {
+          refreshAccessToken();
+        });
+        return;
+      }
+    }
+    
+    if (refreshToken.isEmpty) {
+      print(' لا يوجد refresh token');
+      throw Exception('No refresh token');
+    }
+    
+    final res = await Dio().post(
+      'http://localhost:3300/auth/refreshtoken',
+      data: {'refreshtoken': refreshToken},
+    );
 
-  // ================= INITIAL ROUTE =================
+    if (res.statusCode == 200 || res.statusCode == 201) {
+      await saveTokens(res.data['token'], refreshToken, userId);
+      _lastRefreshTime = DateTime.now(); // سجل وقت التجديد
+      
+      print(' تم تجديد التوكن بنجاح - ${_lastRefreshTime}');
+      
+      // أعِد جدولة التحديث التالي
+      scheduleNextRefresh(res.data['token']);
+    } else {
+      print(' فشل تجديد التوكن: ${res.statusCode}');
+      throw Exception('Failed to refresh');
+    }
+    
+  } catch (e) {
+    print(' خطأ في تجديد التوكن: $e');
+    
+    final retryDelay = Duration(minutes: 1 + Random().nextInt(4));
+    print(' سأحاول مرة أخرى بعد ${retryDelay.inMinutes} دقيقة');
+    
+    _refreshTimer?.cancel();
+    _refreshTimer = Timer(retryDelay, () {
+      refreshAccessToken();
+    });
+    
+    rethrow;
+  }
+}
+
+DateTime? _lastRefreshTime;
+ 
+  
   Future<String> getInitialRoute() async {
     final tokens = await getTokens();
     if (tokens == null) return '/HomeView';
@@ -4229,65 +3796,263 @@ Future<void> uploadcard3online(BuildContext context) async {
     if (JwtDecoder.isExpired(tokens['token'])) {
       try {
         await refreshAccessToken();
-        return '/DashboardScreen'; // go to dashboard if valid
+        return '/Mainscreen';
       } catch (_) {
         return '/HomeView';
       }
     }
-
-    return '/DashboardScreen';
+    
+    return '/Mainscreen';
   }
+  
+  Future<Map<String, dynamic>?> getTokens() async {
+    final prefs = await SharedPreferences.getInstance();
+    final t = prefs.getString('token');
+    final rt = prefs.getString('refreshtoken');
+    final uid = prefs.getInt('userId');
+    
+    if (t == null || rt == null) return null;
 
-  // ================= TOKEN LOGIC =================
-  void startAutoRefresh(String token) {
-    _refreshTimer?.cancel();
+    return {
+      'token': t,
+      'refreshtoken': rt,
+      'userId': uid ?? 0,
+    };
+  }
+  
+  // ==================== نظام الانتقال الذكي ====================
+  
+  Future<void> smartNavigate(String routeName) async {
+    try {
+      print('🧠 smartNavigate إلى: $routeName');
+      
+      // تحديث الصفحة الحالية
+      currentScreen.value = routeName;
+      print('📍 الصفحة الحالية الآن: $routeName');
+      
+      String currentRoute = Get.currentRoute;
+      print('📍 المسار الحالي: ${currentRoute.isNotEmpty ? currentRoute : "بداية التطبيق"}');
+      
+      if (currentRoute == routeName) {
+        print('⚠️ أنت بالفعل في $routeName');
+        return;
+      }
+      
+      // إذا كنت تنتقل إلى Dashboard
+      if (routeName.contains('DashboardScreen')) {
+        isDashboardOpen.value = true;
+        print('✅ تم تعيين isDashboardOpen = true');
+        
+        // بدء نظام التجديد التلقائي
+        final prefs = await SharedPreferences.getInstance();
+        final token = prefs.getString('token');
+        if (token != null) {
+          scheduleNextRefresh(token);
+        }
+      }
+      
+      print('🚀 الانتقال بـ offAndToNamed');
+      Get.offAndToNamed(routeName);
+      
+      print('✅ تم الانتقال الذكي');
+      
+    } catch (e) {
+      print('❌ خطأ في smartNavigate: $e');
+      Get.offAndToNamed(routeName);
+    }
+  }
+  
 
-    final expiryDate = JwtDecoder.getExpirationDate(token);
-    final remaining = expiryDate.difference(DateTime.now());
+  Future<bool> login(BuildContext context) async {
+    final response = await http.post(
+      Uri.parse('http://localhost:3300/auth/login'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({"email": emailController.text, "password": passwordController.text}),
+    );
+    
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final data = jsonDecode(response.body);
+      final prefs = await SharedPreferences.getInstance();
+      
+      await saveTokens(data['token'], data['refreshtoken'], data['userId']);
+      return true;
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("خطأ في البريد الإلكتروني أو كلمة المرور"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return false;
+    }
+  }
+  
 
-    if (remaining.isNegative) {
-      _handleTokenExpired();
+
+Future<void> checkTokenAndRedirect() async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    
+    if (token == null || token.isEmpty) {
+      print('❌ No token found - Redirecting to HomeView');
+      await _redirectToHomeView();
       return;
     }
-
-    final refreshTime = remaining - const Duration(minutes: 1);
-    _refreshTimer = Timer(refreshTime, _handleTokenExpired);
+    
+    if (JwtDecoder.isExpired(token)) {
+      print('⏰ Token expired - Redirecting to HomeView');
+      await _redirectToHomeView();
+      return;
+    }
+    
+    final expiryDate = JwtDecoder.getExpirationDate(token);
+    final remaining = expiryDate.difference(DateTime.now());
+    
+    print('✅ Token valid for ${remaining.inMinutes} minutes');
+    
+    if (remaining.inSeconds < 60) {
+      print('⚠️ Token expiring soon - Will redirect in ${remaining.inSeconds} seconds');
+      Timer(remaining, () async {
+        await _redirectToHomeView();
+      });
+    }
+    
+  } catch (e) {
+    print('❌ Error checking token: $e');
+    await _redirectToHomeView();
   }
+}
+RxBool isDashboardActive = false.obs;
 
-  void stopAutoRefresh() {
-    _refreshTimer?.cancel();
-    _refreshTimer = null;
+void startDashboardTimer() {
+  print('🔄 بدء تايمر Dashboard');
+  isDashboardActive.value = true;
+  
+  _refreshTimer?.cancel();
+  
+  if (token.isNotEmpty && isDashboardOpen.value) {
+    scheduleNextRefresh(token);
   }
+}
 
-  Future<void> _handleTokenExpired() async {
-    if (isDashboardOpen.value) {
-      // stay in dashboard and refresh token
-      await refreshAccessToken();
+void stopDashboardTimer() {
+  print('⏹️ إيقاف تايمر Dashboard');
+  isDashboardActive.value = false;
+  _refreshTimer?.cancel();
+}
+
+void scheduleNextRefresh(String token) {
+  _refreshTimer?.cancel();
+  
+  if (!isDashboardActive.value) {
+    print('⏸ Dashboard غير نشط - لا أجدد تلقائياً');
+    return;
+  }
+  
+  try {
+    final expiryDate = JwtDecoder.getExpirationDate(token);
+    final remaining = expiryDate.difference(DateTime.now());
+    
+    print(' صلاحية التوكن: ${remaining.inMinutes} دقيقة و${remaining.inSeconds % 60} ثانية');
+    
+    final refreshTime = remaining - Duration(minutes: 10);
+    
+    if (refreshTime.isNegative) {
+      print('⏱ بقي أقل من 10 دقائق - جدد بعد دقيقة');
+      _refreshTimer = Timer(Duration(minutes: 1), () {
+        if (isDashboardActive.value) {
+          smartRefreshToken();
+        }
+      });
     } else {
-      // logout from other pages
-      logout();
+      print('سأجدد بعد ${refreshTime.inMinutes} دقيقة');
+      _refreshTimer = Timer(refreshTime, () {
+        if (isDashboardActive.value) {
+          smartRefreshToken();
+        }
+      });
     }
+    
+  } catch (e) {
+    print(' خطأ في scheduleNextRefresh: $e');
   }
+}
 
-  Future<void> refreshAccessToken() async {
-    try {
-      final res = await Dio().post(
-        'http://localhost:3300/auth/refreshtoken',
-        data: {'refreshtoken': refreshToken},
-      );
-
-      await saveTokens(res.data['token'], refreshToken, userId);
-      startAutoRefresh(res.data['token']);
-    } catch (e) {
-      logout();
-    }
-  }
-
-  // ================= LOGOUT =================
-  Future<void> logout() async {
-    stopAutoRefresh();
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
+Future<void> logout() async {
+  print(' بدء تسجيل الخروج');
+  
+  _refreshTimer?.cancel();
+  _refreshTimer = null;
+  
+  isDashboardOpen.value = false;
+  isDashboardActive.value = false;
+  currentScreen.value = '';
+  
+  await Future.delayed(Duration(milliseconds: 100));
+  
+  final prefs = await SharedPreferences.getInstance();
+  
+  await prefs.remove('token');
+  await prefs.remove('refreshtoken');
+  await prefs.remove('userId');
+  
+  if (Get.currentRoute != '/HomeView') {
     Get.offAllNamed('/HomeView');
   }
+  
+  print(' تم تسجيل الخروج');
+}
+Future<void> _redirectToHomeView() async {
+  print(' Redirecting to HomeView...');
+  
+  _logoutTimer?.cancel();
+  _refreshTimer?.cancel();
+  
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.clear();
+  
+  isDashboardOpen.value = false;
+  currentScreen.value = '';
+  token = '';
+  
+  if (Get.currentRoute != '/HomeView') {
+    Get.offAllNamed('/HomeView');
+  }
+  
+  print('Successfully redirected to HomeView');
+}
+
+void startTokenMonitoring() {
+  checkTokenAndRedirect();
+  
+  _logoutTimer = Timer.periodic(Duration(seconds: 30), (timer) {
+    checkTokenAndRedirect();
+  });
+}
+
+@override
+void onClose() {
+  _logoutTimer?.cancel();
+  _refreshTimer?.cancel();
+  super.onClose();
+}
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
