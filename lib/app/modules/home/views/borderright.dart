@@ -102,7 +102,6 @@ class _rightbarState extends State<rightbar> {
         ),
       ),
       onPressed: () {
-        // استخدام smartNavigate الذكي
         controller.smartNavigate(route);
       },
       child: Row(
@@ -159,12 +158,10 @@ class _rightbarState extends State<rightbar> {
       ),
     );
   }
-  // دالة مشتركة للانتقال
   Future<void> _navigate(String routeName) async {
     try {
       print('🔄 الانتقال إلى: $routeName');
       
-      // استخدام smartNavigate الذكي
       await controller.smartNavigate(routeName);
       
     } catch (e) {
@@ -172,11 +169,9 @@ class _rightbarState extends State<rightbar> {
     }
   }
   
-  // معالجة الخروج
   Future<void> _handleLogout() async {
     print('👤 بدء عملية الخروج');
     
-    // أظهر تأكيد للمستخدم
     Get.defaultDialog(
       title: 'تأكيد الخروج',
       middleText: 'هل أنت متأكد من الخروج من التطبيق؟',
@@ -193,7 +188,6 @@ class _rightbarState extends State<rightbar> {
       },
     );
   }
-// في _navigateWithTokenCheck في rightbar
 Future<void> _navigateWithTokenCheck(String routeName,  setStateCallback) async {
   try {
     print('🔄 الانتقال إلى: $routeName');
@@ -201,12 +195,10 @@ Future<void> _navigateWithTokenCheck(String routeName,  setStateCallback) async 
     final currentRoute = Get.currentRoute;
     print('📍 أنت في: $currentRoute');
     
-    // تحديث حالة الأزرار
     if (mounted) {
       setState(setStateCallback);
     }
     
-    // استخدام الدالة الذكية مع التحقق
     // await controller.smartNavigateWithCheck(routeName);
     
     print('✅ تم الانتقال');

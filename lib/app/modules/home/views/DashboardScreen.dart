@@ -132,37 +132,38 @@ class _DashboardScreenState extends State<DashboardScreen> {
       flex: 1,
       child: Column(
         children: [
-Column(
-  children: [
-    Text('Dashboard Screen'),
-    SizedBox(height: 20),
-    ElevatedButton(
-      onPressed: () async {
-        final prefs = await SharedPreferences.getInstance();
-        final token = prefs.getString('token');
-        final expiry = JwtDecoder.getExpirationDate(token!);
-        final remaining = expiry.difference(DateTime.now());
+// Column(
+//   children: [
+//     Text('Dashboard Screen'),
+//     SizedBox(height: 20),
+//     ElevatedButton(
+//       onPressed: () async {
+//         final prefs = await SharedPreferences.getInstance();
+//         final token = prefs.getString('token');
+//         final expiry = JwtDecoder.getExpirationDate(token!);
+//         final remaining = expiry.difference(DateTime.now());
         
-        // print(' الوقت المتبقي: ${remaining.inMinutes} دقيقة و${remaining.inSeconds % 60} ثانية');
+//         // print(' الوقت المتبقي: ${remaining.inMinutes} دقيقة و${remaining.inSeconds % 60} ثانية');
         
-        if (JwtDecoder.isExpired(token)) {
-          // print(' التوكن منتهي!');
-        } else {
-          // print('التوكن ساري');
-        }
-      },
-      child: Text('تحقق من صلاحية التوكن'),
-    ),
-    SizedBox(height: 20),
-    ElevatedButton(
-      onPressed: () {
-        // محاكاة انتهاء التوكن
-        // controller.handleTokenExpired();
-      },
-      child: Text('محاكاة انتهاء التوكن'),
-    ),
-  ],
-),
+//         if (JwtDecoder.isExpired(token)) {
+//           // print(' التوكن منتهي!');
+//         } else {
+//           // print('التوكن ساري');
+//         }
+//       },
+//       child: Text('تحقق من صلاحية التوكن'),
+//     ),
+//     SizedBox(height: 20),
+//     ElevatedButton(
+//       onPressed: () {
+//         // محاكاة انتهاء التوكن
+//         // controller.handleTokenExpired();
+//       },
+//       child: Text('محاكاة انتهاء التوكن'),
+//     ),
+//   ],
+// ),
+      
           Container(
             color: Colors.white,
             height: 96,
