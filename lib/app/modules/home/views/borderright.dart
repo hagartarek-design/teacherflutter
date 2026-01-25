@@ -206,13 +206,12 @@ Future<void> _navigateWithTokenCheck(String routeName,  setStateCallback) async 
   } catch (e) {
     print('❌ خطأ: $e');
   }
-}// دالة مساعدة للحصول على المسار الحالي
+}
 Future<String> _getSafeCurrentRoute() async {
   try {
     String route = Get.currentRoute;
     if (route.isNotEmpty) return route;
     
-    // إذا كان فارغاً، حاول مرة أخرى بعد تأخير
     await Future.delayed(Duration(milliseconds: 100));
     route = Get.currentRoute;
     return route;
@@ -221,13 +220,10 @@ Future<String> _getSafeCurrentRoute() async {
     return '';
   }
 } void handleLogout(BuildContext context) async {
-    // أولاً، تأكد من إغلاق Dashboard
     controller.isDashboardOpen.value = false;
     
-    // تأخير بسيط قبل تسجيل الخروج
     await Future.delayed(Duration(milliseconds: 100));
     
-    // الآن سجل الخروج
     await controller.logout();
   }
 
@@ -236,7 +232,6 @@ Future<String> _getSafeCurrentRoute() async {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Header مع Logo
         Container(
           width: 280,
           height: 157,
@@ -247,7 +242,6 @@ Future<String> _getSafeCurrentRoute() async {
           ),
         ),
         
-        // قائمة الأزرار
         Expanded(
           child: ListView(
             padding: EdgeInsets.zero,
@@ -259,7 +253,6 @@ Future<String> _getSafeCurrentRoute() async {
                   children: [
                     Container(width: 279, height: 72),
                     
-                    // زر الرئيسية
                _buildButtonmain(
                       text: 'الرئيسية',
                       icon: Icons.home,
@@ -268,7 +261,6 @@ Future<String> _getSafeCurrentRoute() async {
                     ),
                     SizedBox(height: 10),
                     
-                    // زر Dashboard
                     _buildButton(
                       text: 'المحاضرات',
                       icon: Icons.dashboard,
@@ -278,7 +270,6 @@ Future<String> _getSafeCurrentRoute() async {
                     ),
                     SizedBox(height: 10),
                     
-                    // زر الامتحانات
                     SizedBox(
                       width: 247.0,
                       height: 48.0,
@@ -337,7 +328,6 @@ Future<String> _getSafeCurrentRoute() async {
                     ),
                     SizedBox(height: 10),
                     
-                    // زر الواجبات
                     SizedBox(
                       width: 247.0,
                       height: 48.0,
@@ -396,7 +386,6 @@ Future<String> _getSafeCurrentRoute() async {
                     ),
                     SizedBox(height: 10),
                     
-                    // زر الطلاب
                     SizedBox(
                       width: 247.0,
                       height: 48.0,
@@ -456,7 +445,6 @@ Future<String> _getSafeCurrentRoute() async {
                     ),
                     SizedBox(height: 10),
                     
-                    // زر جدول
                     SizedBox(
                       width: 247.0,
                       height: 48.0,
@@ -515,7 +503,6 @@ Future<String> _getSafeCurrentRoute() async {
                     ),
                     SizedBox(height: 10),
                     
-                    // زر بنك الأسئلة
                     SizedBox(
                       width: 247.0,
                       height: 48.0,
@@ -574,7 +561,6 @@ Future<String> _getSafeCurrentRoute() async {
                     ),
                     SizedBox(height: 10),
                     
-                    // زر إدارة السنتر
                     SizedBox(
                       width: 247.0,
                       height: 48.0,
@@ -633,7 +619,6 @@ Future<String> _getSafeCurrentRoute() async {
                     ),
                     SizedBox(height: 10),
                     
-                    // زر أسئلة الطلاب
                     SizedBox(
                       width: 247.0,
                       height: 48.0,
@@ -649,7 +634,6 @@ Future<String> _getSafeCurrentRoute() async {
                           ),
                         ),
                         onPressed: () async {
-                          // جلب الأسئلة أولاً
                           await controller.fetchQuestions();
                           
                           List<int> studentLengths = controller.questions
@@ -658,7 +642,6 @@ Future<String> _getSafeCurrentRoute() async {
                           
                           print('📊 عدد الطلاب في الأسئلة: ${studentLengths}');
                           
-                          // ثم الانتقال للصفحة
                           await _navigateWithTokenCheck('/StudentsQuestions', () {
                             clicked = false;
                             sections = false;
@@ -702,7 +685,6 @@ Future<String> _getSafeCurrentRoute() async {
                     ),
                     SizedBox(height: 10),
                     
-                    // زر الإشعارات
                     SizedBox(
                       width: 247.0,
                       height: 48.0,
@@ -761,7 +743,6 @@ Future<String> _getSafeCurrentRoute() async {
                     ),
                     SizedBox(height: 10),
                     
-                    // زر الإعدادات
                     SizedBox(
                       width: 247.0,
                       height: 48.0,
@@ -820,7 +801,6 @@ Future<String> _getSafeCurrentRoute() async {
                     ),
                     SizedBox(height: 10),
                     
-                    // زر الطلبات
                     SizedBox(
                       width: 247.0,
                       height: 48.0,
@@ -879,7 +859,6 @@ Future<String> _getSafeCurrentRoute() async {
                     ),
                     SizedBox(height: 10),
                     
-                    // زر الخروج
                     SizedBox(
                       width: 247.0,
                       height: 48.0,
@@ -912,7 +891,6 @@ Future<String> _getSafeCurrentRoute() async {
                             logout = true;
                           });
                           
-                          // معالجة تسجيل الخروج
                           handleLogout(context);
                         },
                         child: Row(
