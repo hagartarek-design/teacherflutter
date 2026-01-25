@@ -1,63 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
-import 'package:flutterwallet/app/modules/home/studentQuestion2.dart';
-import 'package:flutterwallet/app/modules/home/views/%D8%A7%D8%AF%D8%A7%D8%B1%D8%A9%20%D8%A7%D9%84%D8%B3%D9%86%D8%AA%D8%B1.dart';
-import 'package:flutterwallet/app/modules/home/views/assignments.dart';
-import 'package:flutterwallet/app/modules/home/views/home_view.dart';
-import 'package:flutterwallet/app/modules/home/views/DashboardScreen2.dart';
-import 'package:flutterwallet/app/modules/home/views/lectures.dart';
-import 'package:flutterwallet/app/modules/home/views/logoutScreen.dart';
-import 'package:flutterwallet/app/modules/home/views/mainscreen.dart';
-import 'package:flutterwallet/app/modules/home/views/progress.dart';
-import 'package:flutterwallet/app/modules/home/views/DashboardScreen.dart';
-import 'package:flutterwallet/app/modules/home/views/settings.dart';
-import 'package:flutterwallet/app/modules/home/views/students.dart';
-import 'package:flutterwallet/app/modules/home/views/table.dart';
-import 'package:get/get.dart';
-import 'package:flutterwallet/app/modules/home/views/notifications.dart';
-import 'package:flutterwallet/app/modules/home/views/students_questions.dart';
 
-import 'package:flutter/material.dart';
-import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
-import 'package:flutterwallet/app/modules/home/studentQuestion2.dart';
-import 'package:flutterwallet/app/modules/home/views/%D8%A7%D8%AF%D8%A7%D8%B1%D8%A9%20%D8%A7%D9%84%D8%B3%D9%86%D8%AA%D8%B1.dart';
-import 'package:flutterwallet/app/modules/home/views/assignments.dart';
-import 'package:flutterwallet/app/modules/home/views/home_view.dart';
-// import 'package:flutterwallet/app/modules/home/views/Quizes.dart';
-import 'package:flutterwallet/app/modules/home/views/lectures.dart';
-import 'package:flutterwallet/app/modules/home/views/logoutScreen.dart';
-import 'package:flutterwallet/app/modules/home/views/mainscreen.dart';
-import 'package:flutterwallet/app/modules/home/views/progress.dart';
-import 'package:flutterwallet/app/modules/home/views/DashboardScreen.dart';
-import 'package:flutterwallet/app/modules/home/views/settings.dart';
-import 'package:flutterwallet/app/modules/home/views/students.dart';
-import 'package:flutterwallet/app/modules/home/views/table.dart';
 import 'package:get/get.dart';
-import 'package:flutterwallet/app/modules/home/views/notifications.dart';
-import 'package:flutterwallet/app/modules/home/views/students_questions.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/material.dart';
-import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
-import 'package:flutterwallet/app/modules/home/studentQuestion2.dart';
-import 'package:flutterwallet/app/modules/home/views/%D8%A7%D8%AF%D8%A7%D8%B1%D8%A9%20%D8%A7%D9%84%D8%B3%D9%86%D8%AA%D8%B1.dart';
-import 'package:flutterwallet/app/modules/home/views/assignments.dart';
-import 'package:flutterwallet/app/modules/home/views/home_view.dart';
-// import 'package:flutterwallet/app/modules/home/views/Quizes.dart';
-import 'package:flutterwallet/app/modules/home/views/lectures.dart';
-import 'package:flutterwallet/app/modules/home/views/logoutScreen.dart';
-import 'package:flutterwallet/app/modules/home/views/mainscreen.dart';
-import 'package:flutterwallet/app/modules/home/views/progress.dart';
-import 'package:flutterwallet/app/modules/home/views/DashboardScreen.dart';
-import 'package:flutterwallet/app/modules/home/views/settings.dart';
-import 'package:flutterwallet/app/modules/home/views/students.dart';
-import 'package:flutterwallet/app/modules/home/views/table.dart';
-import 'package:get/get.dart';
-import 'package:flutterwallet/app/modules/home/views/notifications.dart';
-import 'package:flutterwallet/app/modules/home/views/students_questions.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class rightbar extends StatefulWidget {
   const rightbar({super.key});
