@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
-import 'package:flutterwallet/app/modules/home/views/DashboardScreen2.dart';
+import 'package:flutterwallet/app/modules/home/views/quizes.dart';
 import 'package:flutterwallet/app/modules/home/views/assignments%20copy.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
 import 'package:flutterwallet/app/modules/home/views/dialog_quizes.dart';
@@ -399,7 +399,7 @@ Expanded(child:     SingleChildScrollView(child:
         children: [
      
        InkWell(onTap: (){
-        Navigator.push(context,MaterialPageRoute( builder:(context)=>DashboardScreen2()));
+        Navigator.push(context,MaterialPageRoute( builder:(context)=>quizes()));
        },child: 
          Container(
           decoration: BoxDecoration( 
@@ -424,7 +424,7 @@ Expanded(child:     SingleChildScrollView(child:
  onTap: (){
   setState(() {
     // clicked=!clicked;
-           Navigator.push(context,MaterialPageRoute( builder:(context)=>DashboardScreen2()));
+           Navigator.push(context,MaterialPageRoute( builder:(context)=>quizes()));
     
   });
 

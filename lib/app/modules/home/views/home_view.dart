@@ -7,7 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutterwallet/app/google_auth.dart';
 import 'package:flutterwallet/app/modules/home/controllers/file%20test.dart';
 import 'package:flutterwallet/app/modules/home/views/%D8%A7%D8%AF%D8%A7%D8%B1%D8%A9%20%D8%A7%D9%84%D8%B3%D9%86%D8%AA%D8%B1.dart';
-import 'package:flutterwallet/app/modules/home/views/DashboardScreen2.dart';
+import 'package:flutterwallet/app/modules/home/views/quizes.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
 import 'package:flutterwallet/app/modules/home/views/login.dart';
 import 'package:flutterwallet/app/modules/home/views/loginwithgoogle.dart';

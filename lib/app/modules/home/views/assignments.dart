@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
+import 'package:flutterwallet/app/modules/home/views/containe%20copy.dart';
 import 'package:flutterwallet/app/modules/home/views/dialog_assignments.dart';
 import 'package:flutterwallet/app/modules/home/views/stable_app_bar.dart';
 import 'package:get/get.dart';
@@ -323,7 +324,7 @@ class Assignments extends StatelessWidget {
              showDialog(context: context, builder: (BuildContext context){
       List.generate(controller.allsections.length,(index){
     print('http://localhost:3000/${controller.allsections[index].cardimg}');});
-    return  DialogAssignments();
+    return  dialogforassignments();
 
     });// Add lecture logic here
             },

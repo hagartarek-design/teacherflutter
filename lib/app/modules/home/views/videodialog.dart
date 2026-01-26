@@ -156,6 +156,10 @@ if (kIsWeb) {
 
 
   showDialog(
+
+
+
+
     context: context,
     barrierDismissible: false,
     builder: (_) => const Center(child: CircularProgressIndicator()),
@@ -228,7 +232,6 @@ Container(width: 1000,child:
 
             const SizedBox(height: 30),
 
-            // ----------- DRAG & DROP ----------- //
             Stack(
               children: [
               SizedBox(

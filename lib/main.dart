@@ -9,7 +9,7 @@ import 'package:intl/date_symbol_data_local.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  print('🚀 بدء تشغيل التطبيق');
+  print(' بدء تشغيل التطبيق');
   
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -19,14 +19,14 @@ void main() async {
 
   // وضع Controller
   final controller = Get.put(HomeController());
-  print('✅ HomeController جاهز');
+  print(' HomeController جاهز');
 
   String initialRoute;
   try {
     initialRoute = await controller.getInitialRoute();
-    print('📍 المسار الأولي: $initialRoute');
+    print(' المسار الأولي: $initialRoute');
   } catch (e) {
-    print('❌ خطأ في المسار الأولي: $e');
+    print(' خطأ في المسار الأولي: $e');
     initialRoute = '/HomeView';
   }
 
@@ -38,14 +38,13 @@ void main() async {
       routingCallback: (routing) {
         if (routing?.current != null) {
           final time = DateTime.now().toIso8601String().substring(11, 19);
-          print('[$time] 📍 ${routing!.current}');
+          print('[$time]  ${routing!.current}');
         }
       },
-      // إضافة transition واضح
       transitionDuration: Duration(milliseconds: 400),
       defaultTransition: Transition.cupertino,
     ),
   );
   
-  print('🎉 التطبيق يعمل');
+  print(' التطبيق يعمل');
 }

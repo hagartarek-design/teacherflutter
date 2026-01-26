@@ -1388,13 +1388,13 @@ void dispose() {
 }
 
   Future<void> _checkTokenAndAutoLogout() async {
-    print('🔍 Mainscreen - التحقق من التوكن (بدون تجديد)');
+    print(' Mainscreen - التحقق من التوكن (بدون تجديد)');
     
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     
     if (token == null || token.isEmpty) {
-      print('⚠️ Mainscreen - لا يوجد توكن');
+      print(' Mainscreen - لا يوجد توكن');
       _autoLogout('لا يوجد توكن');
       return;
     }
@@ -1403,18 +1403,18 @@ void dispose() {
       final expiryDate = JwtDecoder.getExpirationDate(token);
       final remaining = expiryDate.difference(DateTime.now());
       
-      print('⏳ Mainscreen - الوقت المتبقي: ${remaining.inMinutes} دقيقة و${remaining.inSeconds % 60} ثانية');
+      print(' Mainscreen - الوقت المتبقي: ${remaining.inMinutes} دقيقة و${remaining.inSeconds % 60} ثانية');
       
       if (remaining.isNegative || remaining.inSeconds < 30) {
-        print('⏰ Mainscreen - التوكن منتهي أو شبه منتهي');
+        print(' Mainscreen - التوكن منتهي أو شبه منتهي');
         _autoLogout('التوكن منتهي الصلاحية');
         return;
       }
       
-      print('🚫 Mainscreen - لا تجديد للتوكن هنا، فقط تحقق للتسجيل الخروج');
+      print(' Mainscreen - لا تجديد للتوكن هنا، فقط تحقق للتسجيل الخروج');
       
       if (remaining.inMinutes < 2) {
-        print('⚠️ Mainscreen - التوكن سينتهي قريباً - سيتم الخروج تلقائياً');
+        print(' Mainscreen - التوكن سينتهي قريباً - سيتم الخروج تلقائياً');
         
         Get.snackbar(
           'تحذير',
@@ -1431,12 +1431,12 @@ void dispose() {
       }
       
     } catch (e) {
-      print('❌ Mainscreen - خطأ في فحص التوكن: $e');
+      print(' Mainscreen - خطأ في فحص التوكن: $e');
       _autoLogout('خطأ في فحص التوكن');
     }
   }
 void _autoLogout(String reason) async {
-  print('🚪 Mainscreen - تسجيل خروج تلقائي: $reason');
+  print(' Mainscreen - تسجيل خروج تلقائي: $reason');
   
   try {
     Get.snackbar(
@@ -1457,12 +1457,12 @@ void _autoLogout(String reason) async {
       await safeLogout();
     }
   } catch (e) {
-    print('❌ خطأ في _autoLogout: $e');
+    print(' خطأ في _autoLogout: $e');
     
     try {
       Get.offAllNamed('/HomeView');
     } catch (e2) {
-      print('❌ حتى المحاولة الطارئة فشلت: $e2');
+      print(' حتى المحاولة الطارئة فشلت: $e2');
     }
   }
 }

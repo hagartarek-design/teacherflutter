@@ -45,6 +45,44 @@ import 'dart:html'as html;
 import '../modules/students.dart';
 class HomeController extends GetxController {
 
+Future<bool> refreshTokenForDialog() async {
+  try {
+    print(' محاولة تجديد التوكن للديالوج');
+    
+    if (refreshToken.isEmpty) {
+      print('❌ لا يوجد refresh token للديالوج');
+      return false;
+    }
+    
+    final res = await Dio().post(
+      'http://localhost:3300/auth/refreshtoken',
+      data: {'refreshtoken': refreshToken},
+      options: Options(
+        contentType: 'application/json',
+        responseType: ResponseType.json,
+      ),
+    );
+
+    if (res.statusCode == 200 || res.statusCode == 201) {
+      // Save the new token
+      await saveTokens(res.data['token'], refreshToken, userId);
+      _lastRefreshTime = DateTime.now();
+      
+      print('تم تجديد التوكن بنجاح في الديالوج');
+      
+      // IMPORTANT: Don't schedule next refresh here for dialogs
+      // Just return success
+      return true;
+    } else {
+      print('❌ فشل تجديد التوكن في الديالوج: ${res.statusCode}');
+      return false;
+    }
+    
+  } catch (e) {
+    print('❌ خطأ في تجديد التوكن للديالوج: $e');
+    return false;
+  }
+}
   int itemsPerPage = 10;
   int showDegreeafter = 0;
   int showdegreeEveryQues = 0;
@@ -76,7 +114,38 @@ Future<PlatformFile?> pickVideoWebSafe() async {
 
   return null;
 }
-
+Future<bool> ensureTokenValidForDialog() async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    
+    if (token == null || token.isEmpty) {
+      print('⚠️ لا يوجد توكن في الديالوج');
+      return false;
+    }
+    
+    if (JwtDecoder.isExpired(token)) {
+      print(' التوكن منتهي في الديالوج - محاولة التجديد');
+      
+      final refreshed = await refreshTokenForDialog();
+      
+      if (refreshed) {
+        print(' تم تجديد التوكن بنجاح - يمكن متابعة الديالوج');
+        return true;
+      } else {
+        print('❌ فشل تجديد التوكن - الديالوج سيفشل');
+        return false;
+      }
+    }
+    
+    print(' التوكن صالح في الديالوج');
+    return true;
+    
+  } catch (e) {
+    print('❌ خطأ في التحقق من التوكن للديالوج: $e');
+    return false;
+  }
+}
 void pickAndUpload() async {
   final file = await pickVideoWebSafe();
 
@@ -133,7 +202,7 @@ void pickAndUpload() async {
           ),
         );
       } else if (_videoFile != null) {
-        print('🔄 Uploading video (Mobile/Desktop)');
+        print(' Uploading video (Mobile/Desktop)');
         request.files.add(
           await http.MultipartFile.fromPath(
             'video',
@@ -612,7 +681,7 @@ void startTokenTimer (String token){
     UserCredential userCredential = await auth.signInWithPopup(googleProvider);
 
     String? idToken = await userCredential.user?.getIdToken();
-    print("✅ ID Token: $idToken");
+    print(" ID Token: $idToken");
 
     final response = await http.post(
       Uri.parse('http://localhost:3300/auth/google-login'), 
@@ -3474,8 +3543,75 @@ void updateShowDegreeAfter(int value) {
 void updateShowDegreeEveryQues(int value) {
   showdegreeEveryQues = value;
   update();
+} Widget _buildButtonmain({
+  // required String text,
+  required   icon,
+  required String route,
+  bool isActive = false,
+}) {
+  final HomeController controller = Get.find<HomeController>();
+  
+  return SizedBox(
+    width: 24.0,
+    height: 24.0,
+    child: InkWell(
+      // style: ElevatedButton.styleFrom(
+      //   // backgroundColor: isActive ?Colors.white: Color.fromARGB(235, 6, 69, 152),
+      //   shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.circular(14),
+      //   ),
+      // ),
+      onTap: ()async {
+      
+        
+         Get.back();
+        controller.smartNavigate(route);
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+         
+        icon
+          // Image.asset('$icon', color: isActive ? Colors.blue[900] : Color.fromARGB(181, 154, 175, 228),),
+        ],
+      ),
+    ),
+  );
 }
+ 
+// In HomeController.dart
+Future<bool> refreshTokenForNavigation() async {
+  try {
+    print('🔄 محاولة تجديد التوكن للتنقل...');
+    
+    if (refreshToken.isEmpty) {
+      print('❌ لا يوجد refresh token للتنقل');
+      return false;
+    }
+    
+    final res = await Dio().post(
+      'http://localhost:3300/auth/refreshtoken',
+      data: {'refreshtoken': refreshToken},
+      options: Options(
+        contentType: 'application/json',
+        responseType: ResponseType.json,
+      ),
+    );
 
+    if (res.statusCode == 200 || res.statusCode == 201) {
+      await saveTokens(res.data['token'], refreshToken, userId);
+      print('✅ تم تجديد التوكن بنجاح للتنقل');
+      return true;
+    } else {
+      print('❌ فشل تجديد التوكن للتنقل: ${res.statusCode}');
+      return false;
+    }
+    
+  } catch (e) {
+    print('❌ خطأ في تجديد التوكن للتنقل: $e');
+    return false;
+  }
+}
 String seedate = '2025-01-06'; // Default value matching backend
 String startdate = '2025-01-05'; // Default value matching backend
 
@@ -3526,13 +3662,22 @@ Future<void> uploadcard3online(BuildContext context) async {
       print('Uploading with settings:');
       print('showDegreeafter: $showDegreeafter');
       print('showdegreeEveryQues: $showdegreeEveryQues');
-      
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Assignments2()));
+      _buildButtonmain(   icon:              Image.asset('assets/close-circl.png', width: 24, height: 24),
+
+                      route: '/Mainscreen'
+                      ,  isActive: Get.currentRoute == '/Mainscreen',
+                      );
+      // Navigator.push(context, MaterialPageRoute(builder: (context) => Assignments2()));
       String imageUrl = response.data['imgcart'];
       print('Image uploaded: $imageUrl');
       update();
     } else {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Assignments2()));
+       _buildButtonmain(   icon:              Image.asset('assets/close-circl.png', width: 24, height: 24),
+
+                      route: '/Mainscreen'
+                      ,  isActive: Get.currentRoute == '/Mainscreen',
+                      );
+      // Navigator.push(context, MaterialPageRoute(builder: (context) => Assignments2()));
       print('Upload failed: ${response.statusCode}');
     }
   } catch (e) {
@@ -3661,7 +3806,7 @@ void startAutoLogoutMonitor(String token) {
     userId = prefs.getInt('userId') ?? 0;
     
     if (token.isNotEmpty) {
-      print('🔑 تم تحميل التوكن - ${token.substring(0, 20)}...');
+      print(' تم تحميل التوكن - ${token.substring(0, 20)}...');
       
       // إذا كنا في Dashboard، ابدأ التجديد التلقائي
       if (Get.currentRoute.contains('Dashboard')) {
@@ -3681,7 +3826,7 @@ void startAutoLogoutMonitor(String token) {
     refreshToken = rt;
     userId = uid;
     
-    print('💾 تم حفظ التوكنات الجديدة');
+    print(' تم حفظ التوكنات الجديدة');
   }
   
   // نظام التجديد الذكي بناءً على الصفحة الحالية
@@ -3730,7 +3875,8 @@ Future<void> smartRefreshToken() async {
   } catch (e) {
     print(' خطأ في smartRefreshToken: $e');
   }
-}Future<void> refreshAccessToken() async {
+}
+Future<void> refreshAccessToken() async {
   try {
     print(' تجديد التوكن...');
     
@@ -3822,46 +3968,39 @@ DateTime? _lastRefreshTime;
   
   // ==================== نظام الانتقال الذكي ====================
   
-  Future<void> smartNavigate(String routeName) async {
-    try {
-      print('🧠 smartNavigate إلى: $routeName');
-      
-      // تحديث الصفحة الحالية
-      currentScreen.value = routeName;
-      print('📍 الصفحة الحالية الآن: $routeName');
-      
-      String currentRoute = Get.currentRoute;
-      print('📍 المسار الحالي: ${currentRoute.isNotEmpty ? currentRoute : "بداية التطبيق"}');
-      
-      if (currentRoute == routeName) {
-        print('⚠️ أنت بالفعل في $routeName');
-        return;
-      }
-      
-      // إذا كنت تنتقل إلى Dashboard
-      if (routeName.contains('DashboardScreen')) {
-        isDashboardOpen.value = true;
-        print('✅ تم تعيين isDashboardOpen = true');
-        
-        // بدء نظام التجديد التلقائي
-        final prefs = await SharedPreferences.getInstance();
-        final token = prefs.getString('token');
-        if (token != null) {
-          scheduleNextRefresh(token);
-        }
-      }
-      
-      print('🚀 الانتقال بـ offAndToNamed');
-      Get.offAndToNamed(routeName);
-      
-      print('✅ تم الانتقال الذكي');
-      
-    } catch (e) {
-      print('❌ خطأ في smartNavigate: $e');
-      Get.offAndToNamed(routeName);
+ // In smartNavigate method
+Future<void> smartNavigate(String routeName) async {
+  try {
+    print('🧭 Navigating to: $routeName from ${Get.currentRoute}');
+    
+    // If leaving Dashboard, stop Dashboard timers
+    if (Get.currentRoute.contains('DashboardScreen') && !routeName.contains('DashboardScreen')) {
+      print('🏃 Leaving Dashboard - stopping Dashboard timers');
+      isDashboardActive.value = false;
+      stopDashboardTimer();
     }
+    
+    // Update current screen
+    currentScreen.value = routeName;
+    
+    // If going to Dashboard, set flags and start timers
+    if (routeName.contains('DashboardScreen')) {
+      isDashboardOpen.value = true;
+      isDashboardActive.value = true;
+    } else {
+      isDashboardOpen.value = false;
+    }
+    
+    print('🚀 Using offAndToNamed');
+    Get.offAndToNamed(routeName);
+    
+    print('✅ Navigation completed');
+    
+  } catch (e) {
+    print('❌ Navigation error: $e');
+    Get.offAndToNamed(routeName);
   }
-  
+}
 
   Future<bool> login(BuildContext context) async {
     final response = await http.post(
@@ -3887,8 +4026,6 @@ DateTime? _lastRefreshTime;
     }
   }
   
-
-
 Future<void> checkTokenAndRedirect() async {
   try {
     final prefs = await SharedPreferences.getInstance();
@@ -3900,9 +4037,20 @@ Future<void> checkTokenAndRedirect() async {
       return;
     }
     
+    // Check if we're in DashboardScreen
+    final currentRoute = Get.currentRoute;
+    final isInDashboard = currentRoute.contains('DashboardScreen');
+    
     if (JwtDecoder.isExpired(token)) {
-      print('⏰ Token expired - Redirecting to HomeView');
-      await _redirectToHomeView();
+      print('⏰ Token expired');
+      
+      if (isInDashboard) {
+        print('📱 In Dashboard - Will try to refresh token instead of redirecting');
+        await refreshAccessToken();
+      } else {
+        print('🚪 Not in Dashboard - Redirecting to HomeView');
+        await _redirectToHomeView();
+      }
       return;
     }
     
@@ -3911,22 +4059,68 @@ Future<void> checkTokenAndRedirect() async {
     
     print('✅ Token valid for ${remaining.inMinutes} minutes');
     
-    if (remaining.inSeconds < 60) {
+    // Only redirect from non-Dashboard screens when token is about to expire
+    if (remaining.inSeconds < 60 && !isInDashboard) {
       print('⚠️ Token expiring soon - Will redirect in ${remaining.inSeconds} seconds');
       Timer(remaining, () async {
         await _redirectToHomeView();
       });
+    } else if (remaining.inSeconds < 60 && isInDashboard) {
+      print('📱 In Dashboard - Token expiring soon, will refresh instead of redirect');
+      // In Dashboard, we should refresh the token when it's about to expire
+      if (remaining.inSeconds < 30) {
+        await refreshAccessToken();
+      }
     }
     
   } catch (e) {
     print('❌ Error checking token: $e');
-    await _redirectToHomeView();
+    // Don't auto-logout from Dashboard on error
+    if (!Get.currentRoute.contains('DashboardScreen')) {
+      await _redirectToHomeView();
+    }
   }
 }
+
+// Future<void> checkTokenAndRedirect() async {
+//   try {
+//     final prefs = await SharedPreferences.getInstance();
+//     final token = prefs.getString('token');
+    
+//     if (token == null || token.isEmpty) {
+//       print('❌ No token found - Redirecting to HomeView');
+//       await _redirectToHomeView();
+//       return;
+//     }
+    
+//     if (JwtDecoder.isExpired(token)) {
+//       print(' Token expired - Redirecting to HomeView');
+//       await _redirectToHomeView();
+//       return;
+//     }
+    
+//     final expiryDate = JwtDecoder.getExpirationDate(token);
+//     final remaining = expiryDate.difference(DateTime.now());
+    
+//     print(' Token valid for ${remaining.inMinutes} minutes');
+    
+//     if (remaining.inSeconds < 60) {
+//       print(' Token expiring soon - Will redirect in ${remaining.inSeconds} seconds');
+//       Timer(remaining, () async {
+//         await _redirectToHomeView();
+//       });
+//     }
+    
+//   } catch (e) {
+//     print('❌ Error checking token: $e');
+//     await _redirectToHomeView();
+//   }
+// }
+
 RxBool isDashboardActive = false.obs;
 
 void startDashboardTimer() {
-  print('🔄 بدء تايمر Dashboard');
+  print('بدء تايمر Dashboard');
   isDashboardActive.value = true;
   
   _refreshTimer?.cancel();
@@ -3937,7 +4131,7 @@ void startDashboardTimer() {
 }
 
 void stopDashboardTimer() {
-  print('⏹️ إيقاف تايمر Dashboard');
+  print('إيقاف تايمر Dashboard');
   isDashboardActive.value = false;
   _refreshTimer?.cancel();
 }
@@ -4022,15 +4216,61 @@ Future<void> _redirectToHomeView() async {
   
   print('Successfully redirected to HomeView');
 }
-
 void startTokenMonitoring() {
-  checkTokenAndRedirect();
+  print('🔍 Starting token monitoring...');
   
-  _logoutTimer = Timer.periodic(Duration(seconds: 30), (timer) {
+  // Stop any existing timer
+  _logoutTimer?.cancel();
+  
+  // Check immediately
+  WidgetsBinding.instance.addPostFrameCallback((_) {
     checkTokenAndRedirect();
   });
+  
+  // Then check every 30 seconds
+  _logoutTimer = Timer.periodic(Duration(seconds: 30), (timer) {
+    // Don't check if we're in Dashboard - Dashboard handles its own refresh
+    if (!Get.currentRoute.contains('DashboardScreen')) {
+      checkTokenAndRedirect();
+    } else {
+      print('📱 In Dashboard - Skipping auto-logout check (Dashboard handles refresh)');
+    }
+  });
 }
-
+Future<void> checkDashboardToken() async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    
+    if (token == null || token.isEmpty) {
+      print('❌ No token in Dashboard');
+      return;
+    }
+    
+    if (JwtDecoder.isExpired(token)) {
+      print('🔄 Dashboard: Token expired, refreshing...');
+      await refreshAccessToken();
+    } else {
+      final expiryDate = JwtDecoder.getExpirationDate(token);
+      final remaining = expiryDate.difference(DateTime.now());
+      
+      // If token expires in less than 5 minutes, refresh it
+      if (remaining.inMinutes < 5) {
+        print('🔄 Dashboard: Token expiring soon (${remaining.inMinutes} min), refreshing...');
+        await refreshAccessToken();
+      }
+    }
+  } catch (e) {
+    print('❌ Error in Dashboard token check: $e');
+  }
+}// In HomeController
+void stopAllTimers() {
+  _logoutTimer?.cancel();
+  _logoutTimer = null;
+  _refreshTimer?.cancel();
+  _refreshTimer = null;
+  isDashboardActive.value = false;
+}
 @override
 void onClose() {
   _logoutTimer?.cancel();

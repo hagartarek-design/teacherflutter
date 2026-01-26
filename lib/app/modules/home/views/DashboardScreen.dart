@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
@@ -44,62 +46,86 @@ class _DashboardScreenState extends State<DashboardScreen> {
 // class _DashboardScreenState extends State<DashboardScreen> {
   final HomeController controller = Get.find<HomeController>();
   
-  @override
-  void initState() {
-    super.initState();
-    // print(' DashboardScreen - بدء التشغيل');
-    
-    controller.currentScreen.value = '/DashboardScreen';
-    controller.isDashboardOpen.value = true;
-    controller.isDashboardActive.value = true;
-    
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _initializeDashboardWithRefresh();
-    });
-  }
+// In _DashboardScreenState class
+Timer? _dashboardTokenTimer;
 
-  @override
-  void dispose() {
-    // print(' DashboardScreen - التخلص');
-    
-    controller.stopDashboardTimer();
-    controller.isDashboardActive.value = false;
-    
-    super.dispose();
-  }
+@override
+void initState() {
+  super.initState();
+  
+  controller.currentScreen.value = '/DashboardScreen';
+  controller.isDashboardOpen.value = true;
+  controller.isDashboardActive.value = true;
+  
+  // Start Dashboard-specific token monitoring
+  _startDashboardTokenMonitoring();
+  
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    _initializeDashboardWithRefresh();
+  });
+}
 
-  Future<void> _initializeDashboardWithRefresh() async {
-    // print(' تهيئة Dashboard مع نظام تجديد التوكن التلقائي');
+void _startDashboardTokenMonitoring() {
+  // Stop any existing timer
+  _dashboardTokenTimer?.cancel();
+  
+  // Check token every minute when in Dashboard
+  _dashboardTokenTimer = Timer.periodic(Duration(minutes: 1), (timer) {
+    if (mounted) {
+      controller.checkDashboardToken();
+    }
+  });
+}
+
+@override
+void dispose() {
+  // Stop the Dashboard timer
+  _dashboardTokenTimer?.cancel();
+  _dashboardTokenTimer = null;
+  
+  controller.stopDashboardTimer();
+  controller.isDashboardActive.value = false;
+  
+  super.dispose();
+}
+
+ Future<void> _initializeDashboardWithRefresh() async {
+  print('📱 DashboardScreen - Initializing with auto-refresh');
+  
+  final prefs = await SharedPreferences.getInstance();
+  final token = prefs.getString('token');
+  
+  if (token == null || token.isEmpty) {
+    print('⚠️ No token in Dashboard');
+    return;
+  }
+  
+  try {
+    final expiryDate = JwtDecoder.getExpirationDate(token);
+    final remaining = expiryDate.difference(DateTime.now());
     
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+    print('📱 Dashboard token expires in: ${remaining.inMinutes} minutes');
     
-    if (token == null || token.isEmpty) {
-      // print(' لا يوجد توكن حالي في Dashboard');
-      return;
+    // If token is already expired, refresh immediately
+    if (remaining.isNegative) {
+      print('🔄 Token already expired, refreshing now...');
+      await controller.refreshAccessToken();
+    } 
+    // If token expires in less than 10 minutes, refresh now
+    else if (remaining.inMinutes < 10) {
+      print('🔄 Token expiring soon, refreshing now...');
+      await controller.refreshAccessToken();
     }
     
-    try {
-      final expiryDate = JwtDecoder.getExpirationDate(token);
-      final remaining = expiryDate.difference(DateTime.now());
-      
-      // print(' صلاحية التوكن الحالي في Dashboard: ${remaining.inMinutes} دقيقة');
-      
-      if (remaining.isNegative) {
-        // print(' التوكن منتهي - جدد فوراً');
-        await controller.refreshAccessToken();
-      } else {
-        if (controller.isDashboardActive.value) {
-          controller.startDashboardTimer();
-        }
-      }
-      
-    } catch (e) {
-      // print(' خطأ في فحص التوكن في Dashboard: $e');
+    // Start Dashboard timer
+    if (controller.isDashboardActive.value) {
+      controller.startDashboardTimer();
     }
     
-    // print(' Dashboard جاهز مع نظام تجديد تلقائي');
+  } catch (e) {
+    print('❌ Error in Dashboard token initialization: $e');
   }
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,38 +158,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
       flex: 1,
       child: Column(
         children: [
-// Column(
-//   children: [
-//     Text('Dashboard Screen'),
-//     SizedBox(height: 20),
-//     ElevatedButton(
-//       onPressed: () async {
-//         final prefs = await SharedPreferences.getInstance();
-//         final token = prefs.getString('token');
-//         final expiry = JwtDecoder.getExpirationDate(token!);
-//         final remaining = expiry.difference(DateTime.now());
+Column(
+  children: [
+    // Text('Dashboard Screen'),
+    // SizedBox(height: 20),
+    // ElevatedButton(
+    //   onPressed: () async {
+    //     final prefs = await SharedPreferences.getInstance();
+    //     final token = prefs.getString('token');
+    //     final expiry = JwtDecoder.getExpirationDate(token!);
+    //     final remaining = expiry.difference(DateTime.now());
         
-//         // print(' الوقت المتبقي: ${remaining.inMinutes} دقيقة و${remaining.inSeconds % 60} ثانية');
+    //     // print(' الوقت المتبقي: ${remaining.inMinutes} دقيقة و${remaining.inSeconds % 60} ثانية');
         
-//         if (JwtDecoder.isExpired(token)) {
-//           // print(' التوكن منتهي!');
-//         } else {
-//           // print('التوكن ساري');
-//         }
-//       },
-//       child: Text('تحقق من صلاحية التوكن'),
-//     ),
-//     SizedBox(height: 20),
-//     ElevatedButton(
-//       onPressed: () {
-//         // محاكاة انتهاء التوكن
-//         // controller.handleTokenExpired();
-//       },
-//       child: Text('محاكاة انتهاء التوكن'),
-//     ),
-//   ],
-// ),
-      
+    //     if (JwtDecoder.isExpired(token)) {
+    //       // print(' التوكن منتهي!');
+    //     } else {
+    //       // print('التوكن ساري');
+    //     }
+    //   },
+    //   child: Text('تحقق من صلاحية التوكن'),
+    // ),
+    SizedBox(height: 20),
+    ElevatedButton(
+      onPressed: () {
+        // محاكاة انتهاء التوكن
+        // controller.handleTokenExpired();
+      },
+      child: Text('محاكاة انتهاء التوكن'),
+    ),
+  ],
+),
           Container(
             color: Colors.white,
             height: 96,

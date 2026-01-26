@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutterwallet/app/google_auth.dart';
-import 'package:flutterwallet/app/modules/home/views/DashboardScreen2.dart';
+import 'package:flutterwallet/app/modules/home/views/quizes.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
 import 'package:flutterwallet/app/modules/home/views/DashboardScreen.dart';
 import 'package:flutterwallet/app/modules/home/views/stable_app_bar.dart';
@@ -313,7 +313,7 @@ child:
 
       Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => DashboardScreen2()),
+              MaterialPageRoute(builder: (context) => quizes()),
             )  ;
   },),
  ),SizedBox(height: 16,),

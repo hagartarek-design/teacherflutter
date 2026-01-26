@@ -42,7 +42,7 @@ class _rightbarState extends State<rightbar> {
     height: 48.0,
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: isActive ? Colors.white : Color.fromARGB(235, 6, 69, 152),
+        backgroundColor: isActive ?Colors.white: Color.fromARGB(235, 6, 69, 152),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14),
         ),
@@ -58,16 +58,97 @@ class _rightbarState extends State<rightbar> {
             style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 20,
-              color: isActive ? Colors.blue[900] : Colors.white,
+              color: isActive ? Colors.blue[900] : Color.fromARGB(181, 154, 175, 228),
             ),
           ),
           SizedBox(width: 16),
-          Icon(icon, color: isActive ? Colors.blue[900] : Colors.white),
+          Icon(icon, color: isActive ? Colors.blue[900] : Color.fromARGB(181, 154, 175, 228),),
         ],
       ),
     ),
   );
 }
+  Widget _buildButtonmain2({
+  required String text,
+  required IconData icon,
+  required String route,
+  bool isActive = false,
+}) {
+  final HomeController controller = Get.find<HomeController>();
+  
+  return SizedBox(
+    width: 247.0,
+    height: 48.0,
+    child: ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: isActive ?Colors.white : Color.fromARGB(235, 6, 69, 152),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+        ),
+      ),
+      onPressed: () {
+        controller.smartNavigate(route);
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            text,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 20,
+              color: isActive ? Colors.blue[900] : Color.fromARGB(181, 154, 175, 228),
+            ),
+          ),
+          SizedBox(width: 16),
+          Icon(icon, color: isActive ? Colors.blue[900] : Color.fromARGB(181, 154, 175, 228),),
+        ],
+      ),
+    ),
+  );
+}
+  Widget logouts({
+  required String text,
+  required IconData icon,
+  // required String r/oute,
+  // bool isActive = false,
+}) {
+  final HomeController controller = Get.find<HomeController>();
+  
+  return SizedBox(
+    width: 247.0,
+    height: 48.0,
+    child: ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: //isActive ?Colors.white :
+         Color.fromARGB(235, 6, 69, 152),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+        ),
+      ),
+      onPressed: () {
+         handleLogout(context);
+        // controller.smartNavigate(route);
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            text,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 20,
+              color:Color.fromARGB(181, 154, 175, 228),
+            ),
+          ),
+          SizedBox(width: 16),
+          Icon(icon, color:  Color.fromARGB(181, 154, 175, 228),),
+        ],
+      ),
+    ),
+  );
+}
+
 // final HomeController controller = Get.find<HomeController>();
   Widget _buildButton({
     required String text,
@@ -80,7 +161,7 @@ class _rightbarState extends State<rightbar> {
       height: 48.0,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: isActive ? Colors.white : Color.fromARGB(235, 6, 69, 152),
+          backgroundColor: isActive ?Colors.white : Color.fromARGB(235, 6, 69, 152),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
           ),
@@ -94,11 +175,11 @@ class _rightbarState extends State<rightbar> {
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 20,
-                color: isActive ? Colors.blue[900] : Colors.white,
+                color: isActive ? Colors.blue[900] : Color.fromARGB(181, 154, 175, 228),
               ),
             ),
             SizedBox(width: 16),
-            Icon(icon, color: isActive ? Colors.blue[900] : Colors.white),
+            Icon(icon, color: isActive ? Colors.blue[900] : Color.fromARGB(181, 154, 175, 228),),
           ],
         ),
       ),
@@ -219,649 +300,707 @@ Future<String> _getSafeCurrentRoute() async {
                     SizedBox(
                       width: 247.0,
                       height: 48.0,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          backgroundColor: sections
-                              ? Colors.white
-                              : Color.fromARGB(235, 6, 69, 152),
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                        ),
-                        onPressed: () async {
-                          await _navigateWithTokenCheck('/DashboardScreen2', () {
-                            clicked = false;
-                            sections = true;
-                            assignments = false;
-                            onlinestudents = false;
-                            students = false;
-                            home = false;
-                            tables = false;
-                            bankques = false;
-                            centermanage = false;
-                            studentsques = false;
-                            notifications = false;
-                            settings = false;
-                            orders = false;
-                            logout = false;
-                          });
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'الامتحانات',
-                              textDirection: TextDirection.rtl,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: Color.fromARGB(181, 154, 175, 228),
-                              ),
-                            ),
-                            SizedBox(width: 16),
-                            Image.asset(
-                              'icons/Component2.png',
-                              width: 17.81,
-                              height: 24,
-                            ),
-                          ],
-                        ),
-                      ),
+                      child: _buildButtonmain2(text: 'الامتحنات',icon: Icons.quiz,
+                      route: '/quizes'
+                      ,  isActive: Get.currentRoute == '/quizes',
+                      )
+                    //   ElevatedButton(
+                    //     style: ElevatedButton.styleFrom(
+                    //       shadowColor: Colors.transparent,
+                    //       backgroundColor: sections
+                    //           ? Colors.white
+                    //           : Color.fromARGB(235, 6, 69, 152),
+                    //       elevation: 0,
+                    //       shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.circular(14),
+                    //       ),
+                    //     ),
+                    //     onPressed: () async {
+                    //             _buildButtonmain(
+                    //   text: 'الامتحنات',
+                    //   icon: Icons.home,
+                    //   route: '/DashboardScreen2',
+                    //   isActive: Get.currentRoute == '/DashboardScreen2',
+                    // );
+                    //       // await _navigateWithTokenCheck('/DashboardScreen2', () {
+                    //       //   clicked = false;
+                    //       //   sections = true;
+                    //       //   assignments = false;
+                    //       //   onlinestudents = false;
+                    //       //   students = false;
+                    //       //   home = false;
+                    //       //   tables = false;
+                    //       //   bankques = false;
+                    //       //   centermanage = false;
+                    //       //   studentsques = false;
+                    //       //   notifications = false;
+                    //       //   settings = false;
+                    //       //   orders = false;
+                    //       //   logout = false;
+                    //       // });
+                    //     },
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.end,
+                    //       crossAxisAlignment: CrossAxisAlignment.center,
+                    //       children: [
+                    //         Text(
+                    //           'الامتحانات',
+                    //           textDirection: TextDirection.rtl,
+                    //           textAlign: TextAlign.center,
+                    //           style: TextStyle(
+                    //             fontWeight: FontWeight.w500,
+                    //             fontSize: 20,
+                    //             color: Color.fromARGB(181, 154, 175, 228),
+                    //           ),
+                    //         ),
+                    //         SizedBox(width: 16),
+                    //         Image.asset(
+                    //           'icons/Component2.png',
+                    //           width: 17.81,
+                    //           height: 24,
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
                     ),
                     SizedBox(height: 10),
                     
                     SizedBox(
                       width: 247.0,
                       height: 48.0,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          backgroundColor: assignments
-                              ? Colors.white
-                              : Color.fromARGB(235, 6, 69, 152),
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                        ),
-                        onPressed: () async {
-                          await _navigateWithTokenCheck('/Assignments', () {
-                            clicked = false;
-                            sections = false;
-                            assignments = true;
-                            onlinestudents = false;
-                            students = false;
-                            home = false;
-                            tables = false;
-                            bankques = false;
-                            centermanage = false;
-                            studentsques = false;
-                            notifications = false;
-                            settings = false;
-                            orders = false;
-                            logout = false;
-                          });
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'الواجبات',
-                              textDirection: TextDirection.rtl,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: Color.fromARGB(181, 154, 175, 228),
-                              ),
-                            ),
-                            SizedBox(width: 16),
-                            Image.asset(
-                              'icons/Component3.png',
-                              width: 19.06,
-                              height: 22.15,
-                            ),
-                          ],
-                        ),
-                      ),
+                      child:
+                      //  ElevatedButton(
+                      //   style: ElevatedButton.styleFrom(
+                      //     shadowColor: Colors.transparent,
+                      //     backgroundColor: assignments
+                      //         ? Colors.white
+                      //         : Color.fromARGB(235, 6, 69, 152),
+                      //     elevation: 0,
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(14),
+                      //     ),
+                      //   ),
+                      //   onPressed: () async {
+                          _buildButtonmain2(text: 'واجبات',icon: Icons.assessment,
+                      route: '/Assignments'
+                      ,  isActive: Get.currentRoute == '/Assignments',
+                    )),
+                          // await _navigateWithTokenCheck('/Assignments', () {
+                          //   clicked = false;
+                          //   sections = false;
+                          //   assignments = true;
+                          //   onlinestudents = false;
+                          //   students = false;
+                          //   home = false;
+                          //   tables = false;
+                          //   bankques = false;
+                          //   centermanage = false;
+                          //   studentsques = false;
+                          //   notifications = false;
+                          //   settings = false;
+                          //   orders = false;
+                          //   logout = false;
+                          // });
+                    //     },
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.end,
+                    //       crossAxisAlignment: CrossAxisAlignment.center,
+                    //       children: [
+                    //         Text(
+                    //           'الواجبات',
+                    //           textDirection: TextDirection.rtl,
+                    //           textAlign: TextAlign.center,
+                    //           style: TextStyle(
+                    //             fontWeight: FontWeight.w500,
+                    //             fontSize: 20,
+                    //             color: Color.fromARGB(181, 154, 175, 228),
+                    //           ),
+                    //         ),
+                    //         SizedBox(width: 16),
+                    //         Image.asset(
+                    //           'icons/Component3.png',
+                    //           width: 19.06,
+                    //           height: 22.15,
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    SizedBox(height: 10),
+                    
+                    SizedBox(
+                      width: 247.0,
+                      height: 48.0,
+                      child:
+                      //  ElevatedButton(
+                      //   style: ElevatedButton.styleFrom(
+                      //     shadowColor: Colors.transparent,
+                      //     elevation: 0,
+                      //     backgroundColor: students
+                      //         ? Colors.white
+                      //         : Color.fromARGB(235, 6, 69, 152),
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(14),
+                      //     ),
+                      //   ),
+                      //   onPressed: () async {
+                      //     await _navigateWithTokenCheck('/Students', () {
+                      //       clicked = false;
+                      //       sections = false;
+                      //       assignments = false;
+                      //       onlinestudents = false;
+                      //       students = true;
+                      //       home = false;
+                      //       tables = false;
+                      //       bankques = false;
+                      //       centermanage = false;
+                      //       studentsques = false;
+                      //       notifications = false;
+                      //       settings = false;
+                      //       orders = false;
+                      //       logout = false;
+                      //     });
+                      //   },
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.end,
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     children: [
+                      //       Text(
+                      //         'الطلاب',
+                      //         textDirection: TextDirection.rtl,
+                      //         textAlign: TextAlign.center,
+                      //         style: TextStyle(
+                      //           height: 25 / 14,
+                      //           fontWeight: FontWeight.w500,
+                      //           fontSize: 20,
+                      //           color: Color.fromARGB(181, 154, 175, 228),
+                      //         ),
+                      //       ),
+                      //       SizedBox(width: 16),
+                      //       Image.asset(
+                      //         'icons/Group3.png',
+                      //         width: 21.67,
+                      //         height: 22.15,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                   //   onPressed: () async {
+                          _buildButtonmain2(text: 'الطلاب',icon: Icons.person,
+                      route: '/Students'
+                      ,  isActive: Get.currentRoute == '/Students',
+                    )
                     ),
                     SizedBox(height: 10),
                     
                     SizedBox(
                       width: 247.0,
                       height: 48.0,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          elevation: 0,
-                          backgroundColor: students
-                              ? Colors.white
-                              : Color.fromARGB(235, 6, 69, 152),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                        ),
-                        onPressed: () async {
-                          await _navigateWithTokenCheck('/Students', () {
-                            clicked = false;
-                            sections = false;
-                            assignments = false;
-                            onlinestudents = false;
-                            students = true;
-                            home = false;
-                            tables = false;
-                            bankques = false;
-                            centermanage = false;
-                            studentsques = false;
-                            notifications = false;
-                            settings = false;
-                            orders = false;
-                            logout = false;
-                          });
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'الطلاب',
-                              textDirection: TextDirection.rtl,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                height: 25 / 14,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: Color.fromARGB(181, 154, 175, 228),
-                              ),
-                            ),
-                            SizedBox(width: 16),
-                            Image.asset(
-                              'icons/Group3.png',
-                              width: 21.67,
-                              height: 22.15,
-                            ),
-                          ],
-                        ),
-                      ),
+                      child: 
+                      // ElevatedButton(
+                      //   style: ElevatedButton.styleFrom(
+                      //     shadowColor: Colors.transparent,
+                      //     elevation: 0,
+                      //     backgroundColor: tables
+                      //         ? Colors.white
+                      //         : Color.fromARGB(235, 6, 69, 152),
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(14),
+                      //     ),
+                      //   ),
+                      //   onPressed: () async {
+  _buildButtonmain2(text: 'جدول',icon: Icons.backup_table_outlined,
+                      route: '/table'
+                      ,  isActive: Get.currentRoute == '/table',
+                    )
+                          // await _navigateWithTokenCheck('/table', () {
+                          //   clicked = false;
+                          //   sections = false;
+                          //   assignments = false;
+                          //   onlinestudents = false;
+                          //   students = false;
+                          //   home = false;
+                          //   tables = true;
+                          //   bankques = false;
+                          //   centermanage = false;
+                          //   studentsques = false;
+                          //   notifications = false;
+                          //   settings = false;
+                          //   orders = false;
+                          //   logout = false;
+                          // });
+                       
+                      //   },
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.end,
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     children: [
+                      //       Text(
+                      //         'جدول',
+                      //         textDirection: TextDirection.rtl,
+                      //         textAlign: TextAlign.center,
+                      //         style: TextStyle(
+                      //           fontWeight: FontWeight.w500,
+                      //           fontSize: 20,
+                      //           color: Color.fromARGB(181, 154, 175, 228),
+                      //         ),
+                      //       ),
+                      //       SizedBox(width: 16),
+                      //       Image.asset(
+                      //         'icons/Vector1.png',
+                      //         width: 21.67,
+                      //         height: 22.15,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                     ),
                     SizedBox(height: 10),
                     
                     SizedBox(
                       width: 247.0,
                       height: 48.0,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          elevation: 0,
-                          backgroundColor: tables
-                              ? Colors.white
-                              : Color.fromARGB(235, 6, 69, 152),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                        ),
-                        onPressed: () async {
-                          await _navigateWithTokenCheck('/table', () {
-                            clicked = false;
-                            sections = false;
-                            assignments = false;
-                            onlinestudents = false;
-                            students = false;
-                            home = false;
-                            tables = true;
-                            bankques = false;
-                            centermanage = false;
-                            studentsques = false;
-                            notifications = false;
-                            settings = false;
-                            orders = false;
-                            logout = false;
-                          });
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'جدول',
-                              textDirection: TextDirection.rtl,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: Color.fromARGB(181, 154, 175, 228),
-                              ),
-                            ),
-                            SizedBox(width: 16),
-                            Image.asset(
-                              'icons/Vector1.png',
-                              width: 21.67,
-                              height: 22.15,
-                            ),
-                          ],
-                        ),
-                      ),
+                      child:
+                      //  ElevatedButton(
+                      //   style: ElevatedButton.styleFrom(
+                      //     shadowColor: Colors.transparent,
+                      //     elevation: 0,
+                      //     backgroundColor: bankques
+                      //         ? Colors.white
+                      //         : Color.fromARGB(235, 6, 69, 152),
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(14),
+                      //     ),
+                      //   ),
+                      //   onPressed: () async {
+                      //     await _navigateWithTokenCheck('/Lectures', () {
+                      //       clicked = false;
+                      //       sections = false;
+                      //       assignments = false;
+                      //       onlinestudents = false;
+                      //       students = false;
+                      //       home = false;
+                      //       tables = false;
+                      //       bankques = true;
+                      //       centermanage = false;
+                      //       studentsques = false;
+                      //       notifications = false;
+                      //       settings = false;
+                      //       orders = false;
+                      //       logout = false;
+                      //     });
+                      //   },
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.end,
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     children: [
+                      //       Text(
+                      //         'بنك الأسئلة',
+                      //         textDirection: TextDirection.rtl,
+                      //         textAlign: TextAlign.center,
+                      //         style: TextStyle(
+                      //           fontWeight: FontWeight.w500,
+                      //           fontSize: 20,
+                      //           color: Color.fromARGB(181, 154, 175, 228),
+                      //         ),
+                      //       ),
+                      //       SizedBox(width: 16),
+                      //       Image.asset(
+                      //         'icons/Group4.png',
+                      //         width: 22.59,
+                      //         height: 21.98,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                                      //   onPressed: () async {
+  _buildButtonmain2(text:  'بنك الأسئلة',icon: Icons.question_answer,
+                      route: '/Lectures'
+                      ,  isActive: Get.currentRoute == '/Lectures',
+                    )
                     ),
                     SizedBox(height: 10),
                     
                     SizedBox(
                       width: 247.0,
                       height: 48.0,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          elevation: 0,
-                          backgroundColor: bankques
-                              ? Colors.white
-                              : Color.fromARGB(235, 6, 69, 152),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                        ),
-                        onPressed: () async {
-                          await _navigateWithTokenCheck('/Lectures', () {
-                            clicked = false;
-                            sections = false;
-                            assignments = false;
-                            onlinestudents = false;
-                            students = false;
-                            home = false;
-                            tables = false;
-                            bankques = true;
-                            centermanage = false;
-                            studentsques = false;
-                            notifications = false;
-                            settings = false;
-                            orders = false;
-                            logout = false;
-                          });
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'بنك الأسئلة',
-                              textDirection: TextDirection.rtl,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: Color.fromARGB(181, 154, 175, 228),
-                              ),
-                            ),
-                            SizedBox(width: 16),
-                            Image.asset(
-                              'icons/Group4.png',
-                              width: 22.59,
-                              height: 21.98,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    
-                    SizedBox(
-                      width: 247.0,
-                      height: 48.0,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          elevation: 0,
-                          backgroundColor: centermanage
-                              ? Colors.white
-                              : Color.fromARGB(235, 6, 69, 152),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                        ),
-                        onPressed: () async {
-                          await _navigateWithTokenCheck('/managecenter', () {
-                            clicked = false;
-                            sections = false;
-                            assignments = false;
-                            onlinestudents = false;
-                            students = false;
-                            home = false;
-                            tables = false;
-                            bankques = false;
-                            centermanage = true;
-                            studentsques = false;
-                            notifications = false;
-                            settings = false;
-                            orders = false;
-                            logout = false;
-                          });
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'إدارة السنتر',
-                              textDirection: TextDirection.rtl,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: Color.fromARGB(181, 154, 175, 228),
-                              ),
-                            ),
-                            SizedBox(width: 16),
-                            Image.asset(
-                              'icons/Vector1.png',
-                              width: 21.67,
-                              height: 22.15,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    
-                    SizedBox(
-                      width: 247.0,
-                      height: 48.0,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          elevation: 0,
-                          backgroundColor: studentsques
-                              ? Colors.white
-                              : Color.fromARGB(235, 6, 69, 152),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                        ),
-                        onPressed: () async {
-                          await controller.fetchQuestions();
+                      child:
+                      //  ElevatedButton(
+                      //   style: ElevatedButton.styleFrom(
+                      //     shadowColor: Colors.transparent,
+                      //     elevation: 0,
+                      //     backgroundColor: centermanage
+                      //         ? Colors.white
+                      //         : Color.fromARGB(235, 6, 69, 152),
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(14),
+                      //     ),
+                      //   ),
+                      //   onPressed: () async {
                           
-                          List<int> studentLengths = controller.questions
-                              .map((question) => question.students?.length ?? 0)
-                              .toList();
+  _buildButtonmain2(text:  'إدارة السنتر',icon: Icons.question_mark,
+                      route: '/managecenter'
+                      ,  isActive: Get.currentRoute == '/managecenter',
+                    )
+                          // await _navigateWithTokenCheck('/quizes', () {
+                          //   clicked = false;
+                          //   sections = false;
+                          //   assignments = false;
+                          //   onlinestudents = false;
+                          //   students = false;
+                          //   home = false;
+                          //   tables = false;
+                          //   bankques = false;
+                          //   centermanage = true;
+                          //   studentsques = false;
+                          //   notifications = false;
+                          //   settings = false;
+                          //   orders = false;
+                          //   logout = false;
+                          // });
+                        // },
+                        // child: Row(
+                        //   mainAxisAlignment: MainAxisAlignment.end,
+                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                        //   children: [
+                        //     Text(
+                        //       'إدارة السنتر',
+                        //       textDirection: TextDirection.rtl,
+                        //       textAlign: TextAlign.center,
+                        //       style: TextStyle(
+                        //         fontWeight: FontWeight.w500,
+                        //         fontSize: 20,
+                        //         color: Color.fromARGB(181, 154, 175, 228),
+                        //       ),
+                      //       ),
+                      //       SizedBox(width: 16),
+                      //       Image.asset(
+                      //         'icons/Vector1.png',
+                      //         width: 21.67,
+                      //         height: 22.15,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                    ),
+                    SizedBox(height: 10),
+                    
+                    SizedBox(
+                      width: 247.0,
+                      height: 48.0,
+                      child: 
+                      // ElevatedButton(
+                      //   style: ElevatedButton.styleFrom(
+                      //     shadowColor: Colors.transparent,
+                      //     elevation: 0,
+                      //     backgroundColor: studentsques
+                      //         ? Colors.white
+                      //         : Color.fromARGB(235, 6, 69, 152),
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(14),
+                      //     ),
+                      //   ),
+                      //   onPressed: () async {
+                      //     await controller.fetchQuestions();
                           
-                          print('📊 عدد الطلاب في الأسئلة: ${studentLengths}');
+                      //     List<int> studentLengths = controller.questions
+                      //         .map((question) => question.students?.length ?? 0)
+                      //         .toList();
                           
-                          await _navigateWithTokenCheck('/StudentsQuestions', () {
-                            clicked = false;
-                            sections = false;
-                            assignments = false;
-                            onlinestudents = false;
-                            students = false;
-                            home = false;
-                            tables = false;
-                            bankques = false;
-                            centermanage = false;
-                            studentsques = true;
-                            notifications = false;
-                            settings = false;
-                            orders = false;
-                            logout = false;
-                          });
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'أسئلة الطلاب',
-                              textDirection: TextDirection.rtl,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: Color.fromARGB(181, 154, 175, 228),
-                              ),
-                            ),
-                            SizedBox(width: 16),
-                            Image.asset(
-                              'icons/Vector1.png',
-                              width: 21.67,
-                              height: 22.15,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    
-                    SizedBox(
-                      width: 247.0,
-                      height: 48.0,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          elevation: 0,
-                          backgroundColor: notifications
-                              ? Colors.white
-                              : Color.fromARGB(235, 6, 69, 152),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                        ),
-                        onPressed: () async {
-                          await _navigateWithTokenCheck('/Notifications', () {
-                            clicked = false;
-                            sections = false;
-                            assignments = false;
-                            onlinestudents = false;
-                            students = false;
-                            home = false;
-                            tables = false;
-                            bankques = false;
-                            centermanage = false;
-                            studentsques = false;
-                            notifications = true;
-                            settings = false;
-                            orders = false;
-                            logout = false;
-                          });
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'الإشعارات',
-                              textDirection: TextDirection.rtl,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: Color.fromARGB(181, 154, 175, 228),
-                              ),
-                            ),
-                            SizedBox(width: 16),
-                            Image.asset(
-                              'icons/Vector1.png',
-                              width: 21.67,
-                              height: 22.15,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    
-                    SizedBox(
-                      width: 247.0,
-                      height: 48.0,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          elevation: 0,
-                          backgroundColor: settings
-                              ? Colors.white
-                              : Color.fromARGB(235, 6, 69, 152),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                        ),
-                        onPressed: () async {
-                          await _navigateWithTokenCheck('/Settings', () {
-                            clicked = false;
-                            sections = false;
-                            assignments = false;
-                            onlinestudents = false;
-                            students = false;
-                            home = false;
-                            tables = false;
-                            bankques = false;
-                            centermanage = false;
-                            studentsques = false;
-                            notifications = false;
-                            settings = true;
-                            orders = false;
-                            logout = false;
-                          });
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'الإعدادات',
-                              textDirection: TextDirection.rtl,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: Color.fromARGB(181, 154, 175, 228),
-                              ),
-                            ),
-                            SizedBox(width: 16),
-                            Image.asset(
-                              'icons/Vector1.png',
-                              width: 21.67,
-                              height: 22.15,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    
-                    SizedBox(
-                      width: 247.0,
-                      height: 48.0,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          elevation: 0,
-                          backgroundColor: orders
-                              ? Colors.white
-                              : Color.fromARGB(235, 6, 69, 152),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                        ),
-                        onPressed: () async {
-                          await _navigateWithTokenCheck('/LogOut', () {
-                            clicked = false;
-                            sections = false;
-                            assignments = false;
-                            onlinestudents = false;
-                            students = false;
-                            home = false;
-                            tables = false;
-                            bankques = false;
-                            centermanage = false;
-                            studentsques = false;
-                            notifications = false;
-                            settings = false;
-                            orders = true;
-                            logout = false;
-                          });
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'الطلبات',
-                              textDirection: TextDirection.rtl,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: Color.fromARGB(181, 154, 175, 228),
-                              ),
-                            ),
-                            SizedBox(width: 16),
-                            Image.asset(
-                              'icons/Vector1.png',
-                              width: 21.67,
-                              height: 22.15,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    
-                    SizedBox(
-                      width: 247.0,
-                      height: 48.0,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                          elevation: 0,
-                          backgroundColor: logout
-                              ? Colors.white
-                              : Color.fromARGB(235, 6, 69, 152),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            clicked = false;
-                            sections = false;
-                            assignments = false;
-                            onlinestudents = false;
-                            students = false;
-                            home = false;
-                            tables = false;
-                            bankques = false;
-                            centermanage = false;
-                            studentsques = false;
-                            notifications = false;
-                            settings = false;
-                            orders = false;
-                            logout = true;
-                          });
+                      //     print('📊 عدد الطلاب في الأسئلة: ${studentLengths}');
                           
-                          handleLogout(context);
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'الخروج',
-                              textDirection: TextDirection.rtl,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: Color.fromARGB(181, 154, 175, 228),
-                              ),
-                            ),
-                            SizedBox(width: 16),
-                            Image.asset(
-                              'icons/Vector1.png',
-                              width: 21.67,
-                              height: 22.15,
-                            ),
-                          ],
-                        ),
-                      ),
+                      //     await _navigateWithTokenCheck('/StudentsQuestions', () {
+                      //       clicked = false;
+                      //       sections = false;
+                      //       assignments = false;
+                      //       onlinestudents = false;
+                      //       students = false;
+                      //       home = false;
+                      //       tables = false;
+                      //       bankques = false;
+                      //       centermanage = false;
+                      //       studentsques = true;
+                      //       notifications = false;
+                      //       settings = false;
+                      //       orders = false;
+                      //       logout = false;
+                      //     });
+                      //   },
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.end,
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     children: [
+                      //       Text(
+                      //         'أسئلة الطلاب',
+                      //         textDirection: TextDirection.rtl,
+                      //         textAlign: TextAlign.center,
+                      //         style: TextStyle(
+                      //           fontWeight: FontWeight.w500,
+                      //           fontSize: 20,
+                      //           color: Color.fromARGB(181, 154, 175, 228),
+                      //         ),
+                      //       ),
+                      //       SizedBox(width: 16),
+                      //       Image.asset(
+                      //         'icons/Vector1.png',
+                      //         width: 21.67,
+                      //         height: 22.15,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                                           
+  _buildButtonmain2(text:   'أسئلة الطلاب',icon: Icons.question_answer_outlined,
+                      route: '/StudentsQuestions'
+                      ,  isActive: Get.currentRoute == '/StudentsQuestions',
+                    )
+                    ),
+                    SizedBox(height: 10),
+                    
+                    SizedBox(
+                      width: 247.0,
+                      height: 48.0,
+                      child:
+                      // StudentsQuestion
+                        // ElevatedButton(
+                      //   style: ElevatedButton.styleFrom(
+                      //     shadowColor: Colors.transparent,
+                      //     elevation: 0,
+                      //     backgroundColor: notifications
+                      //         ? Colors.white
+                      //         : Color.fromARGB(235, 6, 69, 152),
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(14),
+                      //     ),
+                      //   ),
+                      //   onPressed: () async {
+                      //     await _navigateWithTokenCheck('/Notifications', () {
+                      //       clicked = false;
+                      //       sections = false;
+                      //       assignments = false;
+                      //       onlinestudents = false;
+                      //       students = false;
+                      //       home = false;
+                      //       tables = false;
+                      //       bankques = false;
+                      //       centermanage = false;
+                      //       studentsques = false;
+                      //       notifications = true;
+                      //       settings = false;
+                      //       orders = false;
+                      //       logout = false;
+                      //     });
+                      //   },
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.end,
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     children: [
+                      //       Text(
+                      //         'الإشعارات',
+                      //         textDirection: TextDirection.rtl,
+                      //         textAlign: TextAlign.center,
+                      //         style: TextStyle(
+                      //           fontWeight: FontWeight.w500,
+                      //           fontSize: 20,
+                      //           color: Color.fromARGB(181, 154, 175, 228),
+                      //         ),
+                      //       ),
+                      //       SizedBox(width: 16),
+                      //       Image.asset(
+                      //         'icons/Vector1.png',
+                      //         width: 21.67,
+                      //         height: 22.15,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                                                           
+  _buildButtonmain2(text:  'الإشعارات',icon: Icons.notifications,
+                      route: '/Notifications'
+                      ,  isActive: Get.currentRoute == '/Notifications',
+                    )
+                    ),
+                    SizedBox(height: 10),
+                    
+                    SizedBox(
+                      width: 247.0,
+                      height: 48.0,
+                      child:                                                           
+  _buildButtonmain2(text:  'الإعدادات',icon: Icons.settings,
+                      route: '/Settings'
+                      ,  isActive: Get.currentRoute == '/Settings',
+                    )
+                      // ElevatedButton(
+                      //   style: ElevatedButton.styleFrom(
+                      //     shadowColor: Colors.transparent,
+                      //     elevation: 0,
+                      //     backgroundColor: settings
+                      //         ? Colors.white
+                      //         : Color.fromARGB(235, 6, 69, 152),
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(14),
+                      //     ),
+                      //   ),
+                      //   onPressed: () async {
+                      //     await _navigateWithTokenCheck('/Settings', () {
+                      //       clicked = false;
+                      //       sections = false;
+                      //       assignments = false;
+                      //       onlinestudents = false;
+                      //       students = false;
+                      //       home = false;
+                      //       tables = false;
+                      //       bankques = false;
+                      //       centermanage = false;
+                      //       studentsques = false;
+                      //       notifications = false;
+                      //       settings = true;
+                      //       orders = false;
+                      //       logout = false;
+                      //     });
+                      //   },
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.end,
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     children: [
+                      //       Text(
+                      //         'الإعدادات',
+                      //         textDirection: TextDirection.rtl,
+                      //         textAlign: TextAlign.center,
+                      //         style: TextStyle(
+                      //           fontWeight: FontWeight.w500,
+                      //           fontSize: 20,
+                      //           color: Color.fromARGB(181, 154, 175, 228),
+                      //         ),
+                      //       ),
+                      //       SizedBox(width: 16),
+                      //       Image.asset(
+                      //         'icons/Vector1.png',
+                      //         width: 21.67,
+                      //         height: 22.15,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                   
+                    ),
+                    SizedBox(height: 10),
+                    
+                    SizedBox(
+                      width: 247.0,
+                      height: 48.0,
+                      child:
+                      //  ElevatedButton(
+                      //   style: ElevatedButton.styleFrom(
+                      //     shadowColor: Colors.transparent,
+                      //     elevation: 0,
+                      //     backgroundColor: orders
+                      //         ? Colors.white
+                      //         : Color.fromARGB(235, 6, 69, 152),
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(14),
+                      //     ),
+                      //   ),
+                      //   onPressed: () async {
+                      //     await _navigateWithTokenCheck('/LogOut', () {
+                      //       clicked = false;
+                      //       sections = false;
+                      //       assignments = false;
+                      //       onlinestudents = false;
+                      //       students = false;
+                      //       home = false;
+                      //       tables = false;
+                      //       bankques = false;
+                      //       centermanage = false;
+                      //       studentsques = false;
+                      //       notifications = false;
+                      //       settings = false;
+                      //       orders = true;
+                      //       logout = false;
+                      //     });
+                      //   },
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.end,
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     children: [
+                      //       Text(
+                      //         'الطلبات',
+                      //         textDirection: TextDirection.rtl,
+                      //         textAlign: TextAlign.center,
+                      //         style: TextStyle(
+                      //           fontWeight: FontWeight.w500,
+                      //           fontSize: 20,
+                      //           color: Color.fromARGB(181, 154, 175, 228),
+                      //         ),
+                      //       ),
+                      //       SizedBox(width: 16),
+                      //       Image.asset(
+                      //         'icons/Vector1.png',
+                      //         width: 21.67,
+                      //         height: 22.15,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                  
+                  _buildButtonmain2(text:  'الطلبات',icon: Icons.request_page,
+                      route: '/LogOut'
+                      ,  isActive: Get.currentRoute == '/LogOut',
+                    )
+                    ),
+                    SizedBox(height: 10),
+                    
+                    SizedBox(
+                      width: 247.0,
+                      height: 48.0,
+                      child:     
+                  logouts(text:  'الخروج',icon: Icons.logout,
+                      
+                      //  isActive: logout,
+                    )
+                        // onPressed: () {
+                        //   setState(() {
+                        //     clicked = false;
+                        //     sections = false;
+                        //     assignments = false;
+                        //     onlinestudents = false;
+                        //     students = false;
+                        //     home = false;
+                        //     tables = false;
+                        //     bankques = false;
+                        //     centermanage = false;
+                        //     studentsques = false;
+                        //     notifications = false;
+                        //     settings = false;
+                        //     orders = false;
+                        //     logout = true;
+                        //   });
+                          
+                        //   handleLogout(context);
+                        // },
+                        // child: Row(
+                        //   mainAxisAlignment: MainAxisAlignment.end,
+                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                        //   children: [
+                        //     Text(
+                        //       'الخروج',
+                        //       textDirection: TextDirection.rtl,
+                        //       textAlign: TextAlign.center,
+                        //       style: TextStyle(
+                        //         fontWeight: FontWeight.w500,
+                        //         fontSize: 20,
+                        //         color: Color.fromARGB(181, 154, 175, 228),
+                        //       ),
+                        //     ),
+                        //     SizedBox(width: 16),
+                        //     Image.asset(
+                        //       'icons/Vector1.png',
+                        //       width: 21.67,
+                        //       height: 22.15,
+                        //     ),
+                        //   ],
+                        // ),
+                      // ),
                     ),
                   ],
                 ),

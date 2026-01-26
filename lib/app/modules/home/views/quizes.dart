@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutterwallet/app/modules/home/views/assignments%20copy.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
+import 'package:flutterwallet/app/modules/home/views/containdialoge.dart';
+import 'package:flutterwallet/app/modules/home/views/containe.dart';
 import 'package:flutterwallet/app/modules/home/views/dialog_quizes.dart';
 import 'package:flutterwallet/app/modules/home/views/dropdown.dart';
 import 'package:flutterwallet/app/modules/home/views/onlinequizes.dart';
@@ -13,14 +15,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui' as ui;
 
 import 'stabledropdown.dart';
-class DashboardScreen2 extends StatefulWidget {
-  const DashboardScreen2({super.key});
+class quizes extends StatefulWidget {
+  const quizes({super.key});
 
   @override
-  State<DashboardScreen2> createState() => _DashboardScreen2State();
+  State<quizes> createState() => _DashboardScreen2State();
 }
 
-class _DashboardScreen2State extends State<DashboardScreen2> {
+class _DashboardScreen2State extends State<quizes> {
 
 
 
@@ -31,7 +33,7 @@ class _DashboardScreen2State extends State<DashboardScreen2> {
   @override
   void initState() {
     super.initState();
-    print('🚀 DashboardScreen2 - initState');
+    print('🚀 quizes - initState');
     
     Future.delayed(Duration(milliseconds: 100), () {
       if (!_isDisposed && !_isInitialized) {
@@ -398,8 +400,9 @@ return Column(
   mainAxisAlignment:MainAxisAlignment.center,
   children: [ 
     
-Expanded(child:     SingleChildScrollView(child: 
-    dialogquizes()))]);
+Expanded(
+  child: DialogWrapper(),
+),]);
       });
             },
             style: ElevatedButton.styleFrom(

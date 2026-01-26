@@ -272,14 +272,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
-import 'package:flutterwallet/app/modules/home/views/DashboardScreen2.dart';
+import 'package:flutterwallet/app/modules/home/views/quizes.dart';
 import 'package:flutterwallet/app/modules/home/views/assignments%20copy.dart';
 import 'package:flutterwallet/app/modules/home/views/calenderpick.dart';
 import 'package:flutterwallet/app/modules/home/views/calenderpick2.dart';
 import 'package:flutterwallet/app/modules/home/views/dropdown.dart';
 import 'package:flutterwallet/app/modules/home/views/progress.dart';
 import 'package:flutterwallet/app/modules/home/views/stabledropdown.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DialogAssignments extends StatefulWidget {
   const DialogAssignments({super.key});
@@ -289,6 +292,74 @@ class DialogAssignments extends StatefulWidget {
 }
 
 class _DialogAssignmentsState extends State<DialogAssignments> {
+    HomeController controller=HomeController();
+  
+Future<bool> ensureTokenValidForDialog() async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    
+    if (token == null || token.isEmpty) {
+      print(' لا يوجد توكن في الديالوج');
+      return false;
+    }
+    
+    if (JwtDecoder.isExpired(token)) {
+      print(' التوكن منتهي في الديالوج - محاولة التجديد');
+      
+      final refreshed = await controller. refreshTokenForDialog();
+      
+      if (refreshed) {
+        print(' تم تجديد التوكن بنجاح - يمكن متابعة الديالوج');
+        return true;
+      } else {
+        print(' فشل تجديد التوكن - الديالوج سيفشل');
+        return false;
+      }
+    }
+    
+    print(' التوكن صالح في الديالوج');
+    return true;
+    
+  } catch (e) {
+    print(' خطأ في التحقق من التوكن للديالوج: $e');
+    return false;
+  }
+}  
+ Widget _buildButtonmain({
+  // required String text,
+  required   icon,
+  required String route,
+  bool isActive = false,
+}) {
+  final HomeController controller = Get.find<HomeController>();
+  
+  return SizedBox(
+    width: 24.0,
+    height: 24.0,
+    child: InkWell(
+      // style: ElevatedButton.styleFrom(
+      //   // backgroundColor: isActive ?Colors.white: Color.fromARGB(235, 6, 69, 152),
+      //   shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.circular(14),
+      //   ),
+      // ),
+      onTap: () {
+        Get.back();
+        controller.smartNavigate(route);
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+         
+        icon
+          // Image.asset('$icon', color: isActive ? Colors.blue[900] : Color.fromARGB(181, 154, 175, 228),),
+        ],
+      ),
+    ),
+  );
+}
+ 
   @override
   Widget build(BuildContext context) {
   return GetBuilder<HomeController>(
@@ -312,7 +383,7 @@ class _DialogAssignmentsState extends State<DialogAssignments> {
                     onTap: (){
                                Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => DashboardScreen2()),
+              MaterialPageRoute(builder: (context) => quizes()),
             );    
                     },
                     child: 
