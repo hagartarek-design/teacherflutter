@@ -179,14 +179,14 @@ Column(
     //   },
     //   child: Text('تحقق من صلاحية التوكن'),
     // ),
-    SizedBox(height: 20),
-    ElevatedButton(
-      onPressed: () {
-        // محاكاة انتهاء التوكن
-        // controller.handleTokenExpired();
-      },
-      child: Text('محاكاة انتهاء التوكن'),
-    ),
+    // SizedBox(height: 20),
+    // ElevatedButton(
+    //   onPressed: () {
+    //     // محاكاة انتهاء التوكن
+    //     // controller.handleTokenExpired();
+    //   },
+    //   child: Text('محاكاة انتهاء التوكن'),
+    // ),
   ],
 ),
           Container(

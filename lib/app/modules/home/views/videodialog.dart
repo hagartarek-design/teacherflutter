@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:flutterwallet/app/modules/home/views/DashboardScreen.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:dotted_border/dotted_border.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:flutterwallet/Applinks.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UploadLectureDialog extends StatefulWidget {
@@ -21,7 +23,75 @@ class UploadLectureDialog extends StatefulWidget {
 class _UploadLectureDialogState extends State<UploadLectureDialog> {
 // class _UploadLectureDialogState extends State<UploadLectureDialog> {
   final HomeController controller = HomeController();
-
+   Widget _buildButtonmain({
+  // required String text,
+  required   icon,
+  required String route,
+  bool isActive = false,
+}) {
+  final HomeController controller = Get.find<HomeController>();
+  
+  return SizedBox(
+    width: 24.0,
+    height: 24.0,
+    child: InkWell(
+      // style: ElevatedButton.styleFrom(
+      //   // backgroundColor: isActive ?Colors.white: Color.fromARGB(235, 6, 69, 152),
+      //   shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.circular(14),
+      //   ),
+      // ),
+      onTap: () {
+        Get.back();
+        controller.smartNavigate(route);
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+         
+        icon
+          // Image.asset('$icon', color: isActive ? Colors.blue[900] : Color.fromARGB(181, 154, 175, 228),),
+        ],
+      ),
+    ),
+  );
+}
+//  HomeController controller =Get.put(HomeController());
+  Future<bool> ensureTokenValidForDialog() async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    
+    if (token == null || token.isEmpty) {
+      print(' لا يوجد توكن في الديالوج');
+      return false;
+    }
+    
+    if (JwtDecoder.isExpired(token)) {
+      print(' التوكن منتهي في الديالوج - محاولة التجديد');
+      
+      final refreshed = await controller. refreshTokenForDialog();
+      
+      if (refreshed) {
+        print(' تم تجديد التوكن بنجاح - يمكن متابعة الديالوج');
+        return true;
+      } else {
+        print(' فشل تجديد التوكن - الديالوج سيفشل');
+        return false;
+      }
+    }
+    
+    print(' التوكن صالح في الديالوج');
+    return true;
+    
+  } catch (e) {
+    print(' خطأ في التحقق من التوكن للديالوج: $e');
+    return false;
+  }
+}  
+  String result='';
+      String? selectedValue;
+      
 //   File? pickedImage;
 //   File? pickedVideo;
 
@@ -195,11 +265,12 @@ return Dialog(
           children: [
             Row(
               children: [
-                InkWell(
-                  onTap: () => Navigator.pop(context),
-                  child: Image.asset('assets/close-circl.png',
-                      height: 24, width: 24),
-                ),
+            _buildButtonmain(   icon:          
+                       Image.asset('assets/close-circl.png', width: 24, height: 24),
+
+                      route: '/DashboardScreen'
+                      ,  isActive: Get.currentRoute == '/DashboardScreen',
+                      ),
               ],
             ),
 
@@ -626,7 +697,10 @@ Container(width: 1000,child:
                       style: TextStyle(color: Colors.white, fontSize: 16)),
                 ),
                 ElevatedButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: (){    
+                    Get.back();
+        controller.smartNavigate('/DashboardScreen');
+        },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF0144AC),
                     padding: const EdgeInsets.symmetric(

@@ -4,6 +4,8 @@ import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart'
 import 'package:flutterwallet/app/modules/home/modules/wallet.dart';
 import 'package:flutterwallet/app/modules/home/views/addgroup.showdialog.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
+import 'package:flutterwallet/app/modules/home/views/containerforaskques.dart';
+import 'package:flutterwallet/app/modules/home/views/containerformanagecenter.dart';
 import 'package:flutterwallet/app/modules/home/views/grouphasstudents.dart';
 import 'package:flutterwallet/app/modules/home/views/stable_app_bar.dart';
 import 'package:get/get.dart';
@@ -299,7 +301,10 @@ return Row(
     
 Expanded(child:   
   SingleChildScrollView(child: 
-    addgroupdialog()))]);
+ 
+      Containerformanagecenter()
+
+    ))]);
       });
               
       },

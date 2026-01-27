@@ -379,16 +379,12 @@ Future<bool> ensureTokenValidForDialog() async {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  InkWell(
-                    onTap: (){
-                               Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => quizes()),
-            );    
-                    },
-                    child: 
-                  Image.asset('assets/close-circl.png', width: 24, height: 24),
-                  ),SizedBox(height: 16),
+                   _buildButtonmain(   icon:          
+                       Image.asset('assets/close-circl.png', width: 24, height: 24),
+
+                      route: '/Assignments'
+                      ,  isActive: Get.currentRoute == '/Assignments',
+                      ),SizedBox(height: 16),
                   Container(
                     width: dialogWidth,
                     child: Column(

@@ -1,12 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
+import 'package:flutterwallet/app/modules/home/views/%D8%A7%D8%AF%D8%A7%D8%B1%D8%A9%20%D8%A7%D9%84%D8%B3%D9%86%D8%AA%D8%B1.dart';
 import 'package:flutterwallet/app/modules/home/views/quizes.dart';
 import 'package:flutterwallet/app/modules/home/views/assignments%20copy.dart';
 import 'package:flutterwallet/app/modules/home/views/dropdown.dart';
 import 'package:flutterwallet/app/modules/home/views/progress.dart';
 import 'package:flutterwallet/app/modules/home/views/stabledropdown.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class addgroupdialog extends StatefulWidget {
   const addgroupdialog({super.key});
@@ -16,8 +20,85 @@ class addgroupdialog extends StatefulWidget {
 }
 
 class _dialogquizesState extends State<addgroupdialog> {
+   Widget _buildButtonmain({
+  // required String text,
+  required   icon,
+  required String route,
+  bool isActive = false,
+}) {
+  final HomeController controller = Get.find<HomeController>();
+  
+  return SizedBox(
+    width: 24.0,
+    height: 24.0,
+    child: InkWell(
+      // style: ElevatedButton.styleFrom(
+      //   // backgroundColor: isActive ?Colors.white: Color.fromARGB(235, 6, 69, 152),
+      //   shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.circular(14),
+      //   ),
+      // ),
+      onTap: () {
+        Get.back();
+        controller.smartNavigate(route);
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+         
+        icon
+          // Image.asset('$icon', color: isActive ? Colors.blue[900] : Color.fromARGB(181, 154, 175, 228),),
+        ],
+      ),
+    ),
+  );
+}
+ HomeController controller =Get.put(HomeController());
+  Future<bool> ensureTokenValidForDialog() async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    
+    if (token == null || token.isEmpty) {
+      print(' لا يوجد توكن في الديالوج');
+      return false;
+    }
+    
+    if (JwtDecoder.isExpired(token)) {
+      print(' التوكن منتهي في الديالوج - محاولة التجديد');
+      
+      final refreshed = await controller. refreshTokenForDialog();
+      
+      if (refreshed) {
+        print(' تم تجديد التوكن بنجاح - يمكن متابعة الديالوج');
+        return true;
+      } else {
+        print(' فشل تجديد التوكن - الديالوج سيفشل');
+        return false;
+      }
+    }
+    
+    print(' التوكن صالح في الديالوج');
+    return true;
+    
+  } catch (e) {
+    print(' خطأ في التحقق من التوكن للديالوج: $e');
+    return false;
+  }
+}  
+  String result='';
+      String? selectedValue;
+      
+  final List<String> items = [
+    'سؤال مقالي',
+    'سؤال اكمل',
+    'سؤال اختار',
+    'سؤال صح/غلط',
+  ];
+
   @override
   Widget build(BuildContext context) {
+    
   return GetBuilder<HomeController>(
         init: HomeController(),
         builder: (controller) {  return Dialog(
@@ -38,16 +119,12 @@ class _dialogquizesState extends State<addgroupdialog> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  InkWell(
-                    onTap: (){
-                               Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => quizes()),
-            );    
-                    },
-                    child: 
-                  Image.asset('assets/close-circl.png', width: 24, height: 24),
-                  ),
+                 _buildButtonmain(   icon:          
+                       Image.asset('assets/close-circl.png', width: 24, height: 24),
+
+                      route: '/managecenter'
+                      ,  isActive: Get.currentRoute == '/managecenter',
+                      ),
                   Container(
                     width: dialogWidth,
                     height: 400,

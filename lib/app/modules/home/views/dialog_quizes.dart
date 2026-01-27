@@ -106,7 +106,8 @@ Future<bool> ensureTokenValidForDialog() async {
                 children: [
                   // InkWell(
                   //   onTap: (){
-                   _buildButtonmain(   icon:              Image.asset('assets/close-circl.png', width: 24, height: 24),
+                   _buildButtonmain(   icon:          
+                       Image.asset('assets/close-circl.png', width: 24, height: 24),
 
                       route: '/quizes'
                       ,  isActive: Get.currentRoute == '/quizes',

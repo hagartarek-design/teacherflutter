@@ -41,6 +41,7 @@ void main() async {
           print('[$time]  ${routing!.current}');
         }
       },
+
       transitionDuration: Duration(milliseconds: 400),
       defaultTransition: Transition.cupertino,
     ),

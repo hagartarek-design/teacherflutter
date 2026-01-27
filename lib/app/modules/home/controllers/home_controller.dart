@@ -3797,8 +3797,8 @@ void startAutoLogoutMonitor(String token) {
   
   // التوكنات
   String token = '';
-  String refreshToken = '';
-  int userId = 0;
+
+  int userId = 0;  String refreshToken = '';
   Future<void> loadTokens() async {
     final prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token') ?? '';
@@ -4194,7 +4194,8 @@ Future<void> logout() async {
   if (Get.currentRoute != '/HomeView') {
     Get.offAllNamed('/HomeView');
   }
-  
+
+
   print(' تم تسجيل الخروج');
 }
 Future<void> _redirectToHomeView() async {
@@ -4216,6 +4217,8 @@ Future<void> _redirectToHomeView() async {
   
   print('Successfully redirected to HomeView');
 }
+
+
 void startTokenMonitoring() {
   print('🔍 Starting token monitoring...');
   
