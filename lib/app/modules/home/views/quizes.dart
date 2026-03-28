@@ -2,21 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
-import 'package:flutterwallet/app/modules/home/views/assignments%20copy.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
-import 'package:flutterwallet/app/modules/home/views/containdialoge.dart';
 import 'package:flutterwallet/app/modules/home/views/containe.dart';
-import 'package:flutterwallet/app/modules/home/views/dialogs/dialog_quizes.dart';
-import 'package:flutterwallet/app/modules/home/views/dropdown.dart';
 import 'package:flutterwallet/app/modules/home/views/onlinequizes.dart';
-import 'package:flutterwallet/app/modules/home/views/DashboardScreen.dart';
 import 'package:flutterwallet/app/modules/home/views/stable_app_bar.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:ui' as ui;
-
-import 'stabledropdown.dart';
 class quizes extends StatefulWidget {
   const quizes({super.key});
 
@@ -73,7 +63,6 @@ class _DashboardScreen2State extends State<quizes> {
   @override
   Widget build(BuildContext context) {
      final screenWidth = MediaQuery.of(context).size.width;
-final isDesktop = screenWidth >= 1200;
   //  Timer? _refreshTimer;
   // final screenWidth = MediaQuery.of(context).size.width;
   final isMobile = screenWidth < 650;
@@ -666,7 +655,6 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>Onlinequizes()));
        DateTime startDateTime = DateTime.parse(controller.Exams[index].startdate.toString());
 int day = startDateTime.day; 
 int year = startDateTime.year; 
-int month= startDateTime.month; 
 List<String> arabicMonths = [
   "", 
   "يناير", // 1
@@ -683,7 +671,6 @@ List<String> arabicMonths = [
   "ديسمبر", // 12
 ];
 String arabicMonth = arabicMonths[startDateTime.month];
-String monthName = DateFormat('MMMM').format(startDateTime);
     final exam = controller.Exams[index];
     return isMobile?SingleChildScrollView
     (
@@ -969,43 +956,6 @@ controller.
 )
     );
   }
-
-  Widget _buildPagination(HomeController controller) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(controller.totalPages, (index) {
-        final pageIndex = index + 1;
-        return GestureDetector(
-          onTap: () {
-            controller.currentPage = pageIndex;
-            controller.exampagination(//context,
-            page:controller.currentPage);
-            controller.update();
-          },
-          child: Container(
-            margin: const EdgeInsets.all(4),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            decoration: BoxDecoration(
-              color: pageIndex 
-              == controller.currentPage
-                  ? Colors.blue
-                  : Colors.grey.shade300,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              '$pageIndex',
-              style: TextStyle(
-                color: pageIndex == controller.currentPage
-                    ? Colors.white
-                    : Colors.black,
-              ),
-            ),
-          ),
-        );
-      }),
-    );
-  }
-
 
 
   bool isToggled = false;

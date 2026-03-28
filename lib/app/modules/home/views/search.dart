@@ -1,9 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/search_controller.dart';
-import 'package:flutterwallet/app/modules/home/views/progress.dart';
 import 'package:get/get.dart';
-import 'package:flutter/src/material/search_anchor.dart';
 // import 'package';
 class StudentSearchScreen extends StatelessWidget {
   final String studentId;
@@ -13,7 +11,6 @@ class StudentSearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SearchController2(studentId));
-SearchController2 cont=SearchController2(studentId);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search Courses'),

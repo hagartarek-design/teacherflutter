@@ -1,74 +1,21 @@
-import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:flutterwallet/app/google_auth.dart';
+
 import 'package:flutterwallet/app/modules/home/views/quizes.dart';
-import 'package:flutterwallet/app/modules/home/views/borderright.dart';
-import 'package:flutterwallet/app/modules/home/views/DashboardScreen.dart';
-import 'package:flutterwallet/app/modules/home/views/stable_app_bar.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
 import 'dart:ui' as ui;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
-import 'package:flutterwallet/app/modules/home/views/img.dart';
-import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
-import 'package:table_calendar/table_calendar.dart';
-import '../controllers/home_controller.dart';
-import '../modules/file.dart';
-import '../modules/students.dart';
+
 
 class MyWidget extends StatelessWidget {
    MyWidget({super.key});
 
- int value = 0;
-  String selectedValue = "السنة الدراسية";
-  String selectedValue3 = "اسم الكورس";
-  HomeController homeController = HomeController();
-  final List<String> dropdownItems = [
-    "السنة الدراسية",
-    "السنة الأولى",
-    "السنة الثانية",
-    "السنة الثالثة",
-  ];
-  final List<String> dropdownItems3 = [
-    "اسم الكورس",
-    "السنة الأولى",
-    "السنة الثانية",
-    "السنة الثالثة",
-  ];
-  final ValueNotifier<DateTime> selectedDay = ValueNotifier(DateTime.now());
-  final ValueNotifier<DateTime> focusedDay = ValueNotifier(DateTime.now());
-  String? selectedValue2;
-  final List<String> options = ['Option 1', 'Option 2', 'Option 3'];
-  bool _passwordVisible = false;
+
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-
- final GoogleSignIn _googleSignIn = GoogleSignIn(
-    clientId: '311774865338-i0eljc50q4qgcosvtdkohbmfgmm10mkc.apps.googleusercontent.com',
-    scopes: ['email', 'profile', 'openid'],
-  );
-
-  Future<void> _handleSignIn() async {
-    try {
-      final GoogleSignInAccount? account = await _googleSignIn.signIn();
-      if (account != null) {
-        final GoogleSignInAuthentication auth = await account.authentication;
-        print("ID Token: ${auth.idToken}");
-        // Send auth.idToken to your backend
-      }
-    } catch (error) {
-      print('Error signing in with Google: $error');
-    }}
+  
+ 
+  
 
     return Scaffold(
       backgroundColor: ui.Color.fromARGB(255, 6, 69, 152),

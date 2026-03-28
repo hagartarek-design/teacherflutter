@@ -1332,29 +1332,19 @@
 //   }
 // }
 import 'dart:async';
-import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
 import 'dart:ui';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
-import 'package:flutterwallet/app/modules/home/views/DashboardScreen.dart';
 import 'package:flutterwallet/app/modules/home/views/stable_app_bar.dart';
-import 'package:http/http.dart' as http;
-import 'dart:ui' as ui;
+
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
-import 'package:flutterwallet/app/modules/home/views/img.dart';
+
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../controllers/home_controller.dart';
-import '../modules/file.dart';
-import '../modules/students.dart';
 // class Mainscreen extends StatelessWidget {
 //    Mainscreen({super.key});
 
@@ -1387,94 +1377,7 @@ void dispose() {
   super.dispose();
 }
 
-  Future<void> _checkTokenAndAutoLogout() async {
-    print(' Mainscreen - التحقق من التوكن (بدون تجديد)');
-    
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
-    
-    if (token == null || token.isEmpty) {
-      print(' Mainscreen - لا يوجد توكن');
-      _autoLogout('لا يوجد توكن');
-      return;
-    }
-    
-    try {
-      final expiryDate = JwtDecoder.getExpirationDate(token);
-      final remaining = expiryDate.difference(DateTime.now());
-      
-      print(' Mainscreen - الوقت المتبقي: ${remaining.inMinutes} دقيقة و${remaining.inSeconds % 60} ثانية');
-      
-      if (remaining.isNegative || remaining.inSeconds < 30) {
-        print(' Mainscreen - التوكن منتهي أو شبه منتهي');
-        _autoLogout('التوكن منتهي الصلاحية');
-        return;
-      }
-      
-      print(' Mainscreen - لا تجديد للتوكن هنا، فقط تحقق للتسجيل الخروج');
-      
-      if (remaining.inMinutes < 2) {
-        print(' Mainscreen - التوكن سينتهي قريباً - سيتم الخروج تلقائياً');
-        
-        Get.snackbar(
-          'تحذير',
-          'التوكن سينتهي خلال ${remaining.inMinutes} دقيقة - سيتم الخروج تلقائياً',
-          duration: Duration(seconds: 5),
-          backgroundColor: Colors.orange,
-        );
-        
-        Future.delayed(Duration(minutes: 1), () {
-          if (mounted && controller.currentScreen.value == '/Mainscreen') {
-            _autoLogout('التوكن على وشك الانتهاء');
-          }
-        });
-      }
-      
-    } catch (e) {
-      print(' Mainscreen - خطأ في فحص التوكن: $e');
-      _autoLogout('خطأ في فحص التوكن');
-    }
-  }
-void _autoLogout(String reason) async {
-  print(' Mainscreen - تسجيل خروج تلقائي: $reason');
-  
-  try {
-    Get.snackbar(
-      'جلسة منتهية',
-      'تم تسجيل الخروج تلقائياً ($reason)',
-      duration: Duration(seconds: 3),
-      backgroundColor: Colors.red,
-      snackPosition: SnackPosition.TOP,
-      margin: EdgeInsets.all(20),
-      borderRadius: 10,
-    );
-    
-    await Future.delayed(Duration(seconds: 3));
-    
-    if (mounted && controller.currentScreen.value == '/Mainscreen') {
-      print('🔄 تنفيذ تسجيل الخروج...');
-      
-      await safeLogout();
-    }
-  } catch (e) {
-    print(' خطأ في _autoLogout: $e');
-    
-    try {
-      showDialog(context: context, builder:(context)=> AlertDialog(
-        content: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [Text('token has been expired')
-      ,  ElevatedButton(onPressed: (){ Get.offAllNamed('/HomeView');},
-       child: Text('ok'))
-        ],),
-      ));
-     
-    } catch (e2) {
-      print(' حتى المحاولة الطارئة فشلت: $e2');
-    }
-  }
-}
+
 
 Future<void> safeLogout() async {
   try {
@@ -1559,174 +1462,20 @@ HomeController homeController =HomeController();
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 final isDesktop = screenWidth >= 1025;
-   Timer? _refreshTimer;
   // final screenWidth = MediaQuery.of(context).size.width;
   final isMobile = screenWidth < 650;
   final istablet = screenWidth < 1024;
-  void stopAutoRefresh() {
-    print('⏹️ إيقاف التجديد التلقائي');
-    _refreshTimer?.cancel();
-    _refreshTimer = null;
-  }
+ 
     HomeController controller=HomeController();
      controller.isDashboardOpen.value = false;
-     void _autoLogout(String reason) async {
-  print('🚪 Mainscreen - تسجيل خروج تلقائي: $reason');
+     // double screenWidth = MediaQuery.of(context).size.width;
   
-  // أولاً، أظهر رسالة التنبيه
-  Get.snackbar(
-    'جلسة منتهية',
-    'تم تسجيل الخروج تلقائياً ($reason)',
-    duration: Duration(seconds: 3),
-    backgroundColor: Colors.red,
-    snackPosition: SnackPosition.TOP,
-  );
-  
-  await Future.delayed(Duration(seconds: 3));
-  
-  if (mounted && controller.currentScreen.value == '/Mainscreen') {
-    print('🔄 تنفيذ تسجيل الخروج...');
-    
-    await controller.logout();
-  }
-}
-
-Future<void> logout() async {
-  try {
-    print('🚪 بدء تسجيل الخروج...');
-    
-    // أولاً، أزل البيانات المحلية
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token');
-    await prefs.remove('userId');
-    await prefs.remove('userType');
-    
- controller.   token = '';
- controller.   update();
-    
-    stopAutoRefresh();
-    
-   controller. currentScreen.value = '/HomeView';
-    
-    print('🔄 الانتقال إلى HomeView...');
-    
-    await Future.delayed(Duration(milliseconds: 500));
-     showDialog(context: context, builder:(context)=> AlertDialog(
-        content: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [Text('token has been expired')
-      ,  ElevatedButton(onPressed: (){     Get.offAllNamed(
-      '/HomeView',
-      predicate: (route) => false, // إزالة جميع الصفحات من الستاك
-    );},
-       child: Text('ok'))
-        ],),
-      ));
-  
-    
-    print('✅ تم تسجيل الخروج بنجاح');
-    
-  } catch (e) {
-    print('❌ خطأ في تسجيل الخروج: $e');
-    
-    try {
-       showDialog(context: context, builder:(context)=> AlertDialog(
-        content: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [Text('token has been expired')
-      ,  ElevatedButton(onPressed: (){     Get.offAllNamed('/HomeView');},
-       child: Text('ok'))
-        ],),
-      ));
-     
-    } catch (e2) {
-      print('❌ حتى المحاولة البديلة فشلت: $e2');
-    }
-  }
-}
-
-
-// دالة safeLogout جديدة في HomeController
-Future<void> safeLogout() async {
-  try {
-    // تنظيف البيانات المحلية
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
-    
-   controller.  token = '';
-   controller.  update();
-    stopAutoRefresh();
-    
-    // الانتقال الآمن
-    await Future.delayed(Duration(milliseconds: 500));
-    
-    Get.offAllNamed(
-      '/HomeView',
-      predicate: (route) => false,
-    );
-  } catch (e) {
-    print('❌ خطأ في safeLogout: $e');
-    Get.offAllNamed('/HomeView');
-  }
-}
-// في HomeController
-Future<void> safeNavigate(String route) async {
-  try {
-    // توقف عن أي مؤقتات
-    stopAutoRefresh();
-    
-    // انتظر لحظة لضمان استقرار الواجهة
-    await Future.delayed(Duration(milliseconds: 300));
-    
-    // استخدم Get.offAllNamed للتأكد من التنظيف الكامل
-    Get.offAllNamed(
-      route,
-      predicate: (route) => route.isFirst, // إبقاء الصفحة الأولى فقط
-    );
-  } catch (e) {
-    print('❌ خطأ في safeNavigate: $e');
-    
-    // محاولة بديلة باستخدام Navigator
-    try {
-      Navigator.of(Get.context!).pushNamedAndRemoveUntil(
-        route,
-        (route) => false,
-      );
-    } catch (e2) {
-      print('❌ حتى المحاولة البديلة فشلت: $e2');
-    }
-  }
-}
-    // double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    double containerWidth = screenWidth * 0.25; // Adjust to 25% of screen width
-    double containerHeight =
-        screenHeight * 0.15; // Adjust to 15% of screen height
-    double gap = screenWidth * 0.03;
-    // Responsive dimensions
-    
-    double responsiveWidth = screenWidth * 0.7; // 70% of the screen width
-    double responsiveHeight = screenHeight * 0.15; // 15% of the screen height
-    double responsiveGap = screenHeight * 0.03;
     return Scaffold(
         body:GetBuilder( init:HomeController(), builder:(controller){ 
-        int count=0;   int getCompletedCount(dynamic lesson) {
-   count = lesson['completedVideosCount'] ?? 0;
-
-  if (count != 0) {
-    return count + 1;
-  }
-  return count;
-}
-
-           final uniqueTypes = controller.type.toSet().toList();
-
+        int count=0;  
+  
   // Fix selected value
-  final safeValue = uniqueTypes.contains(controller.selectedtype)
-      ? controller.selectedtype
-      : null;
+
           return  ScrollConfiguration(
   behavior: const ScrollBehavior().copyWith(
     dragDevices: {
@@ -1820,7 +1569,6 @@ Future<void> safeNavigate(String route) async {
           focusedDay.value = newFocusedDay;
 
           // Format the selected date and call the API
-          final selectedDateString = controller. formatDate(newSelectedDay)??'';
 
       //  controller.   eventDate(context,selectedDateString);
         },
@@ -2202,7 +1950,7 @@ Future<void> safeNavigate(String route) async {
 
                                                         
                                                         Text(
-                                                          '${(controller.courseDatas!.students?.length??0 )??1}',
+                                                          '${(controller.courseDatas.students?.length??0 )}',
                                                         // '${  controller.courseDatas.students?.map((data)=>data['id'].toString()).length.toString()??''}',
 
                                                           style: TextStyle(
@@ -2319,8 +2067,8 @@ Future<void> safeNavigate(String route) async {
                                            items: controller.section
                                            .map((String value) {
                                            return DropdownMenuItem<String>(
-                                                            value: value ??"",
-                                                            child: Text(value??"",
+                                                            value: value,
+                                                            child: Text(value,
                                                                 style:
                                                                     TextStyle(
                                                                   fontSize:
@@ -2415,8 +2163,8 @@ Future<void> safeNavigate(String route) async {
                                                           .map((String value) {
                                                         return DropdownMenuItem<
                                                                 String>(
-                                                            value: value??"",
-                                                            child: Text(value??"",
+                                                            value: value,
+                                                            child: Text(value,
                                                                 style:
                                                                     TextStyle(
                                                                   fontSize:
@@ -2945,14 +2693,9 @@ Future<void> safeNavigate(String route) async {
         // startingDayOfWeek: StartingDayOfWeek.saturday,
         calendarFormat: CalendarFormat.month,
         onDaySelected: (newSelectedDay, newFocusedDay) {
-          // Update selected and focused day
           selectedDay.value = newSelectedDay;
           focusedDay.value = newFocusedDay;
 
-          // Format the selected date and call the API
-          final selectedDateString = controller. formatDate(newSelectedDay)??'';
-
-      //  controller.   eventDate(context,selectedDateString);
         },
         selectedDayPredicate: (day) => isSameDay(day, selectedDay.value),
         headerStyle: const HeaderStyle(
@@ -3332,7 +3075,7 @@ Future<void> safeNavigate(String route) async {
 
                                                         
                                                         Text(
-                                                          '${(controller.courseDatas!.students?.length??0 )??1}',
+                                                          '${(controller.courseDatas.students?.length??0 )}',
                                                         // '${  controller.courseDatas.students?.map((data)=>data['id'].toString()).length.toString()??''}',
 
                                                           style: TextStyle(
@@ -3449,8 +3192,8 @@ Future<void> safeNavigate(String route) async {
                                            items: controller.section
                                            .map((String value) {
                                            return DropdownMenuItem<String>(
-                                                            value: value ??"",
-                                                            child: Text(value??"",
+                                                            value: value ,
+                                                            child: Text(value,
                                                                 style:
                                                                     TextStyle(
                                                                   fontSize:
@@ -3544,8 +3287,8 @@ Future<void> safeNavigate(String route) async {
                                                           .map((String value) {
                                                         return DropdownMenuItem<
                                                                 String>(
-                                                            value: value??"",
-                                                            child: Text(value??"",
+                                                            value: value,
+                                                            child: Text(value,
                                                                 style:
                                                                     TextStyle(
                                                                   fontSize:

@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/fileuploader.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutterwallet/app/modules/home/views/quizes.dart';
-import 'package:flutterwallet/app/modules/home/views/assignments%20copy.dart';
 import 'package:flutterwallet/app/modules/home/views/dropdown.dart';
-import 'package:flutterwallet/app/modules/home/views/progress.dart';
 import 'package:flutterwallet/app/modules/home/views/stabledropdown.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 
 class StudentsButtons extends StatefulWidget {
   const StudentsButtons({super.key});
@@ -12,10 +11,8 @@ class _StudentsButtonsState extends State<StudentsButtons> {
   @override
   Widget build(BuildContext context) {
         double screenWidth = MediaQuery.of(context).size.width;
-HomeController controller =HomeController();
     bool isDesktop = screenWidth > 1200;
     bool isTablet = screenWidth > 768 && screenWidth <= 1200;
-    bool isMobile = screenWidth <= 768;
     return  Container(
                                                           height: 44,
                                                           width: isDesktop

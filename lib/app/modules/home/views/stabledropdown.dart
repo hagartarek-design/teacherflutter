@@ -63,7 +63,7 @@ child: TextButton(onPressed: (){
           selectedDay.value = newSelectedDay;
           focusedDay.value = newFocusedDay;
 
-          final selectedDateString = controller. formatDate(newSelectedDay)??'';
+          final selectedDateString = controller. formatDate(newSelectedDay);
 
        controller.   dailytable(//context,
        coursetabledate:selectedDateString);

@@ -1,20 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/views/homescreen.dart';
 import 'package:get/get.dart';
-import 'dart:ui' as ui;
 
 import '../controllers/home_controller.dart';
-import 'package:flutter/material.dart';
-import 'package:flutterwallet/app/modules/home/modules/wallet.dart';
-import 'package:flutterwallet/app/modules/home/views/homescreen.dart';
-import 'package:get/get.dart';
-import 'dart:ui' as ui;
 
-import '../controllers/home_controller.dart';
-import 'package:flutter/material.dart';
-import 'package:flutterwallet/app/modules/home/modules/wallet.dart';
-import 'package:flutterwallet/app/modules/home/views/homescreen.dart';
-import 'package:get/get.dart';
 class App_bar extends StatefulWidget {
   const App_bar({super.key});
 
@@ -93,9 +82,7 @@ child:
                           height:isTablet?40: 48,
                           child: CircleAvatar(
                             radius: 24,
-                            backgroundImage: NetworkImage('${controller.img}') == null
-                                ? NetworkImage('${controller.img2}')
-                                : NetworkImage('${controller.img}'),
+                            backgroundImage: NetworkImage('${controller.img}'),
                           ),
                         ),
                       )
@@ -294,91 +281,7 @@ InkWell(child:
     );
   }
 
-  // Fixed _buildDropdownField method
-  Widget _buildDropdownField(
-    controller,
-    bool isMobile,
-    String hint,
-    Rx<String?> value,
-    List<Course> items,
-    Function(String?) onChanged,
-  ) {
-    controller.fetchSAllCourses();
-    return Container(
-      width: isMobile ? 263 : 552,
-      decoration: BoxDecoration(color: Colors.white),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          const SizedBox(height: 16),
-          Container(
-            height: 44,
-            child: Directionality(
-              textDirection: TextDirection.rtl,
-              child: DropdownButtonFormField<String?>(
-                value: value.value,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  hintText: hint,
-                  hintTextDirection: TextDirection.rtl,
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Color.fromARGB(255, 154, 175, 228),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Color.fromARGB(255, 154, 175, 228),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                icon: const Icon(
-                  Icons.keyboard_arrow_down,
-                  color: Color.fromARGB(255, 6, 69, 152),
-                ),
-                isExpanded: true,
-                items: [
-                  DropdownMenuItem<String?>(
-                    value: null,
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        hint,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Color.fromARGB(255, 154, 175, 228),
-                        ),
-                      ),
-                    ),
-                  ),
-                  ...items.map((Course course) {
-                    return DropdownMenuItem<String?>(
-                      value: course.name ?? 'Unknown',
-                      child: Text(
-                        course.name ?? 'Unknown',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Color.fromARGB(255, 154, 175, 228),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ],
-                onChanged: (newValue) {
-                  onChanged(newValue);
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 }
 
 // class App_bar extends StatelessWidget {

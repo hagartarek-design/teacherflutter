@@ -4,13 +4,13 @@ import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart'
 
   HomeController controller=HomeController();
 class AttendanceChart extends StatelessWidget {
-  final double present = 40; // Replace with actual values
-  final double absent = 40;  // Replace with actual values
-  final double notAttended = 20; // Replace with actual values
-final double non=20;
-double absentPercentage=0.0;
+ 
   @override
   Widget build(BuildContext context) {
+    final double present = 40; 
+  final double absent = 40;
+  final double notAttended = 20; 
+final double non=20;
     return 
 
 

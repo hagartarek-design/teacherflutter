@@ -4,7 +4,6 @@ import 'package:flutterwallet/app/modules/home/studentQuestion2.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
 import 'package:flutterwallet/app/modules/home/views/stable_app_bar.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart';
 
 class StudentsQuestions extends StatelessWidget {
 
@@ -294,7 +293,6 @@ SizedBox(width:24 ,),
     
     // final question = controller.questions[questionIndex];
     // final student = question.students?[studentIndex];
-  final students=   controller.questions[index].students?.map((e)=>e).join();
   return 
  Container(padding:   EdgeInsets.fromLTRB(24, 25, 24, 25)
 , decoration: BoxDecoration( 

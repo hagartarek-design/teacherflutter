@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/views/home_view.dart';
-import 'package:flutterwallet/app/modules/home/views/homescreen.dart';
 import 'package:flutterwallet/app/modules/home/views/mainscreen.dart';
 import 'package:get/get.dart';
 

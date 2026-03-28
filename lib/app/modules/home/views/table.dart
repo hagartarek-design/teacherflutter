@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
 import 'package:flutterwallet/app/modules/home/views/calender1.dart';
-import 'package:flutterwallet/app/modules/home/views/datepicker.dart';
 import 'package:flutterwallet/app/modules/home/views/stable_app_bar.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'dart:ui' as ui;
 
 class table extends StatelessWidget {
   const table({super.key});
@@ -14,26 +12,8 @@ class table extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
         double screenWidth = MediaQuery.of(context).size.width;
-int value=0; 
-  String selectedValue = "السنة الدراسية"; // Default text
-  String selectedValue3 = "اسم الكورس"; // Default text
-HomeController homeController =HomeController();
-  final List<String> dropdownItems = [
-    "السنة الدراسية",
-    "السنة الأولى",
-    "السنة الثانية",
-    "السنة الثالثة",
-  ];
-  final List<String> dropdownItems3 = [
-    "اسم الكورس",
-    "السنة الأولى",
-    "السنة الثانية",
-    "السنة الثالثة",
-  ];
   final ValueNotifier<DateTime> selectedDay = ValueNotifier(DateTime.now());
   final ValueNotifier<DateTime> focusedDay = ValueNotifier(DateTime.now());
-  String? selectedValue2;
-  final List<String> options = ['Option 1', 'Option 2', 'Option 3'];
 
 final List<Color> colors=[
   Color.fromARGB(255, 181, 181, 181),
@@ -44,19 +24,9 @@ final List<Color> colors=[
 
 ];
     
-    double screenHeight = MediaQuery.of(context).size.height;
-    double containerWidth = screenWidth * 0.25; 
-    double containerHeight =
-        screenHeight * 0.15; 
-    double gap = screenWidth * 0.03;
-    
-    double responsiveWidth = screenWidth * 0.7; 
-    double responsiveHeight = screenHeight * 0.15; 
-    double responsiveGap = screenHeight * 0.03;
     bool isDesktop = screenWidth > 1200;
     bool isTablet = screenWidth > 768 && screenWidth <= 1200;
     bool isMobile = screenWidth <= 768;
-  HomeController controller=HomeController();
     return  Scaffold(
       drawer: isMobile
           ? Drawer(
@@ -210,7 +180,7 @@ Container(
           selectedDay.value = newSelectedDay;
           focusedDay.value = newFocusedDay;
 
-          final selectedDateString = controller. formatDate(newSelectedDay)??'';
+          final selectedDateString = controller. formatDate(newSelectedDay);
 
        controller.   dailytable(//context,
        coursetabledate:selectedDateString);

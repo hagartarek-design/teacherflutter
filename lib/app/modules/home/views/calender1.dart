@@ -56,7 +56,6 @@ class _calender1State extends State<calender1> {
           focusedDay.value = newFocusedDay;
 
           // Format the selected date and call the API
-          final selectedDateString = controller. formatDate(newSelectedDay);
 
       //  controller.   eventDate(context,selectedDateString);
         },

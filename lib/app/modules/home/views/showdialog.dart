@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
-import 'package:flutterwallet/app/modules/home/views/DashboardScreen.dart';
 import 'package:flutterwallet/app/modules/home/Applinks.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart';
-import 'package:http/http.dart' as http;
 
 class show_Dialog extends StatefulWidget {
   const show_Dialog({super.key});
@@ -26,10 +23,6 @@ class _show_DialogState extends State<show_Dialog> {
 
   @override
   Widget build(BuildContext context) {
-      TextEditingController nameController = TextEditingController();
-  TextEditingController priceController = TextEditingController();
-  TextEditingController watchController = TextEditingController();
- 
   // Future uploadAll() async {
   // try {
   //   if (controller. pickedImage == null ||controller. pickedVideo == null) {

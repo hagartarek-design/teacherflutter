@@ -1,12 +1,9 @@
 // token_service.dart
 import 'dart:async';
-import 'dart:convert';
-import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutterwallet/app/modules/home/Applinks.dart';
 // import 'package:flutterwallet/app/Applinks.dart';
-import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -26,7 +23,6 @@ class TokenService {
       
       final prefs = await SharedPreferences.getInstance();
       final refreshToken = prefs.getString('refreshtoken');
-      final userId = prefs.getInt('userId');
       
       if (refreshToken == null || refreshToken.isEmpty) {
         print('❌ [Dialog] لا يوجد refresh token');

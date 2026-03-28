@@ -123,7 +123,6 @@ void dispose() {
   @override
   Widget build(BuildContext context) {
      final screenWidth = MediaQuery.of(context).size.width;
-final isDesktop = screenWidth >= 1200;
   // final screenWidth = MediaQuery.of(context).size.width;
   final isMobile = screenWidth < 650;
   final istablet = screenWidth < 1024;

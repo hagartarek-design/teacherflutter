@@ -7,10 +7,7 @@ import 'package:flutterwallet/app/modules/home/views/stable_app_bar.dart';
 import 'package:flutterwallet/app/modules/home/views/studentsdetails.dart';
 import 'package:flutterwallet/app/modules/home/views/title.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:path/path.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'service.dart';
 
 class Students extends StatefulWidget {
   const Students({super.key});
@@ -33,8 +30,7 @@ class _StudentsState extends State<Students> {
 
 
   void search(String query) async {
-    final result = await controller.searchStudentss(//context,
-    query);
+   
     setState(() {
       // controller.students = result;
       // print('mm${controller.students}');
@@ -549,13 +545,7 @@ class _StudentsState extends State<Students> {
                                                                   .students
                                                                   .length,
                                                               (index) {
-                                                                final lessons = controller.students[index].lesson ?? [];
 
-int lessonPercent(int index) {
-  final lessons = controller.students[index].lesson;
-  if (lessons == null || lessons.isEmpty) return 0;
-  return lessons.first['percentage'] ?? 0;
-}
 
 
 
@@ -1138,89 +1128,4 @@ List<Widget> _buildPageNumbers(HomeController controller) {
   }
 
 
-
-  Widget _buildPagination(HomeController controller) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: () {
-            if (controller.currentPage > 1) {
-              controller.currentPage--;
-              controller.studentexam(controller.currentPage);
-              controller.update();
-            }
-          },
-          child: Container(
-            margin: const EdgeInsets.all(4),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            decoration: BoxDecoration(
-              color: controller.currentPage > 1
-                  ? Colors.blue
-                  : Colors.grey.shade300,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(
-              Icons.arrow_back,
-              color: controller.currentPage > 1 ? Colors.white : Colors.black,
-            ),
-          ),
-        ),
-        ...List.generate(controller.totalPages, (index) {
-          final pageIndex = index + 1;
-          return GestureDetector(
-            onTap: () {
-              controller.currentPage = pageIndex;
-
-              controller.studentexam(controller.currentPage);
-              controller.update();
-            },
-            child: Container(
-              margin: const EdgeInsets.all(4),
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              decoration: BoxDecoration(
-                color: pageIndex == controller.currentPage
-                    ? Colors.blue
-                    : Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                '$pageIndex',
-                style: TextStyle(
-                  color: pageIndex == controller.currentPage
-                      ? Colors.white
-                      : Colors.black,
-                ),
-              ),
-            ),
-          );
-        }),
-        GestureDetector(
-          onTap: () {
-            if (controller.currentPage < controller.totalPages) {
-              controller.currentPage++;
-              controller.studentexam(controller.currentPage);
-              controller.update();
-            }
-          },
-          child: Container(
-            margin: const EdgeInsets.all(4),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            decoration: BoxDecoration(
-              color: controller.currentPage < controller.totalPages
-                  ? Colors.blue
-                  : Colors.grey.shade300,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(
-              Icons.arrow_forward,
-              color: controller.currentPage < controller.totalPages
-                  ? Colors.white
-                  : Colors.black,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 }

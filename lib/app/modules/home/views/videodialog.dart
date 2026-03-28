@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutterwallet/app/modules/home/Applinks.dart';
 import 'package:flutterwallet/app/modules/home/controllers/fileuploader.dart';
-import 'package:flutterwallet/app/modules/home/views/DashboardScreen.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:dotted_border/dotted_border.dart';
@@ -320,7 +319,7 @@ Container(width: 1000,child:
           final bytes = await controller.dropzone.getFileData(ev);
           final name = await controller.dropzone.getFilename(ev);
           final file = PlatformFile(
-            name: name ?? "video.mp4",
+            name: name ,
             bytes: bytes,
             size: bytes.length,
           );

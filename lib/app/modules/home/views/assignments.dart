@@ -14,7 +14,7 @@ class Assignments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
    final screenWidth = MediaQuery.of(context).size.width;
-final isDesktop = screenWidth >= 1200;  final istablet = screenWidth < 1024;
+ final istablet = screenWidth < 1024;
   // final screenWidth = MediaQuery.of(context).size.width;
   final isMobile = screenWidth < 650;
     return Scaffold(

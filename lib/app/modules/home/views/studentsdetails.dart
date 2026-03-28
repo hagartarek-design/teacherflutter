@@ -1,69 +1,28 @@
-import 'dart:typed_data';
-import 'dart:io';
-import 'package:excel/excel.dart' as excel_lib;
-import 'package:flutter/foundation.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:html' as html; 
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
-import 'package:flutterwallet/app/modules/home/views/dropdown.dart';
 import 'package:flutterwallet/app/modules/home/views/mypage.dart';
 import 'package:flutterwallet/app/modules/home/views/progress.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_widget_cache.dart';
 import 'dart:ui';
 import 'dart:ui' as ui;
-import 'package:intl/intl.dart';
-import 'package:path/path.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 class Studentsdetails extends StatelessWidget {
-  String name; final studentId;
+ final String name; final  studentId;
    Studentsdetails({super.key,required this. name,required this.studentId});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }
-// class Studentsdetails extends StatefulWidget {
-//   final name ;
-//   const Studentsdetails({super.key,required this. name});
-
-//   @override
-//   State<Studentsdetails> createState() => _StudentsdetailsState();
-// }
-
-// class _StudentsdetailsState extends State<Studentsdetails> {
-  double absentPercentage=0.0;
+  @override
+  Widget build(BuildContext context) {
+ double absentPercentage=0.0;
 double presentPercentage=0.0;
-  final HomeController controller = HomeController();
                                                                   double absentCount = 0.0;
   String dropdownValue = 'Option 1';
   List<String> items = ['Option 1', 'Option 2', 'Option 3'];
 List<String>attendence=[ 'حضر' , 'غائب' ];
 String dropdownattendence='حضر';
-  Uint8List? image;
 
 double presentCount = 0.0;
 double totalAttendance = 0;
  
-// void _selectFile() async {
-
-// final FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-// if (result != null) {
-
-// // setState(() {
-// selectedFile = result.files.first.name;
-// print(selectedFile);
-// controller.addfile(result.toString());
-// // });
-// }}
-  String? selectedValue;
-  @override
-  Widget build(BuildContext context) {
  double screenWidth = MediaQuery.of(context).size.width;
   
     return Scaffold(
@@ -248,7 +207,7 @@ double totalAttendance = 0;
                                                   // Padding(
                                                   //             padding: EdgeInsets.all(15.0),
                                                   // child:
- ...List.generate(1?? 0,(index){
+ ...List.generate(1,(index){
 int absentCount = 0;
 int presentCount = 0;
 
@@ -404,7 +363,7 @@ LinearProgressIndicator(
                                                             Colors.white
                                                         // ),
                                     ));}),
-                                             ...List.generate(1?? 0,(index){
+                                             ...List.generate(1,(index){
 int absentCount = 0;
 int presentCount = 0;
 
@@ -422,7 +381,6 @@ double presentPercentage = (presentCount / totalAttendance) * 100;
 double absentPercentage = (absentCount / totalAttendance) * 100;
 
 double presentFraction = presentCount / totalAttendance; 
-double absentFraction = absentCount / totalAttendance;  
 
 presentPercentage = double.parse(presentPercentage.toStringAsFixed(2));
 absentPercentage = double.parse(absentPercentage.toStringAsFixed(2));
@@ -838,7 +796,7 @@ LinearProgressIndicator(
                                             spacing: 8,
                                             children: [
                                               Text(
-                                                '${name??"N/A"}',
+                                                '${name}',
                                                 style: TextStyle(
                                                     fontSize: 20,
                                                     fontWeight:
@@ -1904,7 +1862,6 @@ print('Absent: $absentCount');
           onTap: () {
             if (controller.currentPage > 1) {
               controller.currentPage--;
-            var id= controller.students2.map((f)=>f.id.toString());
           // controller .fetchStudent(context,'${controller.student.id}',page:controller.currentPage);
               // controller.studentexam(controller.currentPage);
               print( controller.currentPage);
@@ -1951,7 +1908,6 @@ print('Absent: $absentCount');
           print('students44${ controller.students2.map((f)=>f.id.toString())}' );
           
         // var id= controller.students2.map((f)=>f.id.toString());
-        var id = controller.students2.map((f)=>f.id.toString());
         
 // controller.fetchStudent(context,'${controller.student.id}', page:controller.currentPage);
           // controller .fetchStudent('$id',page:controller.currentPage);
@@ -2182,28 +2138,6 @@ print('Absent: $absentCount');
 //   }
 // }
   
-  Widget _buildTextField(
-      String label, String hint, TextEditingController controllers) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Text(label,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-        SizedBox(height: 4),
-        TextField(
-          controller: controllers,
-          textAlign: TextAlign.right,
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: TextStyle(color: Colors.grey),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(width: 1),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 }
 
 String dropdownValue = 'ادخل السنه الدراسيه';
@@ -2270,7 +2204,6 @@ List<Widget> _buildPageNumbers(HomeController controller) {
       GestureDetector(
         onTap: () {
           controller.currentPage = page;
-           var id= controller.students2.map((f)=>f.id.toString());
           // controller .fetchStudent(context,'${controller.student.id}',page:controller.currentPage);
               // controller.studentexam(controller.currentPage);
               controller.update();

@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutterwallet/app/modules/home/views/quizes.dart';
-import 'package:flutterwallet/app/modules/home/views/assignments%20copy.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
-import 'package:flutterwallet/app/modules/home/views/dialogs/dialog_quizes.dart';
-import 'package:flutterwallet/app/modules/home/views/dropdown.dart';
 import 'package:flutterwallet/app/modules/home/views/offlinedialog.dart';
-import 'package:flutterwallet/app/modules/home/views/DashboardScreen.dart';
 import 'package:flutterwallet/app/modules/home/views/stable_app_bar.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart';
-import 'dart:ui' as ui;
-
-import 'stabledropdown.dart';
 class Onlinequizes extends StatefulWidget {
   const Onlinequizes({super.key});
 
@@ -28,9 +20,6 @@ class _OnlinequizesState extends State<Onlinequizes> {
   bool clicked=false;
   @override
   Widget build(BuildContext context) {
-var  startdate=controller.startdate;
-DateTime startDateTime = DateTime.parse(controller.startdate);
-int day = startDateTime.day; // 13
 
     return Scaffold(
       drawer: Drawer(
@@ -587,40 +576,6 @@ Expanded(child:     SingleChildScrollView(child:
  
   // }
 
-  Widget _buildPagination(HomeController controller) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(controller.totalPages, (index) {
-        final pageIndex = index + 1;
-        return GestureDetector(
-          onTap: () {
-            controller.currentPage = pageIndex;
-            // controller.exampaginationonline(context,page:controller.currentPage);
-            controller.update();
-          },
-          child: Container(
-            margin: const EdgeInsets.all(4),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            decoration: BoxDecoration(
-              color: pageIndex 
-              == controller.currentPage
-                  ? Colors.blue
-                  : Colors.grey.shade300,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              '$pageIndex',
-              style: TextStyle(
-                color: pageIndex == controller.currentPage
-                    ? Colors.white
-                    : Colors.black,
-              ),
-            ),
-          ),
-        );
-      }),
-    );
-  }
 
 
 
