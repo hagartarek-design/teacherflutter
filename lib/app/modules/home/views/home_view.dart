@@ -1,39 +1,10 @@
-import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutterwallet/app/google_auth.dart';
-import 'package:flutterwallet/app/modules/home/controllers/file%20test.dart';
-import 'package:flutterwallet/app/modules/home/views/%D8%A7%D8%AF%D8%A7%D8%B1%D8%A9%20%D8%A7%D9%84%D8%B3%D9%86%D8%AA%D8%B1.dart';
-import 'package:flutterwallet/app/modules/home/views/quizes.dart';
-import 'package:flutterwallet/app/modules/home/views/borderright.dart';
 import 'package:flutterwallet/app/modules/home/views/login.dart';
-import 'package:flutterwallet/app/modules/home/views/loginwithgoogle.dart';
 import 'package:flutterwallet/app/modules/home/views/mainscreen.dart';
-import 'package:flutterwallet/app/modules/home/views/DashboardScreen.dart';
-import 'package:flutterwallet/app/modules/home/views/stable_app_bar.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
 import 'dart:ui' as ui;
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
-import 'package:flutterwallet/app/modules/home/views/img.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:table_calendar/table_calendar.dart';
-import '../../../../Applinks.dart';
 import '../controllers/home_controller.dart';
-import '../modules/file.dart';
-import '../modules/students.dart';
-import 'homescreen.dart';
-
 class HomeView extends GetView<HomeController> {
   
   HomeView({super.key});
@@ -69,49 +40,12 @@ class HomeView extends GetView<HomeController> {
 //   }
 // } String selectedValue = "السنة الدراسية";
  
-  String selectedValue3 = "اسم الكورس";
-  HomeController homeController = HomeController();
-  final List<String> dropdownItems = [
-    "السنة الدراسية",
-    "السنة الأولى",
-    "السنة الثانية",
-    "السنة الثالثة",
-  ];
-  final List<String> dropdownItems3 = [
-    "اسم الكورس",
-    "السنة الأولى",
-    "السنة الثانية",
-    "السنة الثالثة",
-  ];
-  
-  final ValueNotifier<DateTime> selectedDay = ValueNotifier(DateTime.now());
-  final ValueNotifier<DateTime> focusedDay = ValueNotifier(DateTime.now());
-  String? selectedValue2;
-  final List<String> options = ['Option 1', 'Option 2', 'Option 3'];
-  bool _passwordVisible = false;
-
+ 
   @override
   Widget build(BuildContext context) {
 
-    // void handleLogin() async {
-    //   bool success = await controller.login();
-
-    //   if (success) {
-    //     Navigator.push(
-    //       context,
-    //       MaterialPageRoute(builder: (context) => Mainscreen()),
-    //     );
-    //   } else {
-    //     // Handle login failure
-    //   }
-    // }
-
-    // double screenWidth = MediaQuery.of(context).size.width;
-    // double screenHeight = MediaQuery.of(context).size.height;
-
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-  return GetBuilder<HomeController>(
+  
+ return GetBuilder<HomeController>(
       init: HomeController(),
       builder: (controller) {
   
@@ -247,6 +181,8 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _buildPasswordField(HomeController controller) {
+  bool passwordVisible = false;
+
     return Column(
       children: [
         Container(
@@ -280,18 +216,18 @@ class HomeView extends GetView<HomeController> {
             textDirection: TextDirection.rtl,
             child: TextField(
               controller: controller.passwordController,
-              obscureText: !_passwordVisible,
+              obscureText: !passwordVisible,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: "**********",
                 hintStyle: TextStyle(color: ui.Color.fromARGB(255, 125, 140, 158)),
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                    Icons.visibility_off,
                     color: const ui.Color.fromARGB(255, 212, 211, 211),
                   ),
                   onPressed: () {
-                    _passwordVisible = !_passwordVisible;
+                    passwordVisible = !passwordVisible;
                   },
                 ),
               ),
@@ -423,46 +359,7 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _buildGoogleLoginButton(context) {
-     final GoogleSignIn _googleSignIn = GoogleSignIn(
-    clientId: '748588866035-dn3vn5ca4icqdr40aj48bq9gcitqm40r.apps.googleusercontent.com',
-    scopes: ['openid', 'email', 'profile'],
-  );
-Future<void> _handleSignIn() async {
-  try {
-    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-    if (googleUser == null) return;
-
-    final GoogleSignInAuthentication googleAuth = 
-        await googleUser.authentication;
-
-    // Print the tokens before sending to backend
-    print('Google ID Token: ${googleAuth.idToken}');
-
-    print('Google Access Token: ${googleAuth.accessToken}');
-
-    // Send token to your backend
-    final response = await http.post(
-      Uri.parse('http://localhost:3000/auth/google'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'token': googleAuth.idToken,
-        'accessToken': googleAuth.accessToken,
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      final userData = jsonDecode(response.body);
-      print('Backend response: $userData');
-      // Handle successful login (store token, navigate to home, etc.)
-      print('Logged in user: ${userData['email']}');
-    } else {
-      throw Exception('Failed to authenticate with backend');
-    }
-  } catch (error) {
-    print('Error signing in with Google: $error');
-  }
-}
-
+  
 
 
 

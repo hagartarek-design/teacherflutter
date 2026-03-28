@@ -19,7 +19,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-import '../../../../Applinks.dart';
 import '../controllers/home_controller.dart';
 import '../modules/file.dart';
 import '../modules/students.dart';

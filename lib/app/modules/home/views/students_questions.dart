@@ -4,6 +4,7 @@ import 'package:flutterwallet/app/modules/home/studentQuestion2.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
 import 'package:flutterwallet/app/modules/home/views/stable_app_bar.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart';
 
 class StudentsQuestions extends StatelessWidget {
 
@@ -211,8 +212,8 @@ SizedBox(width:24 ,),
         Image.asset('icons/server.png',height: 24,width: 24,),SizedBox(width: 24,),
    InkWell(
     onTap: (){
-      print('myques${controller.questions.map((e)=>e.students?.map((e)=>e['id']).join()).join()}');
-      print('mytext${controller.questions.map((e)=>e.text).join()}');
+      // print('myques${controller.questions.map((e)=>e.students?.map((e)=>e['id']).join()).join()}');
+      // print('mytext${controller.questions.map((e)=>e.text).join()}');
       ;},
     child:  Image.asset('icons/book-open.png',height: 24,width: 24,),),     SizedBox(width: 24,),
          Image.asset('icons/delete.png',height: 24,width: 24,),SizedBox(width: 24,),
@@ -442,7 +443,9 @@ SizedBox(width:24 ,),
   
  
  }
- ),SizedBox(height: 200,),
+ )
+ ,
+ SizedBox(height: 200,),
  Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -450,7 +453,7 @@ SizedBox(width:24 ,),
           onTap: () {
             if (controller.currentPage > 1) {
               controller.currentPage--;
-                  controller.fetchQuestions(page:controller.currentPage);
+                  // controller.fetchQuestions(context,page:controller.currentPage);
           controller.update();
             }
           },
@@ -480,14 +483,14 @@ SizedBox(width:24 ,),
           // width: 292,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: _buildPageNumbers(controller),
+            children: _buildPageNumbers(controller,context),
           ),
         ),
         GestureDetector(
           onTap: () {
             if (controller.currentPage < controller.totalPages) {
               controller.currentPage++;
-          controller.fetchQuestions(page:controller.currentPage);
+          // controller.fetchQuestions(context,page:controller.currentPage);
           controller.update();
             }
           },
@@ -524,6 +527,7 @@ SizedBox(width:24 ,),
     ),
   
   ]))
+                   
                           ])])))      ,
      if (!isMobile)
                 Container(
@@ -547,7 +551,7 @@ SizedBox(width:24 ,),
                 )]));
      }));}
      }
-      List<Widget> _buildPageNumbers(HomeController controller) {
+      List<Widget> _buildPageNumbers(HomeController controller,context) {
   final currentPage = controller.currentPage;
   final totalPages = controller.totalPages;
   final List<Widget> pages = [];
@@ -557,7 +561,7 @@ SizedBox(width:24 ,),
       GestureDetector(
         onTap: () {
           controller.currentPage = page;
-        controller.fetchQuestions(page:controller.currentPage);
+        controller.fetchQuestions(context,page:controller.currentPage);
           controller.update();
         },
         child: Container(

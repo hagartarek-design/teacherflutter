@@ -1,10 +1,10 @@
 // dialog_wrapper.dart
 import 'package:flutter/material.dart';
-import 'package:flutterwallet/app/modules/home/views/dialog_assignments.dart';
-import 'package:flutterwallet/app/modules/home/views/dialog_quizes.dart';
+import 'package:flutterwallet/app/modules/home/views/dialogs/dialog_assignments.dart';
+// import 'package:flutterwallet/app/modules/home/views/dialog_assignments.dart';
+// import 'package:flutterwallet/app/modules/home/views/dialog_quizes.dart';
 import 'package:flutterwallet/app/modules/home/views/tokenservice.dart';
 
-import '../controllers/tokens.dart';
 
 class dialogforassignments extends StatefulWidget {
   const dialogforassignments({super.key});

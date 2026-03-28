@@ -39,9 +39,9 @@ HomeController controller =HomeController();
                                                                       152)),
                                                           child: InkWell(
                                                             onTap: () {
-                                                              controller
-                                                                  .courseStudentType(
-                                                                      'center');
+                                                              // controller
+                                                              //     .courseStudentType(
+                                                              //        context, 'center');
                                                             },
                                                             child: Row(
                                                               mainAxisAlignment:

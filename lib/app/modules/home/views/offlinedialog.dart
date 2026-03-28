@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterwallet/app/modules/home/controllers/fileuploader.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutterwallet/app/modules/home/views/quizes.dart';
 import 'package:flutterwallet/app/modules/home/views/assignments%20copy.dart';
@@ -221,7 +222,8 @@ class _dialogquizesState extends State<dialogoffline> {
                                 //         List.generate(controller.allsections.length, (index) {
                                 //           print('http://localhost:3000/${controller.allsections[index].cardimg}');
                                 //         });
-                                        controller.pickAndUploadImage3();
+                                Fileuploader file =Fileuploader();
+                                        file.pickAndUploadImage3();
                               },
                               ),)
                            
@@ -240,7 +242,8 @@ class _dialogquizesState extends State<dialogoffline> {
                                      ,shape:RoundedRectangleBorder( borderRadius:BorderRadius.circular(8))
                                 ),
                                 onPressed: (){
-controller.uploadcard3offline(context,);
+                                  Fileuploader file=Fileuploader();
+file.uploadcard3offline(context,);
 
                               }, child: Text("بدا عمل الامتحان",style: TextStyle(color: Colors.white),)))      ],
                     ),

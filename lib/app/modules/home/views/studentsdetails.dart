@@ -7,7 +7,6 @@ import 'dart:html' as html;
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterwallet/Applinks.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutterwallet/app/modules/home/views/dropdown.dart';
 import 'package:flutterwallet/app/modules/home/views/mypage.dart';
@@ -210,13 +209,13 @@ double totalAttendance = 0;
                                                   newValue??"";
                                               controller.update();
 
-                                              controller.fetchcoursedata3(
-                                                  controller
-                                                      .selectedmonth_by_year);
+                                              // controller.fetchcoursedata3(
+                                              // context,    controller
+                                              //         .selectedmonth_by_year);
                                             },
                                             onTap: () => {
-                                              controller.fetchcoursedata3(
-                                                  controller.selectedtype),
+                                              // controller.fetchcoursedata3(
+                                              //   context,  controller.selectedtype),
                                               controller.update()
                                             },
                                           ),
@@ -253,13 +252,13 @@ double totalAttendance = 0;
 int absentCount = 0;
 int presentCount = 0;
 
-for (var i = 0; i < controller.student.exams!.length; i++) {
-  if (controller.student.exams![i]['attendence'] == true) {
-    presentCount++; 
-  } else {
-    absentCount++; 
-  }
-}
+// for (var i = 0; i < controller.student.exams!.length; i++) {
+//   if (controller.student.exams![i]['attendence'] == true) {
+//     presentCount++; 
+//   } else {
+//     absentCount++; 
+//   }
+// }
 
 int totalAttendance = presentCount + absentCount; 
 
@@ -409,13 +408,13 @@ LinearProgressIndicator(
 int absentCount = 0;
 int presentCount = 0;
 
-for (var i = 0; i < controller.student.exams!.length; i++) {
-  if (controller.student.exams![i]['attendence'] == true) {
-    presentCount++; 
-  } else {
-    absentCount++; 
-  }
-}
+// for (var i = 0; i < controller.student.exams!.length; i++) {
+//   if (controller.student.exams![i]['attendence'] == true) {
+//     presentCount++; 
+//   } else {
+//     absentCount++; 
+//   }
+// }
 
 int totalAttendance = presentCount + absentCount; 
 
@@ -859,14 +858,14 @@ LinearProgressIndicator(
                                         Container(
                                           width: 56,
                                           height: 56,
-                                          child: CircleAvatar(
-                                            radius: 24,
-                                            backgroundImage: NetworkImage(
-  controller.student?.img != null 
-    ? '${Applinks.baseurl}/${controller.student!.img}' 
-    : 'placeholder_url'
-),
-                                          ),
+//                                           child: CircleAvatar(
+//                                             radius: 24,
+//                                             backgroundImage: NetworkImage(
+//   controller.student?.img != null 
+//     ? '${Applinks.baseurl}/${controller.student!.img}' 
+//     : 'placeholder_url'
+// ),
+//                                           ),
                                         ),
                                       ],
                                     ),
@@ -991,14 +990,14 @@ LinearProgressIndicator(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.end,
                                                 children: [
-                                                  Container(
-                                                      child: Text(
-                                                    '${controller.student.grade??"N/A"}',
-                                                    style: TextStyle(
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
+                                                  // Container(
+                                                  //     child: Text(
+                                                  //   '${controller.student.grade??"N/A"}',
+                                                  //   style: TextStyle(
+                                                  //       fontSize: 16,
+                                                  //       fontWeight:
+                                                  //           FontWeight.bold),
+                                                  // )),
                                                   Container(
                                                       child: Text(
                                                     ':السنة الدراسية',
@@ -1015,10 +1014,10 @@ LinearProgressIndicator(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.end,
                                                 children: [
-                                                  Container(
-                                                      child:
-                                                          Text('${controller.student.branch??'N/A'}')
-                                                          ),
+                                                  // Container(
+                                                  //     child:
+                                                  //         // Text('${controller.student.branch??'N/A'}')
+                                                  //         ),
                                                   Container(
                                                       child: Text(
                                                           ':الشعبه العلميه')),
@@ -1030,9 +1029,9 @@ LinearProgressIndicator(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.end,
                                                 children: [
-                                                  Container(
-                                                      child:
-                                                          Text('${controller.student.course?['placecountry']}')),
+                                                  // Container(
+                                                      // child:
+                                                          // Text('${controller.student.course?['placecountry']}')),
                                                   Container(
                                                       child: Text(':سنتر')),
                                                 ]),
@@ -1050,14 +1049,14 @@ LinearProgressIndicator(
                                                               MainAxisAlignment
                                                                   .end,
                                                           children: [
-                                                            Text(
-                                                              '${controller.student.phoneNum.toString()}',
-                                                              style: TextStyle(
-                                                                  fontSize: 15,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
-                                                            ),
+                                                            // Text(
+                                                            //   '${controller.student.phoneNum.toString()}',
+                                                            //   style: TextStyle(
+                                                            //       fontSize: 15,
+                                                            //       fontWeight:
+                                                            //           FontWeight
+                                                            //               .w500),
+                                                            // ),
                                                             Image.asset(
                                                               'icons/call.png',
                                                               width: 16,
@@ -1079,14 +1078,14 @@ LinearProgressIndicator(
                                                               MainAxisAlignment
                                                                   .end,
                                                           children: [
-                                                            Text(
-                                                              '${controller.student.email.toString()??"n/a"}',
-                                                              style: TextStyle(
-                                                                  fontSize: 15,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
-                                                            ),
+                                                            // Text(
+                                                            //   '${controller.student.email.toString()??"n/a"}',
+                                                            //   style: TextStyle(
+                                                            //       fontSize: 15,
+                                                            //       fontWeight:
+                                                            //           FontWeight
+                                                            //               .w500),
+                                                            // ),
                                                             Image.asset(
                                                               'icons/sms.png',
                                                               width: 16,
@@ -1231,7 +1230,7 @@ LinearProgressIndicator(
                                   ),
                           InkWell(onTap: (){
 
-                        controller.    fetchstud(Id:studentId );
+                        // controller.    fetchstud(context,Id:studentId );
                           },child:         Container(
                                     width: 213,
                                     decoration: BoxDecoration(
@@ -1293,7 +1292,9 @@ LinearProgressIndicator(
                                             ),
                                             padding: EdgeInsets.fromLTRB(
                                                 16, 8, 16, 8)),
-                                        onPressed: () {exportExcelSimple(context);},
+                                        onPressed: () {
+                                          // exportExcelSimple(context);
+                                          },
                                         child: Container(
                                             // width: 76,
                                             child: Row(
@@ -1440,13 +1441,13 @@ LinearProgressIndicator(
                                                               (index) {
 
 
-for (var i = 0; i < controller.student.exams!.length; i++) {
-  if (controller.student.exams![i]['attendence'] == true) {
-    presentCount++; 
-  } else {
-    absentCount++; 
-  }
-}
+// for (var i = 0; i < controller.student.exams!.length; i++) {
+//   if (controller.student.exams![i]['attendence'] == true) {
+//     presentCount++; 
+//   } else {
+//     absentCount++; 
+//   }
+// }
 
  totalAttendance = presentCount + absentCount; 
 
@@ -1463,16 +1464,19 @@ print('Total Attendance Records: $totalAttendance');
 print('Present: $presentCount');
 print('Absent: $absentCount'); 
 
-                                                                   controller.  findonestudent('${controller.students2[index].id}',attendence: 1);}
+                                                                  //  controller.  findonestudent(context,'${controller.students2[index].id}',attendence: 1);
+                                                                   }
                                                                     );}    else   if(newValue=='غائب')
                                                                               //  controller.
-                                                                {      List.generate(
-                                                              controller
-                                                                  .students2
-                                                                  .length,
-                                                              (index) {
-                                                                   controller.  findonestudent('${controller.students2[index].id}',attendence:0);}
-                                                                    );}
+                                                                {
+                                                              //     List.generate(
+                                                              // controller
+                                                              //     .students2
+                                                              //     .length,
+                                                              // (index) {
+                                                              //      controller.  findonestudent(context,'${controller.students2[index].id}',attendence:0);}
+                                                              //       );
+                                                                    }
                                                                       // });
                                                                     },
                                                                     items: attendence.map<
@@ -1576,7 +1580,9 @@ print('Absent: $absentCount');
                                                                     width: 266,
                                                                     child:
                                                                         TextField(
-                                                                          onChanged: (value){return controller.searchExams(value);},
+                                                                          onChanged: (value){
+                                                                            // return controller.searchExams(value,context);
+                                                                            },
                                                                       textDirection: ui
                                                                           .TextDirection
                                                                           .rtl,
@@ -1735,145 +1741,150 @@ print('Absent: $absentCount');
                                             // ],
                                           )]))
                                     ]),
-                              ),  ...List.generate(controller.student.exams?.length ?? 0,(index){
+                              ),  
+//                               ...List.generate( controller.student.exams?.length ?? 0,(index){
 
 
 
 
 
-for (var i = 0; i < controller.student.exams!.length; i++) {
-  if (controller.student.exams![i]['attendence'] == true) {
-    presentCount++; 
-  } else {
-    absentCount++;
-  }
-}
+// for (var i = 0; i < controller.student.exams!.length; i++) {
+//   if (controller.student.exams![i]['attendence'] == true) {
+//     presentCount++; 
+//   } else {
+//     absentCount++;
+//   }
+// }
 
- totalAttendance = presentCount + absentCount; 
-presentPercentage = (presentCount / totalAttendance) * 100;
- absentPercentage = (absentCount / totalAttendance) * 100;
+//  totalAttendance = presentCount + absentCount; 
+// presentPercentage = (presentCount / totalAttendance) * 100;
+//  absentPercentage = (absentCount / totalAttendance) * 100;
 
-presentPercentage = double.parse(presentPercentage.toStringAsFixed(2));
-absentPercentage = double.parse(absentPercentage.toStringAsFixed(2));
+// presentPercentage = double.parse(presentPercentage.toStringAsFixed(2));
+// absentPercentage = double.parse(absentPercentage.toStringAsFixed(2));
 
-print('Total Present: $presentCount (${presentPercentage}%)');
-print('Total Absent: $absentCount (${absentPercentage}%)');
-print('Total Attendance Records: $totalAttendance');
-// print('Total exams: $totalExams');
-print('Present: $presentCount');
-print('Absent: $absentCount');                          return Container(
-                                width: 984,
-                                height: 72,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(8),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.05),
-                                        offset: Offset(0, 3),
-                                        blurRadius: 13,
-                                        spreadRadius: 0,
-                                      ),
-                                    ]),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                spacing: 12,  children: [
-                                   Row(children: [
-Container(width: 127 ,child:Container( width: 117,height: 50
-, child:  TextButton(  style: TextButton.styleFrom(shape:
- RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)
-),
-side: BorderSide(width: 1,color: Color.fromARGB(255, 6, 69, 152)),padding: EdgeInsets.all(16)
-), child:Text('شوف التفاصيل' ,style: TextStyle(color:
-Color.fromARGB(255, 6, 69, 152) ),) ,onPressed: (){},))),
-Container(
+// print('Total Present: $presentCount (${presentPercentage}%)');
+// print('Total Absent: $absentCount (${absentPercentage}%)');
+// print('Total Attendance Records: $totalAttendance');
+// // print('Total exams: $totalExams');
+// print('Present: $presentCount');
+// print('Absent: $absentCount');                          return Container(
+//                                 width: 984,
+//                                 height: 72,
+//                                 decoration: BoxDecoration(
+//                                     color: Colors.white,
+//                                     borderRadius: BorderRadius.circular(8),
+//                                     boxShadow: [
+//                                       BoxShadow(
+//                                         color: Colors.black.withOpacity(0.05),
+//                                         offset: Offset(0, 3),
+//                                         blurRadius: 13,
+//                                         spreadRadius: 0,
+//                                       ),
+//                                     ]),
+//                                 child: Row(
+//                                   mainAxisAlignment: MainAxisAlignment.end,
+//                                 spacing: 12,  children: [
+//                                    Row(children: [
+// Container(width: 127 ,child:Container( width: 117,height: 50
+// , child:  TextButton(  style: TextButton.styleFrom(shape:
+//  RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)
+// ),
+// side: BorderSide(width: 1,color: Color.fromARGB(255, 6, 69, 152)),padding: EdgeInsets.all(16)
+// ), child:Text('شوف التفاصيل' ,style: TextStyle(color:
+// Color.fromARGB(255, 6, 69, 152) ),) ,onPressed: (){},))),
+// Container(
   
-  width: 100,height: 72 ,child:Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [ Text('ناجح',style: TextStyle(color: Colors.green),),])),
+//   width: 100,height: 72 ,child:Row(
+//     mainAxisAlignment: MainAxisAlignment.center,
+//     children: [ Text('ناجح',style: TextStyle(color: Colors.green),),])),
 
-                                    Container( 
-                                      width: 205,decoration: BoxDecoration(color: Colors.white)
-,height: 72,child: Row(
+//                                     Container( 
+//                                       width: 205,decoration: BoxDecoration(color: Colors.white)
+// ,height: 72,child: Row(
   
-  mainAxisAlignment: MainAxisAlignment.spaceAround,
-  children: [
-  Text('%90'),
- new LinearPercentIndicator(
-                    width: 100.0,
-                    lineHeight: 8.0,barRadius: Radius.circular(16),
-                    percent: 0.9
-                    ,alignment:MainAxisAlignment.start,isRTL: true,
-                    progressColor: Color.fromARGB(230, 6, 69, 152)
-                  ),
+//   mainAxisAlignment: MainAxisAlignment.spaceAround,
+//   children: [
+//   Text('%90'),
+//  new LinearPercentIndicator(
+//                     width: 100.0,
+//                     lineHeight: 8.0,barRadius: Radius.circular(16),
+//                     percent: 0.9
+//                     ,alignment:MainAxisAlignment.start,isRTL: true,
+//                     progressColor: Color.fromARGB(230, 6, 69, 152)
+//                   ),
 
-],),),
-//  Container(child: ,),
-  Container( width: 149, child:Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
+// ],),),
+// //  Container(child: ,),
+//   Container( width: 149, child:Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+//                                 Column(
+//                                   mainAxisAlignment: MainAxisAlignment.center,
+//                                   children: [
 
-                                Text('2023 15يناير')
-,
-                                Text('9:30AM')
-                               ],) 
+//                                 Text('2023 15يناير')
+// ,
+//                                 Text('9:30AM')
+//                                ],) 
                                
-                                  ,  Image.asset('assets/calendar.png',width: 20,height: 20,)
-                                ],) ),
+//                                   ,  Image.asset('assets/calendar.png',width: 20,height: 20,)
+//                                 ],) ),
 
 
-Container(
-width: 58,height: 29,
-decoration: BoxDecoration(borderRadius: BorderRadius.circular(8),
-color:Color.fromARGB(223, 233, 241, 238)),
-padding: EdgeInsets.all(4)
-,child:
+// Container(
+// width: 58,height: 29,
+// decoration: BoxDecoration(borderRadius: BorderRadius.circular(8),
+// color:Color.fromARGB(223, 233, 241, 238)),
+// padding: EdgeInsets.all(4)
+// ,child:
 
- Row(children: [
+//  Row(children: [
  
-Text( '${controller.student.exams![index]['attendence']==true?'حاضر':'غائب'}',style: TextStyle(color: Color.fromARGB(255, 39, 114, 83)),)
- , Image.asset('icons/tick-circle.png',width:16 ,height:16 ,)
-])),]),
-                                     Container( width: 187,height: 72,
-                                    //  padding: EdgeInsets.fromLTRB(24,16,24,16),
-                              child:
-                               Row(//spacing: 12,
-                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                // Container(width: 142,height: 40,child:
-                                 Text('${controller.student.courses?.map((e)=>e['type']??'').join()}',style: TextStyle(fontSize: 14),),//)
-                              // )
-                              ],),),
-                                   Container(
-                                      width: 123,
-                                      height: 72,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(8),
-                                            bottomRight: Radius.circular(8)),
-                                      ),
-                                    // padding: EdgeInsets.fromLTRB(24, 18, 24, 18),
-                                child:Container(height: 72, 
-                                child:Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [  
+// Text( '${controller.student.exams![index]['attendence']==true?'حاضر':'غائب'}',style: TextStyle(color: Color.fromARGB(255, 39, 114, 83)),)
+//  , Image.asset('icons/tick-circle.png',width:16 ,height:16 ,)
+// ])),]),
+//                                      Container( width: 187,height: 72,
+//                                     //  padding: EdgeInsets.fromLTRB(24,16,24,16),
+//                               child:
+//                                Row(//spacing: 12,
+//                                mainAxisAlignment: MainAxisAlignment.center,
+//                               children: [
+//                                 // Container(width: 142,height: 40,child:
+//                                  Text('${controller.student.courses?.map((e)=>e['type']??'').join()}',style: TextStyle(fontSize: 14),),//)
+//                               // )
+//                               ],),),
+//                                    Container(
+//                                       width: 123,
+//                                       height: 72,
+//                                       decoration: BoxDecoration(
+//                                         borderRadius: BorderRadius.only(
+//                                             topRight: Radius.circular(8),
+//                                             bottomRight: Radius.circular(8)),
+//                                       ),
+//                                     // padding: EdgeInsets.fromLTRB(24, 18, 24, 18),
+//                                 child:Container(height: 72, 
+//                                 child:Row(
+//                                   mainAxisAlignment: MainAxisAlignment.center,
+//                                   children: [  
                                   
 
-                                     Text('${controller.student.exams![index]['exam_name']}')
+//                                      Text('${controller.student.exams![index]['exam_name']}')
                                     
-                                    ])),
-                                    )
-                                    ,
+//                                     ])),
+//                                     )
+//                                     ,
                                   
                                 
-                                  ],
-                                ),
-                              );
+//                                   ],
+//                                 ),
+//                               );
                              
 
 
-        })],
+//         }
+//         )
+      
+        ],
+                      
                           ),
                     ))
                      ,  Container(
@@ -1894,7 +1905,7 @@ Text( '${controller.student.exams![index]['attendence']==true?'حاضر':'غائ
             if (controller.currentPage > 1) {
               controller.currentPage--;
             var id= controller.students2.map((f)=>f.id.toString());
-          controller .fetchStudent('${controller.student.id}',page:controller.currentPage);
+          // controller .fetchStudent(context,'${controller.student.id}',page:controller.currentPage);
               // controller.studentexam(controller.currentPage);
               print( controller.currentPage);
               controller.update();
@@ -1942,7 +1953,7 @@ Text( '${controller.student.exams![index]['attendence']==true?'حاضر':'غائ
         // var id= controller.students2.map((f)=>f.id.toString());
         var id = controller.students2.map((f)=>f.id.toString());
         
-controller.fetchStudent('${controller.student.id}', page:controller.currentPage);
+// controller.fetchStudent(context,'${controller.student.id}', page:controller.currentPage);
           // controller .fetchStudent('$id',page:controller.currentPage);
               // controller.studentexam(controller.currentPage);
               controller.update();
@@ -1997,95 +2008,95 @@ controller.fetchStudent('${controller.student.id}', page:controller.currentPage)
       ),
     );
   }
-Future<void> exportExcelSimple(BuildContext context) async {
-  try {
-    print('=== Export Started ===');
+// Future<void> exportExcelSimple(BuildContext context) async {
+//   try {
+//     print('=== Export Started ===');
     
-    final controller = Get.find<HomeController>();
+//     final controller = Get.find<HomeController>();
     
-    // تحميل البيانات إذا لزم
-    if (controller.student == null) {
-      await controller.fetchStudent(studentId.toString());
-      controller.update();
-      await Future.delayed(Duration(milliseconds: 500));
-    }
+//     // تحميل البيانات إذا لزم
+//     if (controller.student == null) {
+//       await controller.fetchStudent(context,studentId.toString());
+//       controller.update();
+//       await Future.delayed(Duration(milliseconds: 500));
+//     }
     
-    if (controller.student?.exams == null || controller.student!.exams!.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('❌ لا توجد بيانات'))
-      );
-      return;
-    }
+//     if (controller.student?.exams == null || controller.student!.exams!.isEmpty) {
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text('❌ لا توجد بيانات'))
+//       );
+//       return;
+//     }
     
-    final exams = controller.student!.exams!;
+//     final exams = controller.student!.exams!;
     
-    // إنشاء Excel
-    final excel = excel_lib.Excel.createExcel();
-    final sheet = excel['نتائج الامتحانات'];
+//     // إنشاء Excel
+//     final excel = excel_lib.Excel.createExcel();
+//     final sheet = excel['نتائج الامتحانات'];
     
-    // إضافة العناوين باستخدام appendRow (أسهل)
-    sheet.appendRow([
-      excel_lib.TextCellValue('اسم الامتحان'),
-      excel_lib.TextCellValue('اسم الدرس'),
-      excel_lib.TextCellValue('الحضور'),
-      excel_lib.TextCellValue('التاريخ'),
-      excel_lib.TextCellValue('الدرجة'),
-      excel_lib.TextCellValue('النتيجة'),
-    ]);
+//     // إضافة العناوين باستخدام appendRow (أسهل)
+//     sheet.appendRow([
+//       excel_lib.TextCellValue('اسم الامتحان'),
+//       excel_lib.TextCellValue('اسم الدرس'),
+//       excel_lib.TextCellValue('الحضور'),
+//       excel_lib.TextCellValue('التاريخ'),
+//       excel_lib.TextCellValue('الدرجة'),
+//       excel_lib.TextCellValue('النتيجة'),
+//     ]);
     
-    // إضافة كل البيانات مرة واحدة
-    for (final exam in exams) {
-      if (exam == null) continue;
+//     // إضافة كل البيانات مرة واحدة
+//     for (final exam in exams) {
+//       if (exam == null) continue;
       
-      sheet.appendRow([
-        excel_lib.TextCellValue(exam['exam_name']?.toString() ?? ''),
-        excel_lib.TextCellValue('التيار الكهربي الفصل الرابع'),
-        excel_lib.TextCellValue(exam['attendence'] == true ? 'حاضر' : 'غائب'),
-        excel_lib.TextCellValue(exam['date']?.toString() ?? ''),
-        excel_lib.TextCellValue(exam['score']?.toString() ?? '90%'),
-        excel_lib.TextCellValue(exam['passed'] == true ? 'ناجح' : 'راسب'),
-      ]);
-    }
+//       sheet.appendRow([
+//         excel_lib.TextCellValue(exam['exam_name']?.toString() ?? ''),
+//         excel_lib.TextCellValue('التيار الكهربي الفصل الرابع'),
+//         excel_lib.TextCellValue(exam['attendence'] == true ? 'حاضر' : 'غائب'),
+//         excel_lib.TextCellValue(exam['date']?.toString() ?? ''),
+//         excel_lib.TextCellValue(exam['score']?.toString() ?? '90%'),
+//         excel_lib.TextCellValue(exam['passed'] == true ? 'ناجح' : 'راسب'),
+//       ]);
+//     }
     
-    // حفظ الملف
-    final bytesList = excel.save();
-    if (bytesList == null) throw 'Failed to save Excel';
+//     // حفظ الملف
+//     final bytesList = excel.save();
+//     if (bytesList == null) throw 'Failed to save Excel';
     
-    final bytes = Uint8List.fromList(bytesList);
-    final fileName = '${name ?? "طالب"}_نتائج_${DateFormat('yyyy-MM-dd').format(DateTime.now())}.xlsx';
+//     final bytes = Uint8List.fromList(bytesList);
+//     final fileName = '${name ?? "طالب"}_نتائج_${DateFormat('yyyy-MM-dd').format(DateTime.now())}.xlsx';
     
-    if (kIsWeb) {
-      final blob = html.Blob([bytes], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-      final url = html.Url.createObjectUrlFromBlob(blob);
-      final anchor = html.AnchorElement(href: url)
-        ..setAttribute('download', fileName)
-        ..click();
-      html.Url.revokeObjectUrl(url);
-    } else {
-      final dir = await getDownloadsDirectory();
-      if (dir != null) {
-        await File('${dir.path}/$fileName').writeAsBytes(bytes);
-      }
-    }
+//     if (kIsWeb) {
+//       final blob = html.Blob([bytes], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+//       final url = html.Url.createObjectUrlFromBlob(blob);
+//       final anchor = html.AnchorElement(href: url)
+//         ..setAttribute('download', fileName)
+//         ..click();
+//       html.Url.revokeObjectUrl(url);
+//     } else {
+//       final dir = await getDownloadsDirectory();
+//       if (dir != null) {
+//         await File('${dir.path}/$fileName').writeAsBytes(bytes);
+//       }
+//     }
     
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('✅ تم تصدير ${exams.length} امتحان'),
-        backgroundColor: Colors.green,
-      )
-    );
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(
+//         content: Text('✅ تم تصدير ${exams.length} امتحان'),
+//         backgroundColor: Colors.green,
+//       )
+//     );
     
-  } catch (e) {
-    print('Error: $e');
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('❌ $e'),
-        backgroundColor: Colors.red,
-      )
-    );
-  }
-}
-//     var sheet = excel['Sheet1'];
+//   } catch (e) {
+//     print('Error: $e');
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(
+//         content: Text('❌ $e'),
+//         backgroundColor: Colors.red,
+//       )
+//     );
+//   }
+// }
+// //     var sheet = excel['Sheet1'];
 
 //     // Add headers
 //     sheet.appendRow([
@@ -2260,7 +2271,7 @@ List<Widget> _buildPageNumbers(HomeController controller) {
         onTap: () {
           controller.currentPage = page;
            var id= controller.students2.map((f)=>f.id.toString());
-          controller .fetchStudent('${controller.student.id}',page:controller.currentPage);
+          // controller .fetchStudent(context,'${controller.student.id}',page:controller.currentPage);
               // controller.studentexam(controller.currentPage);
               controller.update();
         },

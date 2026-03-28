@@ -3,12 +3,13 @@ import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart'
 import 'package:flutterwallet/app/modules/home/views/quizes.dart';
 import 'package:flutterwallet/app/modules/home/views/assignments%20copy.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
-import 'package:flutterwallet/app/modules/home/views/dialog_quizes.dart';
+import 'package:flutterwallet/app/modules/home/views/dialogs/dialog_quizes.dart';
 import 'package:flutterwallet/app/modules/home/views/dropdown.dart';
 import 'package:flutterwallet/app/modules/home/views/offlinedialog.dart';
 import 'package:flutterwallet/app/modules/home/views/DashboardScreen.dart';
 import 'package:flutterwallet/app/modules/home/views/stable_app_bar.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart';
 import 'dart:ui' as ui;
 
 import 'stabledropdown.dart';
@@ -106,7 +107,7 @@ int day = startDateTime.day; // 13
              
                 child: Column(children: [    SizedBox(height: 10,), _buildHeader(context),
                 SizedBox(height: 10,),
-              _buildHeader2(),       SizedBox(height: 5,),
+              _buildHeader2(context),       SizedBox(height: 5,),
                            ]), ),  
                            
                            
@@ -201,7 +202,7 @@ int day = startDateTime.day; // 13
             ),)
           ,
                     // SizedBox(height: 10),
-                    _buildList(controller),
+                    // _buildList(controller),
                    
                                                                    Container(
     width: 1030,
@@ -221,7 +222,7 @@ int day = startDateTime.day; // 13
           onTap: () {
             if (controller.currentPage > 1) {
               controller.currentPage--;
-                  controller.exampaginationonline(page:controller.currentPage);
+                  // controller.exampaginationonline(context,page:controller.currentPage);
           controller.update();
             }
           },
@@ -261,7 +262,7 @@ int day = startDateTime.day; // 13
           onTap: () {
             if (controller.currentPage < controller.totalPages) {
               controller.currentPage++;
-            controller.exampaginationonline(page:controller.currentPage);
+            // controller.exampaginationonline(context,page:controller.currentPage);
           controller.update();
             }
           },
@@ -388,7 +389,7 @@ Expanded(child:     SingleChildScrollView(child:
       ),)
     );
   }
-  Widget _buildHeader2() {
+  Widget _buildHeader2(context) {
     return Container(
      
       height: 40,
@@ -450,7 +451,7 @@ Expanded(child:     SingleChildScrollView(child:
                 //    clicked=!clicked;
                 // });
 
-controller.exampaginationonline();
+// controller.exampaginationonline(context);
                 },)
             
             ),
@@ -463,126 +464,128 @@ controller.exampaginationonline();
     );
   }
 
-  Widget _buildList(HomeController controller) {
-    return Expanded(
-      child:       ListView.builder(
-        itemCount: controller.exam.length,
-        itemBuilder: (context, index) {
-          final item = controller.exam[index];
-          return 
-          Container(
+  // Widget _buildList(HomeController controller) {
+  //   return Expanded(
+  //     child:       ListView.builder(
+  //       itemCount: controller.exam.length,
+  //       itemBuilder: (context, index) {
+  //         final item = controller.exam[index];
+  //         return 
+  //         Container(
             
-            margin: const EdgeInsets.symmetric(vertical: 2,horizontal: 5),
+  //           margin: const EdgeInsets.symmetric(vertical: 2,horizontal: 5),
 
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            height: 95,
-            decoration: BoxDecoration(
-              boxShadow: [BoxShadow(
-                  color: Colors.black.withOpacity(0.05), 
-                  offset: Offset(0, 3), 
-                  blurRadius: 13, 
-                  spreadRadius: 0, 
-                ),],
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: 
+  //           padding: const EdgeInsets.symmetric(horizontal: 14),
+  //           height: 95,
+  //           decoration: BoxDecoration(
+  //             boxShadow: [BoxShadow(
+  //                 color: Colors.black.withOpacity(0.05), 
+  //                 offset: Offset(0, 3), 
+  //                 blurRadius: 13, 
+  //                 spreadRadius: 0, 
+  //               ),],
+  //             color: Colors.white,
+  //             borderRadius: BorderRadius.circular(16),
+  //           ),
+  //           child: 
             
             
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [InkWell(child: 
-                Image.asset('icons/Frame6.png', width: 26, height: 23),onTap:(){
+  //           Row(
+  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //             children: [InkWell(child: 
+  //               Image.asset('icons/Frame6.png', width: 26, height: 23),onTap:(){
 
-                },),
-                              Row(
-                  children: [
-                    Text('جنيه', style: TextStyle(fontSize: 16)),
-                    Text(
-                     '${ item.durationmin.toString()}',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Color.fromARGB(202, 6, 69, 152),
-                      ),
-                    ),
-                  ],
-                ),
+  //               },),
+  //                             Row(
+  //                 children: [
+  //                   Text('جنيه', style: TextStyle(fontSize: 16)),
+  //                   Text(
+  //                    '${ item.durationmin.toString()}',
+  //                     style: TextStyle(
+  //                       fontWeight: FontWeight.bold,
+  //                       fontSize: 16,
+  //                       color: Color.fromARGB(202, 6, 69, 152),
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
                
               
-                Row(
-                  children: [
-                    Text('درجة', style: TextStyle(fontSize: 16)),
-                    Text(
-                      item.totaldegree.toString(),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Color.fromARGB(202, 6, 69, 152),
-                      ),
-                    ),
-                  ],
-                ),
+  //               Row(
+  //                 children: [
+  //                   Text('درجة', style: TextStyle(fontSize: 16)),
+  //                   Text(
+  //                     item.totaldegree.toString(),
+  //                     style: TextStyle(
+  //                       fontWeight: FontWeight.bold,
+  //                       fontSize: 16,
+  //                       color: Color.fromARGB(202, 6, 69, 152),
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
                
-                Row(
-                  children: [
+  //               Row(
+  //                 children: [
                     
-                    Text('', style: TextStyle(fontSize: 16)),
-                    Text(
-                      item.course?['month_by_year'],
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Color.fromARGB(202, 6, 69, 152),
-                      ),
-                    ),
-                  ],
-                ),  Row(
-                  children: [
-                    Text('', style: TextStyle(fontSize: 16)),
-                    Text(
-                      item.examplace.toString(),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Color.fromARGB(202, 6, 69, 152),
-                      ),
-                    ),
-                  ],
-                ),
+  //                   Text('', style: TextStyle(fontSize: 16)),
+  //                   Text(
+  //                     item.course?['month_by_year'],
+  //                     style: TextStyle(
+  //                       fontWeight: FontWeight.bold,
+  //                       fontSize: 16,
+  //                       color: Color.fromARGB(202, 6, 69, 152),
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),  Row(
+  //                 children: [
+  //                   Text('', style: TextStyle(fontSize: 16)),
+  //                   Text(
+  //                     item.examplace.toString(),
+  //                     style: TextStyle(
+  //                       fontWeight: FontWeight.bold,
+  //                       fontSize: 16,
+  //                       color: Color.fromARGB(202, 6, 69, 152),
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
                 
-                 Row(
-                  children: [
-                    Text('دقيقة', style: TextStyle(fontSize: 16)),
-                    Text(
-                      item .examprice.toString(),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Color.fromARGB(202, 6, 69, 152),
-                      ),
-                    ),
-                  ],
-                ),
-                 Row(
-                  children: [
-                    Text(
-                      'اسم الامتحان',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                    SizedBox(width: 4),
-                   Image.asset('icons/✏️ Digit.png',width: 24,height: 24,)
-                  ],
-                ),
+  //                Row(
+  //                 children: [
+  //                   Text('دقيقة', style: TextStyle(fontSize: 16)),
+  //                   Text(
+  //                     item .examprice.toString(),
+  //                     style: TextStyle(
+  //                       fontWeight: FontWeight.bold,
+  //                       fontSize: 16,
+  //                       color: Color.fromARGB(202, 6, 69, 152),
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //                Row(
+  //                 children: [
+  //                   Text(
+  //                     'اسم الامتحان',
+  //                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+  //                   ),
+  //                   SizedBox(width: 4),
+  //                  Image.asset('icons/✏️ Digit.png',width: 24,height: 24,)
+  //                 ],
+  //               ),
               
               
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
+  //             ],
+  //           ),
+  //         );
+  //       },
+  //     ),
+  
+  //   );
+ 
+  // }
 
   Widget _buildPagination(HomeController controller) {
     return Row(
@@ -592,7 +595,7 @@ controller.exampaginationonline();
         return GestureDetector(
           onTap: () {
             controller.currentPage = pageIndex;
-            controller.exampaginationonline(page:controller.currentPage);
+            // controller.exampaginationonline(context,page:controller.currentPage);
             controller.update();
           },
           child: Container(
@@ -647,7 +650,7 @@ List<Widget> _buildPageNumbers(HomeController controller) {
       GestureDetector(
         onTap: () {
           controller.currentPage = page;
-            controller.exampaginationonline(page:controller.currentPage);
+            // controller.exampaginationonline(context,page:controller.currentPage);
           controller.update();
         },
         child: Container(

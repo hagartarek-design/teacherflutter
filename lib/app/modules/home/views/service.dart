@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutterwallet/Applinks.dart';
+import 'package:flutterwallet/app/modules/home/Applinks.dart';
 import 'package:flutterwallet/app/modules/home/modules/students.dart';
 import 'package:flutterwallet/app/modules/home/views/progress.dart';
 import 'package:http/http.dart' as http;

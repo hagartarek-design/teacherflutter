@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutterwallet/Applinks.dart';
+import 'package:flutterwallet/app/modules/home/Applinks.dart';
 // import 'package:flutterwallet/app/Applinks.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -73,7 +73,7 @@ class TokenService {
     _refreshTimer?.cancel();
     
     try {
-      final expiryDate = JwtDecoder.getExpirationDate(token);
+      final expiryDate = JwtDecoder.getExpirationDate(token); 
       final remaining = expiryDate.difference(DateTime.now());
       
       print('⏳ [Dialog] صلاحية التوكن: ${remaining.inMinutes} دقيقة');

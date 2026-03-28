@@ -1,9 +1,4 @@
 
-import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
-import 'package:flutterwallet/app/modules/home/modules/wallet.dart';
-
-import 'file.dart';
-
 
 
 class userInfo {
@@ -32,9 +27,9 @@ final String?    password;
   });
 
   factory userInfo.fromJson(Map<String, dynamic> json) {
-print('json'+json['id'].toString());
-print('json'+json['image'].toString());
-print('url'+json['url'].toString());
+// print('json'+json['id'].toString());
+// print('json'+json['image'].toString());
+// print('url'+json['url'].toString());
     return userInfo(
       
       id: json['id'] as int?,

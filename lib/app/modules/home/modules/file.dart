@@ -1,8 +1,4 @@
 
-import 'package:flutterwallet/app/modules/home/modules/wallet.dart';
-
-import 'file.dart';
-
 
 
 
@@ -34,7 +30,7 @@ final String?    createdate;
   });
 
   factory Event.fromJson(Map<String, dynamic> json) {
-print('json'+json['id'].toString());
+// print('json'+json['id'].toString());
     return Event(
       
       id: json['id'] as int?,

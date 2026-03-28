@@ -1,6 +1,7 @@
 import 'package:flutterwallet/app/modules/home/views/%D8%A7%D8%AF%D8%A7%D8%B1%D8%A9%20%D8%A7%D9%84%D8%B3%D9%86%D8%AA%D8%B1.dart';
 import 'package:flutterwallet/app/modules/home/views/askquestion.dart';
-import 'package:flutterwallet/app/modules/home/views/dialog_quizes.dart';
+import 'package:flutterwallet/app/modules/home/views/dialogs/dialog_quizes.dart';
+// import 'package:flutterwallet/app/modules/home/views/dialog_quizes.dart';
 import 'package:flutterwallet/app/modules/home/views/lectures.dart';
 import 'package:flutterwallet/app/modules/home/views/logoutScreen.dart';
 import 'package:flutterwallet/app/modules/home/views/mainscreen.dart';

@@ -69,7 +69,7 @@ class Mypage extends StatelessWidget {
                             context,
                             MaterialPageRoute(builder: (context) => Homescreen()),
                           );
-                          controller.allimages();
+                          // controller.allimages(context);
                         },
                         child: Container(
                           width: 48,

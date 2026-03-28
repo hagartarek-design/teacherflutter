@@ -1,7 +1,5 @@
-import 'package:flutterwallet/app/modules/home/controllers/tokens.dart';
 
 class DialogSession {
-  static bool _active = false;
 
   // static Future<void> start() async {
   //   if (_active) return;
@@ -13,7 +11,7 @@ class DialogSession {
  
   //   TokenService.startAutoRefresh();
   // }
-
+ 
   // static Future<void> end({bool logout = true}) async {
   //   if (!_active) return;
   //   _active = false;

@@ -1,10 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutterwallet/app/modules/home/views/assignments%20copy.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
 import 'package:flutterwallet/app/modules/home/views/containdialoge.dart';
 import 'package:flutterwallet/app/modules/home/views/containe.dart';
-import 'package:flutterwallet/app/modules/home/views/dialog_quizes.dart';
+import 'package:flutterwallet/app/modules/home/views/dialogs/dialog_quizes.dart';
 import 'package:flutterwallet/app/modules/home/views/dropdown.dart';
 import 'package:flutterwallet/app/modules/home/views/onlinequizes.dart';
 import 'package:flutterwallet/app/modules/home/views/DashboardScreen.dart';
@@ -70,7 +72,13 @@ class _DashboardScreen2State extends State<quizes> {
 
   @override
   Widget build(BuildContext context) {
-
+     final screenWidth = MediaQuery.of(context).size.width;
+final isDesktop = screenWidth >= 1200;
+  //  Timer? _refreshTimer;
+  // final screenWidth = MediaQuery.of(context).size.width;
+  final isMobile = screenWidth < 650;
+  final istablet = screenWidth < 1024;  // return Scaffold(
+  
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -94,37 +102,60 @@ class _DashboardScreen2State extends State<quizes> {
       body: GetBuilder<HomeController>(
         init: HomeController(),
         builder: (controller) {
-          return Row(
-  children: [
+          // return Row(
+  // children: [
     
     // Main Content
-    Expanded(
-      flex: 1, // Reduced to 50% width (you can adjust the value further)
-      child: Column(
+    // Expanded(
+    //   flex: 1, // Reduced to 50% width (you can adjust the value further)
+    //   child:
+  return    ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(
+    physics: const ClampingScrollPhysics(),
+    child: Column(
+      children: [ Stack(
         children: [
           
-          Container(
-
-            color: Colors.white,
-            height: 96,
-            padding: const EdgeInsets.fromLTRB(64, 24, 344, 24),
-            child: App_bar(),
-          ),
+          // Padding(
+          //   child:
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+  width: double.infinity,color: Colors.white,
+  height: 96,
+  padding: 
+  isMobile
+      ? EdgeInsets.zero
+      : 
+      const EdgeInsets.fromLTRB(64, 24, 344, 24),
+  child: const App_bar(),
+),
           SizedBox(height: 16),
-          Expanded(
+          // Expanded(
 
 
-            child:Container(
-              decoration: BoxDecoration(
-                // color: Colors.white,
-                // boxShadow: [BoxShadow(
-                //   color: Colors.black.withOpacity(0.05), 
-                //   offset: Offset(0, 3), 
-                //   blurRadius: 13, 
-                //   spreadRadius: 0, 
-                // ),]
-              ),
-              child: Container(
+            // child:
+            // Container(
+            //   decoration: BoxDecoration(
+            //     // color: Colors.white,
+            //     // boxShadow: [BoxShadow(
+            //     //   color: Colors.black.withOpacity(0.05), 
+            //     //   offset: Offset(0, 3), 
+            //     //   blurRadius: 13, 
+            //     //   spreadRadius: 0, 
+            //     // ),]
+            //   ),
+              // child:
+               Container( height: 860,//width: 1007,
 width: 1031,
               margin: const EdgeInsets.symmetric(horizontal: 100),
          decoration:  BoxDecoration(  
@@ -133,29 +164,29 @@ width: 1031,
               // elevation: 3,
                 borderRadius: BorderRadius.circular(16),
                 
-                )
-              // child: Padding(
-                // padding: const EdgeInsets.all(16.0),
-                ,
+                ),
+              child:
+               Padding(
+                padding: const EdgeInsets.all(16.0),
+//                 ,
                 child:
                 Column(
                   
                   children: [
-               Container(
-                width: 1031,
-                decoration: BoxDecoration(   color: Colors.white,borderRadius: BorderRadius.circular(16)),
-             
-                child: Column(children: [    SizedBox(height: 10,), 
-                _buildHeader(context),
-                SizedBox(height: 10,),
+            // child:
               _buildHeader2(),       SizedBox(height: 5,),
-                           ]), ),  
-                           
-                           
-                                     Container(
+ _buildHeader(context), 
+                // Container(
+                // width: 1031,
+                // decoration: BoxDecoration(   
+                //   color: Colors.white,borderRadius: BorderRadius.circular(16)),
+                isMobile? SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child:    
+                   Container(
             // margin: const EdgeInsets.symmetric(vertical: 5,horizontal: 5),
             // padding: const EdgeInsets.symmetric(horizontal: 16),
-            height: 95,width: 1007,padding: EdgeInsets.fromLTRB(24, 25, 24, 25),
+            height: 95,width: 1007,padding:isMobile?EdgeInsets.zero: EdgeInsets.fromLTRB(24, 25, 24, 25),
             decoration: BoxDecoration(
               boxShadow: [BoxShadow(
                   color: Colors.black.withOpacity(0.05), 
@@ -169,16 +200,16 @@ width: 1031,
            
            
                child: Row(
-                spacing: 10,
+                spacing:isMobile?0: 10,
+              // alignment:isMobile? WrapAlignment.center:WrapAlignment.spaceBetween,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              
               children: [
                 // Image.asset('icons/Frame6.png', width: 26, height: 23),
                        
                 // Text('   '),
             
                
-                Row(
+                Wrap(
                   children: [
                     Text(
                       'سعر الامتحان',
@@ -189,7 +220,7 @@ width: 1031,
                   ],
                 ),
               
-                Row(
+                Wrap(
                   children: [
                     Padding(padding: EdgeInsets.symmetric(horizontal: 10),child:  Text(
                       'اجمالي الدرجه',
@@ -199,7 +230,7 @@ width: 1031,
                   //  Image.asset('icons/✏️ Digit.png',width: 24,height: 24,)
                   ],
                 ),
-                Row(
+                Wrap(
                   children: [
                     Text(
                       'تاريخ بدا الامتحان',
@@ -210,7 +241,7 @@ width: 1031,
                   ],
                 ),
                 
-                Row(
+                Wrap(
                   children: [
                     Text(
                       'مكان الامتحان ',
@@ -220,7 +251,7 @@ width: 1031,
                   //  Image.asset('icons/✏️ Digit.png',width: 24,height: 24,)
                   ],
                 ),
-                Row(
+                Wrap(
                   children: [
                     Text(
                       'مده الامتحان',
@@ -230,7 +261,7 @@ width: 1031,
                   //  Image.asset('icons/✏️ Digit.png',width: 24,height: 24,)
                   ],
                 ),
-                Row(
+                Wrap(
                   children: [
                     Text(
                       'نوع الامتحان',
@@ -242,10 +273,109 @@ width: 1031,
                 ),
               ],
             ),)
-          ,
-                    // SizedBox(height: 10),
-                    _buildList(controller),
-                                                                 Container(
+          ,  ):          Container(
+            // margin: const EdgeInsets.symmetric(vertical: 5,horizontal: 5),
+            // padding: const EdgeInsets.symmetric(horizontal: 16),
+            height: 95,width: 1007,padding:isMobile?EdgeInsets.zero: EdgeInsets.fromLTRB(24, 25, 24, 25),
+            decoration: BoxDecoration(
+              boxShadow: [BoxShadow(
+                  color: Colors.black.withOpacity(0.05), 
+                  offset: Offset(0, 3), 
+                  blurRadius: 13, 
+                  spreadRadius: 0, 
+                ),],
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+            ),
+           
+           
+               child: Wrap(
+                spacing:isMobile?0: 10,
+              alignment:isMobile? WrapAlignment.center:WrapAlignment.spaceBetween,
+              
+              children: [
+                // Image.asset('icons/Frame6.png', width: 26, height: 23),
+                       
+                // Text('   '),
+            
+               
+                Wrap(
+                  children: [
+                    Text(
+                      'سعر الامتحان',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    // SizedBox(width: 7),
+                  //  Image.asset('icons/✏️ Digit.png',width: 24,height: 24,)
+                  ],
+                ),
+              
+                Wrap(
+                  children: [
+                    Padding(padding: EdgeInsets.symmetric(horizontal: 10),child:  Text(
+                      'اجمالي الدرجه',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),),
+                    // SizedBox(width: 7),
+                  //  Image.asset('icons/✏️ Digit.png',width: 24,height: 24,)
+                  ],
+                ),
+                Wrap(
+                  children: [
+                    Text(
+                      'تاريخ بدا الامتحان',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    // SizedBox(width: 7),
+                  //  Image.asset('icons/✏️ Digit.png',width: 24,height: 24,)
+                  ],
+                ),
+                
+                Wrap(
+                  children: [
+                    Text(
+                      'مكان الامتحان ',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    // SizedBox(width: 7),
+                  //  Image.asset('icons/✏️ Digit.png',width: 24,height: 24,)
+                  ],
+                ),
+                Wrap(
+                  children: [
+                    Text(
+                      'مده الامتحان',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    // SizedBox(width: 7),
+                  //  Image.asset('icons/✏️ Digit.png',width: 24,height: 24,)
+                  ],
+                ),
+                Wrap(
+                  children: [
+                    Text(
+                      'نوع الامتحان',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    // SizedBox(width: 7),
+                  //  Image.asset('icons/✏️ Digit.png',width: 24,height: 24,)
+                  ],
+                ),
+              ],
+            ),)
+          ,  
+                    // _buildList(controller),
+                // child: Column(children: [
+                      // SizedBox(height: 10,), 
+               
+                SizedBox(height: 10,),
+              // _buildHeader2(),       SizedBox(height: 5,),
+                  // _buildHeader(context),
+                   _buildList(controller,isMobile),
+                            ]), ),  
+                           
+    ),            
+                                                     Container(
     width: 1030,
     height: 67,
     decoration: const BoxDecoration(
@@ -263,7 +393,8 @@ width: 1031,
             if (controller.currentPage > 1) {
               controller.currentPage--;
            
-                  controller.exampagination(page:controller.currentPage);
+                  controller.exampagination(//context,
+                  page:controller.currentPage);
           controller.update();
             }
           },
@@ -293,7 +424,7 @@ width: 1031,
           // width: 292,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: _buildPageNumbers(controller),
+            children: _buildPageNumbers(controller,context),
           ),
         ),
 
@@ -301,7 +432,8 @@ width: 1031,
           onTap: () {
             if (controller.currentPage < controller.totalPages) {
               controller.currentPage++;
-            controller.exampagination(page:controller.currentPage);
+            controller.exampagination(//context,
+            page:controller.currentPage);
           controller.update();
             }
           },
@@ -339,44 +471,58 @@ width: 1031,
   )
                                             
              
+          ],),
+                  // SizedBox(height: 10),
+                      
                     // _buildPagination(controller),
-                  ],
-                ),
-              ),
-            ),)
+                //   ],
+                // ),
+              // ),
+            // ),//),
           // ),
-        ],
-      ),
-    ),
-    
-    Container(
-      width: 280, 
-      height: double.infinity, 
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(24),
-          bottomLeft: Radius.circular(24),
-        ),
-        color: Color.fromARGB(240, 6, 69, 152), 
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 10,
-            spreadRadius: 2,
-          ),
-        ],
-      ),
-      child: rightbar(),
-    ),
+      //   ],
+      // ),
+    // ),
+(isMobile&&controller.isoptionselect)||(istablet&&controller.isoptionselecttablet)||(!isMobile&&!istablet)
+?Positioned(
+            top: 0, // Align at the top
+         right: 0, // Align to the right
+            child: Container(
+              width: 280, // Fixed width
+              height: 1445, // Fixed height
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    bottomLeft: Radius.circular(24)),
+                color:
+                    Color.fromARGB(240, 6, 69, 152), // Sidebar background color
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 10,
+                    spreadRadius: 2,
+                  ),
+                ],
+              ),
+              child: rightbar(),
+            ),
+          )
+  :Container()
+   
+   
   ],
-);
+),//])
+          // , 
+
+     ])));
         },
       ),
     );
   }
 
   Widget _buildHeader(context) {
-    return Positioned(top: 0,bottom: 50,child:  Container(
+    return // Positioned(top: 0,bottom: 50,child: 
+     Container(
      
      
       decoration:BoxDecoration(
@@ -436,7 +582,7 @@ Expanded(
           ),
           
         ],
-      ),)
+      )//,)
     );
   }
   Widget _buildHeader2() {
@@ -510,11 +656,11 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>Onlinequizes()));
     );
   }
 
-  Widget _buildList(HomeController controller) {
+  Widget _buildList(HomeController controller,isMobile) {
     return Expanded(
       child:
       
-   ListView.builder(
+   ListView.builder(shrinkWrap: true,
   itemCount: controller.Exams.length,
   itemBuilder: (context, index) {
        DateTime startDateTime = DateTime.parse(controller.Exams[index].startdate.toString());
@@ -539,7 +685,11 @@ List<String> arabicMonths = [
 String arabicMonth = arabicMonths[startDateTime.month];
 String monthName = DateFormat('MMMM').format(startDateTime);
     final exam = controller.Exams[index];
-    return  Container(
+    return isMobile?SingleChildScrollView
+    (
+      scrollDirection: Axis.horizontal,
+      child: 
+        Container(
       width: 1008,
       padding: const EdgeInsets.fromLTRB(24, 25, 24, 25),
       height: 95,
@@ -593,11 +743,152 @@ borderRadius: BorderRadius.circular(8),
         ),
       ),
       onTap: () {
-     controller.   deleteexam(exam.id.toString());
+     controller.   deleteexam(exam.id.toString(),context
+     );
         // controller.deletesection(item.id.toString());
 controller.update();
 controller.
- exampagination();
+ exampagination(//context
+ );
+
+      },
+    
+            ),
+          ],
+           child: Image.asset(
+          'icons/Group 37966.png'
+           ,width: 26,height: 6,), ),
+          Row(
+            children: [
+              // const Text('جنيه', style: TextStyle(fontSize: 16)),
+              Text(
+                exam.examprice.toString(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Color.fromARGB(202, 6, 69, 152),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Text(
+               day.toString()+"-"+year.toString()+"-"+arabicMonth.toString(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Color.fromARGB(202, 6, 69, 152),
+                ),
+              ),
+            ],
+          ),
+      
+          Row(
+            children: [
+              const Text('', style: TextStyle(fontSize: 16)),
+              Text(
+                'سنتر${exam.examplace.toString()}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Color.fromARGB(202, 6, 69, 152),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              const Text('دقيقة', style: TextStyle(fontSize: 16)),
+              Text(
+                exam.durationmin.toString(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Color.fromARGB(202, 6, 69, 152),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Text(
+                exam.exam_name??"",
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(width: 4),
+              Image.asset('icons/✏️ Digit.png', width: 24, height: 24),
+            ],
+          ),
+        ],
+      ),
+    ) 
+ 
+    ,):
+     Container(
+      width: 1008,
+      padding: const EdgeInsets.fromLTRB(24, 25, 24, 25),
+      height: 95,
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            offset: const Offset(0, 3),
+            blurRadius: 13,
+            spreadRadius: 0,
+          ),
+        ],
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+  
+                  PopupMenuButton<String>(
+ color: Colors.white,
+borderRadius: BorderRadius.circular(8),
+  onSelected: (value) {
+    if (value == 'close') {
+      print('اغلق السؤال selected');
+    } else if (value == 'delete') {
+      print('مسح السؤال selected');
+    }
+  },
+  itemBuilder: (BuildContext context) => [
+    PopupMenuItem(
+      value: 'close',
+      child: Container(
+        width: 151, 
+        height: 75, 
+        child: Center( 
+          child: Text('اغلق السؤال' ,
+          style: TextStyle(color: Colors.blue),
+          ),
+        ),
+      ),
+    ),
+    PopupMenuItem(
+      value: 'delete',
+      child: Container(
+        width: 151,
+        height: 75,
+        child: Center(
+          child: Text('مسح السؤال',style: 
+          TextStyle(color: Colors.red),),
+        ),
+      ),
+      onTap: () {
+     controller.   deleteexam(exam.id.toString(),context
+     );
+        // controller.deletesection(item.id.toString());
+controller.update();
+controller.
+ exampagination(//context
+ );
 
       },
     
@@ -687,7 +978,8 @@ controller.
         return GestureDetector(
           onTap: () {
             controller.currentPage = pageIndex;
-            controller.exampagination(page:controller.currentPage);
+            controller.exampagination(//context,
+            page:controller.currentPage);
             controller.update();
           },
           child: Container(
@@ -731,17 +1023,18 @@ controller.
 // }
 
 }
-List<Widget> _buildPageNumbers(HomeController controller) {
+List<Widget> _buildPageNumbers(HomeController controller,context) {
   final currentPage = controller.currentPage;
   final totalPages = controller.totalPages;
   final List<Widget> pages = [];
 
-  void addPage(int page) {
+  void addPage(int page, context) {
     pages.add(
       GestureDetector(
         onTap: () {
           controller.currentPage = page;
-            controller.exampagination(page:controller.currentPage);
+            controller.exampagination(//context,
+            page:controller.currentPage);
           controller.update();
         },
         child: Container(
@@ -766,11 +1059,11 @@ List<Widget> _buildPageNumbers(HomeController controller) {
 
   if (totalPages <= 7) {
     for (int i = 1; i <= totalPages; i++) {
-      addPage(i);
+      addPage(i,context);
     }
   } else {
     for (int i = 1; i <= 3; i++) {
-      addPage(i);
+      addPage(i,context);
     }
 
     if (currentPage > 4 && currentPage < totalPages - 3) {
@@ -780,7 +1073,7 @@ List<Widget> _buildPageNumbers(HomeController controller) {
         child: Center(child: Text('...')),
       ));
 
-      addPage(currentPage);
+      addPage(currentPage,context);
 
       pages.add(const SizedBox(
         width: 40,
@@ -796,7 +1089,7 @@ List<Widget> _buildPageNumbers(HomeController controller) {
     }
 
     for (int i = totalPages - 2; i <= totalPages; i++) {
-      addPage(i);
+      addPage(i,context);
     }
   }
 

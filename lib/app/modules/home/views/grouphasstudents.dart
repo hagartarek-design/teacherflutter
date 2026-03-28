@@ -1,27 +1,18 @@
 import 'dart:typed_data';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterwallet/Applinks.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutterwallet/app/modules/home/modules/wallet.dart';
-import 'package:flutterwallet/app/modules/home/views/dropdown.dart';
-import 'package:flutterwallet/app/modules/home/views/mypage.dart';
-import 'package:flutterwallet/app/modules/home/views/progress.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_widget_cache.dart';
 import 'dart:ui';
 import 'dart:ui' as ui;
-import 'package:intl/intl.dart';
-import 'package:path/path.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
   
 
+// ignore: must_be_immutable
 class groupHasStudents extends StatelessWidget {
-  final Course course;
    groupHasStudents({super.key ,required this.course});
   final HomeController controller = HomeController();
   String dropdownValue = 'Option 1';
+  final Course course;
   List<String> items = ['Option 1', 'Option 2', 'Option 3'];
 
   Uint8List? image;
@@ -41,7 +32,6 @@ class groupHasStudents extends StatelessWidget {
   String? selectedValue;
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       drawer: Drawer(
@@ -395,8 +385,9 @@ Navigator.pop(context);
                                           )),//)
                                     ]),
                               ),
- ...List.generate(controller.stu.student?.length ?? 0,(index){
-                       return       Container(
+//  ...List.generate(controller.stu.student?.length ?? 0,(index){
+                      //  return
+                              Container(
                                 width: 984,
                                 height: 72,
                                 decoration: BoxDecoration(
@@ -456,7 +447,7 @@ Navigator.pop(context);
 mainAxisAlignment: MainAxisAlignment.end,
 children: [                           
 
-    Text('${controller.stu.student?[index]['email']??"n/a"}')
+    // Text('${controller.stu.student?[index]['email']??"n/a"}')
 
 
 ]
@@ -527,16 +518,16 @@ Text('+(02)1125134370',style: TextStyle(  color: Colors.grey ),)
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
 
-                       Text('${controller.stu.student?[index]['name']}',textAlign: TextAlign.right
-                       ,style: TextStyle(fontFamily: 'Teshrin AR+LT'
-                       ,fontWeight:FontWeight.w500,
-                       fontSize: 14
-                       ,height:17.5/14 
+                      //  Text('${controller.stu.student?[index]['name']}',textAlign: TextAlign.right
+                      //  ,style: TextStyle(fontFamily: 'Teshrin AR+LT'
+                      //  ,fontWeight:FontWeight.w500,
+                      //  fontSize: 14
+                      //  ,height:17.5/14 
                        
-                       ),
+                      //  ),
                        
-                       )
-                       ,
+                      //  )
+                      //  ,
                        SizedBox(height: 8,),
                   // Text('+(02)${controller.coursemanager[index].students?[index]['phoneNum']}',style: TextStyle(
                   //        color: Colors.grey 
@@ -547,15 +538,15 @@ Text('+(02)1125134370',style: TextStyle(  color: Colors.grey ),)
                         ])
                       // ],)) 
                 ,SizedBox(width:8),
-                 Container(
-                        width: 40,
-                        height: 40,
-                        child: CircleAvatar(
+                //  Container(
+                //         width: 40,
+                //         height: 40,
+                //         child: CircleAvatar(
                           
-                          radius: 24,
-                          backgroundImage: NetworkImage('${Applinks.baseurl}/${controller.stu.student?[index]['img'].toString()}'),
-                        ),
-                      ),
+                //           radius: 24,
+                //           backgroundImage: NetworkImage('${Applinks.baseurl}/${controller.stu.student?[index]['img'].toString()}'),
+                //         ),
+                //       ),
                    
                    
                    
@@ -574,14 +565,17 @@ Text('+(02)1125134370',style: TextStyle(  color: Colors.grey ),)
                                 child:Row(
 
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [  Text('${controller.stu.student?[index]['code']}')])),
+                                  children: [  
+                                    // Text('${controller.stu.student?[index]['code']}')
+                                    ])),
                                     )
                                     ,
                                   
                                 
                                   ],
                                 ),
-);} )
+// );}
+ )
                              
 
                             ],
@@ -616,10 +610,10 @@ Text('+(02)1125134370',style: TextStyle(  color: Colors.grey ),)
           onTap: () {
             if (controller.currentPage > 1) {
               controller.currentPage--;
-            var id= controller.students2.map((f)=>f.id.toString());
+            controller.students2.map((f)=>f.id.toString());
     // controller.currentPage = page;
           //  var id= controller.students2.map((f)=>f.id.toString());
-          controller .Studentsbycourse(course.id.toString(),page:controller.currentPage);
+          // controller .Studentsbycourse(context,course.id.toString(),page:controller.currentPage);
               // controller.studentexam(controller.currentPage);
               print( controller.currentPage);
               controller.update();
@@ -655,7 +649,7 @@ Text('+(02)1125134370',style: TextStyle(  color: Colors.grey ),)
           // width: 292,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: _buildPageNumbers(controller,course),
+            children: _buildPageNumbers(controller,course,context),
           ),
         ),
 
@@ -670,7 +664,7 @@ Text('+(02)1125134370',style: TextStyle(  color: Colors.grey ),)
         // var id = controller.students2.map((f)=>f.id.toString());
         print(course.id);
         print(controller.currentPage);
- controller .Studentsbycourse( course.id.toString(),page:controller.currentPage);
+//  controller .Studentsbycourse(context, course.id.toString(),page:controller.currentPage);
           // controller .fetchStudent('$id',page:controller.currentPage);
               // controller.studentexam(controller.currentPage);
               controller.update();
@@ -722,28 +716,6 @@ Text('+(02)1125134370',style: TextStyle(  color: Colors.grey ),)
     );
   }
 
-  Widget _buildTextField(
-      String label, String hint, TextEditingController controllers) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Text(label,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-        SizedBox(height: 4),
-        TextField(
-          controller: controllers,
-          textAlign: TextAlign.right,
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: TextStyle(color: Colors.grey),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(width: 1),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 }
 
 String dropdownValue = 'ادخل السنه الدراسيه';
@@ -801,7 +773,7 @@ Widget buildDropdownContainer(double maxWidth) {
     ),
   );
 }
-List<Widget> _buildPageNumbers(HomeController controller,Course course) {
+List<Widget> _buildPageNumbers(HomeController controller,Course course,context) {
   final currentPage = controller.currentPage;
   final totalPages = controller.totalPages;
   final List<Widget> pages = [];
@@ -812,7 +784,7 @@ List<Widget> _buildPageNumbers(HomeController controller,Course course) {
         onTap: () {
           controller.currentPage = page;
           //  var id= controller.students2.map((f)=>f.id.toString());
-         controller .Studentsbycourse(course.id.toString(),page:controller.currentPage);
+        //  controller .Studentsbycourse(context,course.id.toString(),page:controller.currentPage);
               // controller.studentexam(controller.currentPage);
               controller.update();
         },

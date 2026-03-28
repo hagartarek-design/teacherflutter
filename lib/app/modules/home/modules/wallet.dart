@@ -1,4 +1,3 @@
-import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 
 class Course {
   final int? id;

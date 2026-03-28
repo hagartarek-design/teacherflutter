@@ -116,7 +116,8 @@ child: groupHasStudents(course:course),
     return  show_Dialog();
 
     });
-       controller.gloabalsection();     },
+       controller.gloabalsection(//context
+       );     },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
               side: BorderSide(color: Color.fromARGB(206, 6, 69, 152)),
@@ -306,7 +307,7 @@ borderRadius: BorderRadius.circular(8),
         return GestureDetector(
           onTap: () {
             controller.currentPage = pageIndex;
-            controller.allpaginsections(page:controller.currentPage);
+            // controller.allpaginsections(context,page:controller.currentPage);
             controller.update();
           },
           child: Container(

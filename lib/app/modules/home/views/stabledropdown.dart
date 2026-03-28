@@ -65,7 +65,8 @@ child: TextButton(onPressed: (){
 
           final selectedDateString = controller. formatDate(newSelectedDay)??'';
 
-       controller.   dailytable(coursetabledate:selectedDateString);
+       controller.   dailytable(//context,
+       coursetabledate:selectedDateString);
 
 
      Navigator.of(context).pop();

@@ -1,7 +1,4 @@
 
-import 'package:flutterwallet/app/modules/home/modules/wallet.dart';
-
-import 'file.dart';
 
 
 

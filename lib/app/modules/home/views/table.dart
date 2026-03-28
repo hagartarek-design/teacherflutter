@@ -110,9 +110,9 @@ final List<Color> colors=[
                       child: App_bar(),
                     ),
 
-       Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+       Wrap(
+                  alignment: WrapAlignment.start,
+                  runAlignment: WrapAlignment.start,
                   children: [
 
 calender1(),
@@ -212,7 +212,8 @@ Container(
 
           final selectedDateString = controller. formatDate(newSelectedDay)??'';
 
-       controller.   dailytable(coursetabledate:selectedDateString);
+       controller.   dailytable(//context,
+       coursetabledate:selectedDateString);
 
 
      Navigator.of(context).pop();

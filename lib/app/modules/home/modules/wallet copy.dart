@@ -1,4 +1,3 @@
-import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 
 class course_reservation {
   final int? id;
@@ -14,8 +13,8 @@ class course_reservation {
 // // final bool ?attendence;
 // // final bool? sheets_paym;
 // final String ?grade;
-  final dynamic?students;
-  final dynamic?course;
+  final dynamic students;
+  final dynamic course;
   
 // final String  ?month_by_year;
   // final List<String>? courseIds;
@@ -55,8 +54,8 @@ this.place
     // availableStudents:json['availableStudents']as int?,
     //  grade:json['grade']as String?
     //  ,
-    course: json['course']as dynamic?,
-     students: json['students']as dynamic?
+    course: json['course']as dynamic??{},
+     students: json['students']as dynamic??{}
 // ,     placecountry:json['placecountry']as String?,type: json['type']as String?
 //     ,month_by_year: json['month_by_year']as String?
     );

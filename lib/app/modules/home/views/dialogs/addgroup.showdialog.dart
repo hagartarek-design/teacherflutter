@@ -1,14 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
-import 'package:flutterwallet/app/modules/home/views/%D8%A7%D8%AF%D8%A7%D8%B1%D8%A9%20%D8%A7%D9%84%D8%B3%D9%86%D8%AA%D8%B1.dart';
-import 'package:flutterwallet/app/modules/home/views/quizes.dart';
 import 'package:flutterwallet/app/modules/home/views/assignments%20copy.dart';
-import 'package:flutterwallet/app/modules/home/views/dropdown.dart';
-import 'package:flutterwallet/app/modules/home/views/progress.dart';
-import 'package:flutterwallet/app/modules/home/views/stabledropdown.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -108,7 +101,6 @@ class _dialogquizesState extends State<addgroupdialog> {
         builder: (context, constraints) {
           // Use constraints to determine the size of the dialog
           double dialogWidth = constraints.maxWidth > 1032 ? 1032 : constraints.maxWidth * 0.9;
-          double columnWidth = dialogWidth * 0.45; // Adjust column width based on dialog width
 
           return Container(
 
@@ -353,7 +345,10 @@ Text('ميعاد الدرس',style: TextStyle(fontSize: 16,fontWeight: FontWeigh
                           backgroundColor: Color.fromARGB(255, 6, 69, 152)
                         ) ,
                         
-                        onPressed: (){}, child: Text('حفظ',style: TextStyle(color: Colors.white),))
+                        onPressed: (){
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Assignments2()));
+      // print('Upload failed: ${response.statusCode}');
+    }, child: Text('حفظ',style: TextStyle(color: Colors.white),))
                         )]))
                 ],
               ),
@@ -364,31 +359,5 @@ Text('ميعاد الدرس',style: TextStyle(fontSize: 16,fontWeight: FontWeigh
     );
   });}
 
-  Widget _buildTextField(String label, String hint,controller) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Text(
-          label,
-          style: TextStyle(),
-          textAlign: TextAlign.right,
-        ),
-        SizedBox(height: 8),
-        TextField(textAlign: TextAlign.right
-      ,  controller:controller
-         , textDirection: TextDirection.rtl,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),),
-            hintText: hint,
-            hintTextDirection: TextDirection.rtl,
-            hintStyle: TextStyle(
-              color: Color.fromARGB(255, 125, 140, 158),
-              fontSize: 16,
-              fontWeight: FontWeight.w400),
-          ),
-        ),
-      ],
-    );
-  }
+
 }

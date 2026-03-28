@@ -1,25 +1,294 @@
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutterwallet/app/modules/home/views/Quizes.dart';
+// import 'package:flutterwallet/app/modules/home/views/assignments%20copy.dart';
+// import 'package:flutterwallet/app/modules/home/views/dropdown.dart';
+// import 'package:flutterwallet/app/modules/home/views/progress.dart';
+// import 'package:flutterwallet/app/modules/home/views/stabledropdown.dart';
+
+// class DialogAssignments extends StatefulWidget {
+//   const DialogAssignments({super.key});
+
+//   @override
+//   State<DialogAssignments> createState() => _dialogassignmentsState();
+// }
+
+// class _dialogassignmentsState extends State<DialogAssignments> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Dialog(
+//       backgroundColor: Colors.white,
+//       child: LayoutBuilder(
+//         builder: (context, constraints) {
+//           // Use constraints to determine the size of the dialog
+//           double dialogWidth = constraints.maxWidth > 1032 ? 1032 : constraints.maxWidth * 0.9;
+//           double columnWidth = dialogWidth * 0.45; // Adjust column width based on dialog width
+
+//           return Container(
+//             padding: EdgeInsets.fromLTRB(18, 18, 18, 40),
+//             width: dialogWidth,
+//             child: SingleChildScrollView(
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   InkWell(
+//                     onTap: (){
+//                                Navigator.push(
+//               context,
+//               MaterialPageRoute(builder: (context) => DashboardScreen2()),
+//             );    
+//                     },
+//                     child: 
+//                   Image.asset('assets/close-circl.png', width: 24, height: 24),
+//                   ),SizedBox(height: 16),
+//                   Container(
+//                     width: dialogWidth,
+//                     child: Column(
+//                       crossAxisAlignment: CrossAxisAlignment.end,
+//                       children: [
+//                         Text(
+//                           'اضافه واجب جديد',
+//                           style: TextStyle(
+//                             fontWeight: FontWeight.w600,
+//                             fontSize: 32,
+//                             color: Color.fromARGB(255, 6, 69, 152)),
+//                           textAlign: TextAlign.right,
+//                         ),
+//                         SizedBox(height: 16),
+//                         Column(
+//                           children: [
+//                             Row(
+//                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                               children: [
+//                                 Container(
+//                                   width: columnWidth,
+//                                   child: Column(
+//                                     children: [
+//                                   _buildTextField('سعر الامتحان', 'ادخل سعر الامتحان'),
+//                                       SizedBox(height: 16),
+//                                       _buildTextField('المدة', 'ادخل المدة'),
+//                                       SizedBox(height: 16),
+//                                       _buildTextField('الدرجه النجاح', 'ادخل درجة النجاح الامتحان'),   
+//                                     ],
+//                                   ),
+//                                 ),
+//                                 Container(
+//                                   width: columnWidth,
+//                                   child: Column(
+//                                     children: [
+//                                    _buildTextField('اسم الامتحان', 'ادخل اسم الامتحان'),
+//                                       SizedBox(height: 16),
+//                                       _buildTextField('عدد الامتحان', 'ادخل عدد السنوات'),
+//                                       SizedBox(height: 16),
+//                                       _buildTextField('الدرجة', 'ادخل الدرجة'),
+//                                     ],
+//                                   ),
+//                                 ),
+//                               ],
+//                             ),
+//                           ],
+//                         ),
+//                         SizedBox(height: 16),
+//                         Column(
+//                           children: [
+//                             Row(
+//                               mainAxisAlignment: MainAxisAlignment.end,
+//                               children: [    DraggableToggleSwitch(
+//                     initialValue: controller.showdegreeEveryQues == 1,
+//                     onToggleChanged: (value) {
+//                       controller.updateShowDegreeEveryQues(value ? 1 : 0);
+//                     },
+//                   ),
+//                                 SizedBox(width: 8),
+//                                 Text(
+//                                   'اظهار النتيجه بعد الامتحان',
+//                                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+//                                 ),
+//                               ],
+//                             ),
+//                           ],
+//                         ),
+//                         SizedBox(height: 16),
+//                         Column(
+//                           children: [
+//                             Row(
+//                               mainAxisAlignment: MainAxisAlignment.end,
+//                               children: [
+//                              DraggableToggleSwitch(
+//                     initialValue: controller.showdegreeEveryQues == 1,
+//                     onToggleChanged: (value) {
+//                       controller.updateShowDegreeEveryQues(value ? 1 : 0);
+//                     },
+//                   ),
+//                                 SizedBox(width: 8),
+//                                 Text(
+//                                   'وضع قيمه الدرجه علي كل سؤال',
+//                                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+//                                 ),
+//                               ],
+//                             ),
+//                           ],
+//                         ),
+//                         SizedBox(height: 16),
+//                         Container(
+//                           width: dialogWidth,
+//                           height: 76,
+//                           child: Row(
+//                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                             children: [
+//                               Container(
+//                                 width: columnWidth,
+//                                 height: 76,
+//                                 child: Column(
+//                                   crossAxisAlignment: CrossAxisAlignment.end,
+//                                   children: [
+//                                     Text(
+//                                       'تاريخ استحقاق الامتحان ',
+//                                       textAlign: TextAlign.right,
+//                                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+//                                     ),
+//                                     CustomDropdown(),
+//                                   ],
+//                                 ),
+//                               ),
+//                               Container(
+//                                 width: columnWidth,
+//                                 height: 76,
+//                                 child: Column(
+//                                   crossAxisAlignment: CrossAxisAlignment.end,
+//                                   children: [
+//                                     Text(
+//                                       'تاريخ فتح الامتحان',
+//                                       textAlign: TextAlign.right,
+//                                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+//                                     ),
+//                                     CustomDropdown(),
+//                                   ],
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                         SizedBox(height: 16),
+//                         Container(
+//                           width: dialogWidth,
+//                           child: Column(
+//                             crossAxisAlignment: CrossAxisAlignment.end,
+//                             children: [
+//                               Container(
+//                                 width: dialogWidth,
+//                                 child: Column(
+//                                   crossAxisAlignment: CrossAxisAlignment.end,
+//                                   children: [
+//                                     Text(
+//                                       'اختار شكل الكارت',
+//                                       style: TextStyle(
+//                                         fontSize: 20,
+//                                         fontWeight: FontWeight.w500,
+//                                         color: Color.fromARGB(255, 6, 69, 152)),
+//                                       textAlign: TextAlign.right,
+//                                     ),
+//                                     SizedBox(height: 8),
+//                                     Text(
+//                                       'اختار شكل كارت اللي يناسب استخدامك في العمل الامتحانات بكل سهولة ودقة!',
+//                                       style: TextStyle(
+//                                         fontWeight: FontWeight.w400,
+//                                         fontSize: 16,
+//                                         color: Color.fromARGB(255, 80, 124, 181)),
+//                                       textAlign: TextAlign.right,
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                               SizedBox(height: 16),
+//                               Container(
+//                                 width: dialogWidth * 0.3, // Adjust width for the image row
+//                                 child: Row(
+//                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                   children: [
+//                                     Image.asset('assets/Component 170.png', width: 93, height: 109),
+                                    
+//                                   ],
+//                                 ),
+//                               ),
+                           
+//                             ],
+//                           ),
+//                         ),  
+//             Row(mainAxisAlignment: MainAxisAlignment.start, children: [  
+//                Container( width: 193,height: 40,
+               
+//                child: 
+//                               TextButton(
+                                
+//                                 style: TextButton.styleFrom(
+//                                   backgroundColor: Color.fromARGB(255, 6, 69, 152),
+//                                      padding: EdgeInsets.all(8)
+//                                      ,shape:RoundedRectangleBorder( borderRadius:BorderRadius.circular(8))
+//                                 ),
+//                                 onPressed: (){
+
+// Navigator.push(context, MaterialPageRoute(builder: (context)=>Assignments2()));
+
+//                               }, child: Text("بدا عمل الامتحان",style: TextStyle(color: Colors.white),)))      ],
+//                     ),
+//                 ])),
+//                 ],
+//               ),
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+
+//   Widget _buildTextField(String label, String hint) {
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.end,
+//       children: [
+//         Text(
+//           label,
+//           style: TextStyle(),
+//           textAlign: TextAlign.right,
+//         ),
+//         SizedBox(height: 8),
+//         TextField(
+//           textDirection: TextDirection.rtl,
+//           decoration: InputDecoration(
+//             border: OutlineInputBorder(
+//               borderSide: BorderSide(color: Colors.white),),
+//             hintText: hint,
+//             hintTextDirection: TextDirection.rtl,
+//             hintStyle: TextStyle(
+//               color: Color.fromARGB(255, 125, 140, 158),
+//               fontSize: 16,
+//               fontWeight: FontWeight.w400),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterwallet/app/modules/home/controllers/fileuploader.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
-import 'package:flutterwallet/app/modules/home/views/quizes.dart';
-import 'package:flutterwallet/app/modules/home/views/calenderpick.dart';
 import 'package:flutterwallet/app/modules/home/views/calenderpick2.dart';
 import 'package:flutterwallet/app/modules/home/views/dropdown.dart';
 import 'package:get/get.dart';
-
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class dialogquizes extends StatefulWidget {
-  const dialogquizes({super.key});
+class DialogAssignments extends StatefulWidget {
+  const DialogAssignments({super.key});
 
   @override
-  State<dialogquizes> createState() => _dialogquizesState();
+  State<DialogAssignments> createState() => _DialogAssignmentsState();
 }
 
-class _dialogquizesState extends State<dialogquizes> {
-  HomeController controller=HomeController();
+class _DialogAssignmentsState extends State<DialogAssignments> {
+    HomeController controller=HomeController();
   
 Future<bool> ensureTokenValidForDialog() async {
   try {
@@ -86,6 +355,7 @@ Future<bool> ensureTokenValidForDialog() async {
     ),
   );
 }
+ 
   @override
   Widget build(BuildContext context) {
   return GetBuilder<HomeController>(
@@ -94,8 +364,9 @@ Future<bool> ensureTokenValidForDialog() async {
       backgroundColor: Colors.white,
       child: LayoutBuilder(
         builder: (context, constraints) {
+          // Use constraints to determine the size of the dialog
           double dialogWidth = constraints.maxWidth > 1032 ? 1032 : constraints.maxWidth * 0.9;
-          double columnWidth = dialogWidth * 0.45; 
+          double columnWidth = dialogWidth * 0.45; // Adjust column width based on dialog width
 
           return Container(
             padding: EdgeInsets.fromLTRB(18, 18, 18, 40),
@@ -104,22 +375,12 @@ Future<bool> ensureTokenValidForDialog() async {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // InkWell(
-                  //   onTap: (){
                    _buildButtonmain(   icon:          
                        Image.asset('assets/close-circl.png', width: 24, height: 24),
 
-                      route: '/quizes'
-                      ,  isActive: Get.currentRoute == '/quizes',
-                      )
-            //                    Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => quizes()),
-            // );    
-                    // },
-                    // child: 
-              ,
-                  SizedBox(height: 16),
+                      route: '/Assignments'
+                      ,  isActive: Get.currentRoute == '/Assignments',
+                      ),SizedBox(height: 16),
                   Container(
                     width: dialogWidth,
                     child: Column(
@@ -228,14 +489,14 @@ Future<bool> ensureTokenValidForDialog() async {
                                       textAlign: TextAlign.right,
                                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                                     ),
-                             Calenderpick2(
+                                Calenderpick2(
   onDateSelected: (date) {
     setState(() {
-    controller.  seedate = date; // or seedate = date depending on which one you're setting
+    controller.  seedate = date;
     });
   },
-  initialDate:controller. seedate, // or seedate
-  isStartDate: true, // or false for seedate
+  initialDate:controller. seedate,
+  isStartDate: true, 
 )
                                   ],
                                 ),
@@ -251,13 +512,13 @@ Future<bool> ensureTokenValidForDialog() async {
                                       textAlign: TextAlign.right,
                                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                                     ),
-                               calenderPick(
+                                Calenderpick2(
   onDateSelected: (date) {
     setState(() {
-    controller.  startdate = date; // or seedate = date depending on which one you're setting
+    controller.  seedate = date; // or seedate = date depending on which one you're setting
     });
   },
-  initialDate:controller. startdate, // or seedate
+  initialDate:controller. seedate, // or seedate
   isStartDate: true, // or false for seedate
 )
                                   ],
@@ -309,11 +570,12 @@ Future<bool> ensureTokenValidForDialog() async {
                                   ],
                                 ),
                               onTap: (){
+                                Fileuploader file =Fileuploader();
                                 // controller.gloabalsection();
                                 //         List.generate(controller.allsections.length, (index) {
                                 //           print('http://localhost:3000/${controller.allsections[index].cardimg}');
                                 //         });
-                                        controller.pickAndUploadImage3();
+                                        file.pickAndUploadImage3();
                               },
                               ),)
                            
@@ -332,7 +594,8 @@ Future<bool> ensureTokenValidForDialog() async {
                                      ,shape:RoundedRectangleBorder( borderRadius:BorderRadius.circular(8))
                                 ),
                                 onPressed: (){
-controller.uploadcard3online(context);
+                                  Fileuploader file =Fileuploader();
+file.uploadcard3online(context);
 
                               }, child: Text("بدا عمل الامتحان",style: TextStyle(color: Colors.white),)))      ],
                     ),

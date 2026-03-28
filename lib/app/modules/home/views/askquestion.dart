@@ -2,7 +2,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
-import 'package:flutterwallet/app/modules/home/views/lectures.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +12,7 @@ class Askquestion extends StatefulWidget {
   @override
   State<Askquestion> createState() => _AskquestionState();
 }
+
 class _AskquestionState extends State<Askquestion> {
    Widget _buildButtonmain({
   // required String text,
@@ -309,7 +309,8 @@ setState(() {
   
 
   
-                   controller.add(  lessonid);
+                   controller.add(//context,
+                     lessonid);
               // controller.update();      
                   });
 
@@ -339,7 +340,10 @@ TextButton(
 onPressed: localResult.isNotEmpty
                         ? () {
                             setState(() {
-                              controller.add(lessonid);
+                              controller.add(
+                              //   context
+                              // ,
+                              lessonid);
                               selectedValue = localSelectedValue;
                               result = localResult;
                             });
@@ -400,7 +404,6 @@ onPressed: localResult.isNotEmpty
 }):localResult=='سؤال مقالي'?
                        
 showDialog( context: context, builder: (context){
-   String? localSelectedValue = selectedValue;
       String localResult = result;
 return StatefulBuilder( builder: (context,setStateDialog){
   
@@ -498,7 +501,8 @@ TextButton(
 onPressed: localResult.isNotEmpty
                         ? () {
                             setState(() {
-                              controller.textQuestion(lessonid);
+                              controller.textQuestion(context,
+                              lessonid);
                               // selectedValue = localSelectedValue;
                               // result = localResult;
                             });
@@ -556,7 +560,6 @@ onPressed: localResult.isNotEmpty
 }):localResult=='سؤال صح/غلط'?
 
 showDialog( context: context, builder: (context){
-   String? localSelectedValue = selectedValue;
       String localResult = result;
 return StatefulBuilder( builder: (context,setStateDialog){
   
@@ -624,7 +627,7 @@ Text('ادخل الاجابه الصحيحه',style: TextStyle(fontSize: 16,font
 
 Container( height: 44,decoration: BoxDecoration(border: Border.all(width: 1),
 borderRadius: BorderRadius.circular(8)),child:
-TextField(textDirection: TextDirection.rtl,controller: controller.wrightwrongteacher_answer,
+TextField(textDirection: TextDirection.rtl,controller: controller.wrightwrongteacherAnswer,
 decoration: InputDecoration(
       contentPadding: EdgeInsets.all(
   8
@@ -667,7 +670,8 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,  children: [
 TextButton(
 onPressed: localResult.isNotEmpty
                         ? () {
-                          controller.wrightWrong(lessonid);
+                          controller.wrightWrong(context,
+                          lessonid);
                             // setState(() {
                             //   selectedValue = localSelectedValue;
                             //   result = localResult;
@@ -727,7 +731,6 @@ onPressed: localResult.isNotEmpty
 })
 
 :showDialog( context: context, builder: (context){
-   String? localSelectedValue = selectedValue;
       String localResult = result;
 return StatefulBuilder( builder: (context,setStateDialog){
   
@@ -823,7 +826,8 @@ onPressed: localResult.isNotEmpty
                             //   result = localResult;
                             // });
                             // Navigator.of(context).pop();
-controller.completeQuestion(lessonid);
+controller.completeQuestion(//context,
+lessonid);
                           }
                         : null,
   child: Text(

@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:flutterwallet/app/modules/home/Applinks.dart';
+import 'package:flutterwallet/app/modules/home/controllers/fileuploader.dart';
 import 'package:flutterwallet/app/modules/home/views/DashboardScreen.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -7,7 +9,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
-import 'package:flutterwallet/Applinks.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -245,8 +246,9 @@ if (kIsWeb) {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text("Uploaded Success")));
   } else {
+  //  final data=request.fields['message'];
     ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("Upload Failed: $body")));
+        .showSnackBar(SnackBar(content: Text("you have no access to this endpoint")));
   }   
   } catch (e) {
    print('nnnn${e}'); 
@@ -322,7 +324,8 @@ Container(width: 1000,child:
             bytes: bytes,
             size: bytes.length,
           );
-          controller.uploadVideoWebSafe(file);
+          Fileuploader files=Fileuploader(); 
+          files.uploadVideoWebSafe(file);
         },
       ),
 

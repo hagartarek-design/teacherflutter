@@ -1,9 +1,9 @@
 // dialog_wrapper.dart
 import 'package:flutter/material.dart';
-import 'package:flutterwallet/app/modules/home/views/dialog_quizes.dart';
+import 'package:flutterwallet/app/modules/home/views/dialogs/dialog_quizes.dart';
+// import 'package:flutterwallet/app/modules/home/views/dialog_quizes.dart';
 import 'package:flutterwallet/app/modules/home/views/tokenservice.dart';
 
-import '../controllers/tokens.dart';
 
 class DialogWrapper extends StatefulWidget {
   const DialogWrapper({super.key});

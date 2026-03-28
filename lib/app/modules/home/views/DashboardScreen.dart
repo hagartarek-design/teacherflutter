@@ -1,19 +1,13 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
-import 'package:flutterwallet/app/modules/home/views/homescreen.dart';
-import 'package:flutterwallet/app/modules/home/views/progress.dart';
-import 'package:flutterwallet/app/modules/home/views/showdialog.dart';
 import 'package:flutterwallet/app/modules/home/views/stable_app_bar.dart';
 import 'package:flutterwallet/app/modules/home/views/videodialog.dart';
 import 'package:get/get.dart';
-import 'dart:ui' as ui;
-import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:path/path.dart' as path;
-import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // class DashboardScreen extends StatelessWidget {
@@ -128,7 +122,12 @@ void dispose() {
 }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+     final screenWidth = MediaQuery.of(context).size.width;
+final isDesktop = screenWidth >= 1200;
+  // final screenWidth = MediaQuery.of(context).size.width;
+  final isMobile = screenWidth < 650;
+  final istablet = screenWidth < 1024;
+     return Scaffold(
       drawer: Drawer(
         child: ListView(
           children: [
@@ -151,57 +150,83 @@ void dispose() {
       body: GetBuilder<HomeController>(
         // init: HomeController(),
         builder: (controller) {
-          return Row(
-  children: [
+          return 
+  //         Row(
+  // children: [
     
-    Expanded(
-      flex: 1,
-      child: Column(
+    // Expanded(
+    //   flex: 4,
+    //   child:
+   ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(
+    physics: const ClampingScrollPhysics(),
+    child: Column(
+      children: [ Stack(
         children: [
-Column(
-  children: [
-    // Text('Dashboard Screen'),
-    // SizedBox(height: 20),
-    // ElevatedButton(
-    //   onPressed: () async {
-    //     final prefs = await SharedPreferences.getInstance();
-    //     final token = prefs.getString('token');
-    //     final expiry = JwtDecoder.getExpirationDate(token!);
-    //     final remaining = expiry.difference(DateTime.now());
-        
-    //     // print(' الوقت المتبقي: ${remaining.inMinutes} دقيقة و${remaining.inSeconds % 60} ثانية');
-        
-    //     if (JwtDecoder.isExpired(token)) {
-    //       // print(' التوكن منتهي!');
-    //     } else {
-    //       // print('التوكن ساري');
-    //     }
-    //   },
-    //   child: Text('تحقق من صلاحية التوكن'),
-    // ),
-    // SizedBox(height: 20),
-    // ElevatedButton(
-    //   onPressed: () {
-    //     // محاكاة انتهاء التوكن
-    //     // controller.handleTokenExpired();
-    //   },
-    //   child: Text('محاكاة انتهاء التوكن'),
-    // ),
-  ],
+          
+          // Padding(
+          //   child:
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+                    Container(
+  width: double.infinity,
+  color: Colors.white,
+  height: 96,
+  padding: 
+  isMobile
+      ? EdgeInsets.zero:
+   istablet?EdgeInsets.zero   : 
+      const EdgeInsets.fromLTRB(64, 24, 344, 24),
+  child: const App_bar(),
 ),
-          Container(
-            color: Colors.white,
-            height: 96,
-            padding: const EdgeInsets.fromLTRB(64, 24, 344, 24),
-            child: App_bar(),
-          ),
-          SizedBox(height: 16),
-          Expanded(
+// Column(
+//   children: [
+//     // Text('Dashboard Screen'),
+//     // SizedBox(height: 20),
+//     // ElevatedButton(
+//     //   onPressed: () async {
+//     //     final prefs = await SharedPreferences.getInstance();
+//     //     final token = prefs.getString('token');
+//     //     final expiry = JwtDecoder.getExpirationDate(token!);
+//     //     final remaining = expiry.difference(DateTime.now());
+        
+//     //     // print(' الوقت المتبقي: ${remaining.inMinutes} دقيقة و${remaining.inSeconds % 60} ثانية');
+        
+//     //     if (JwtDecoder.isExpired(token)) {
+//     //       // print(' التوكن منتهي!');
+//     //     } else {
+//     //       // print('التوكن ساري');
+//     //     }
+//     //   },
+//     //   child: Text('تحقق من صلاحية التوكن'),
+//     // ),
+//     // SizedBox(height: 20),
+//     // ElevatedButton(
+//     //   onPressed: () {
+//     //     // محاكاة انتهاء التوكن
+//     //     // controller.handleTokenExpired();
+//     //   },
+//     //   child: Text('محاكاة انتهاء التوكن'),
+//     // ),
+//   ],
+// ),
+         SizedBox(height: 16),
+          // Expanded(
 
 
-            child: Container(
-              width: 1032,
-              margin: const EdgeInsets.symmetric(horizontal: 100),
+          //   child: 
+            Container(
+              width: 1032,height: 900,
+              // margin: const EdgeInsets.symmetric(horizontal: 100),
              decoration: BoxDecoration(borderRadius: BorderRadius.circular(16),
               color:  Colors.white,
              ),
@@ -212,12 +237,11 @@ Column(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 
-                child: Column(
+                child: Column(crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                SizedBox(width: 50,),      _buildHeader(context),
-                    
-                    
-                      Container(
+                             
+                      Container( 
             margin: const EdgeInsets.symmetric(vertical: 8),
             padding: const EdgeInsets.symmetric(horizontal: 16),
             height: 95,
@@ -248,7 +272,7 @@ Column(
                     ),
                   ],
                 ),
-                Row(
+                Row(mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                  
                     Text(
@@ -261,13 +285,13 @@ Column(
                     ),
                   ],
                 ),
-                Row(
+                Row(mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'اسم المحاضره',
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
-                    SizedBox(width: 4),
+                    // SizedBox(width: 4),
                   //  Image.asset('icons/ Digit.png',width: 24,height: 24,)
                   ],
                 ),
@@ -294,7 +318,8 @@ Column(
          onTap: () {
   if (controller.currentPage > 1) {
     controller.currentPage--;
-    controller.allpaginsections(page: controller.currentPage);
+    controller.allpaginsections(//context,
+    page: controller.currentPage);
     controller.update();
   }
 }
@@ -325,7 +350,7 @@ Column(
   height: 40,
   child: Row(
     mainAxisAlignment: MainAxisAlignment.center,
-    children: _buildPageNumbers(controller),
+    children: _buildPageNumbers(controller,context),
   ),
 )
 ,
@@ -334,7 +359,8 @@ Column(
          onTap: () {
   if (controller.currentPage < controller.totalPages) {
     controller.currentPage++;
-    controller.allpaginsections(page: controller.currentPage);
+    controller.allpaginsections(//context,
+    page: controller.currentPage);
     controller.update();
   }
 }
@@ -378,32 +404,62 @@ Column(
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-    ),
+          // ),
+       
+        // ],
+      // ),
+    // ),
     // Sidebar
-    Container(
-      width: 280, // Fixed width for the sidebar
-      height: double.infinity, // Full height
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(24),
-          bottomLeft: Radius.circular(24),
-        ),
-        color: Color.fromARGB(240, 6, 69, 152), // Sidebar background color
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 10,
-            spreadRadius: 2,
-          ),
-        ],
-      ),
-      child: rightbar(),
-    ),
+    // Container(
+    //   width: 280, // Fixed width for the sidebar
+    //   height: double.infinity, // Full height
+    //   decoration: BoxDecoration(
+    //     borderRadius: BorderRadius.only(
+    //       topLeft: Radius.circular(24),
+    //       bottomLeft: Radius.circular(24),
+    //     ),
+    //     color: Color.fromARGB(240, 6, 69, 152), // Sidebar background color
+    //     boxShadow: [
+    //       BoxShadow(
+    //         color: Colors.black.withOpacity(0.2),
+    //         blurRadius: 10,
+    //         spreadRadius: 2,
+    //       ),
+    //     ],
+    //   ),
+    //   child: rightbar(),
+    // ),
+     
   ],
-);
+),
+
+(isMobile&&controller.isoptionselect)||(istablet&&controller.isoptionselecttablet)||(!isMobile&&!istablet)
+?Positioned(
+            top: 0, // Align at the top
+         right: 0, // Align to the right
+            child: Container(
+              width: 280, // Fixed width
+              height: 1445, // Fixed height
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    bottomLeft: Radius.circular(24)),
+                color:
+                    Color.fromARGB(240, 6, 69, 152), // Sidebar background color
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 10,
+                    spreadRadius: 2,
+                  ),
+                ],
+              ),
+              child: rightbar(),
+            ),
+          )
+  :Container()
+   ]
+)])));
         },
       ),
     );
@@ -432,7 +488,8 @@ Column(
      controller.startTokenTimer(token);
 return  UploadLectureDialog();
     });
-       controller.gloabalsection();     },
+       controller.gloabalsection(//context
+       );     },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
               side: BorderSide(color: Color.fromARGB(206, 6, 69, 152)),
@@ -469,8 +526,13 @@ return  UploadLectureDialog();
   }
 
   Widget _buildList(HomeController controller) {
-    return Expanded(
-      child: ListView.builder(
+    return
+  // SingleChildScrollView(child: Column(children: [ 
+   Expanded(//width:  1020,
+      child:
+       ListView.builder(    shrinkWrap: true, 
+       
+    // physics: const NeverScrollableScrollPhysics(), 
         itemCount: controller.sections.length,
         itemBuilder: (context, index) {
           final item = controller.sections[index];
@@ -527,9 +589,11 @@ borderRadius: BorderRadius.circular(8),
         ),
       ),
       onTap: () {
-        controller.deletesection(item.id.toString());
+        controller.deletesection(context,
+        item.id.toString());
 controller.update();
-controller.allpaginsections(page: 1);
+controller.allpaginsections(//context,
+page: 1);
       },
     
             ),
@@ -577,9 +641,12 @@ controller.allpaginsections(page: 1);
             ),
           );
         },
-      ),
-    );
-  }
+      // ),
+    // )
+//  ],
+//  ),
+))  ;
+ }
 
   // Widget _buildPagination(HomeController controller) {
   //   return Row(
@@ -674,7 +741,7 @@ void showCustomDialog(BuildContext context) {
   );
 
 }
-List<Widget> _buildPageNumbers(HomeController controller) {
+List<Widget> _buildPageNumbers(HomeController controller,context) {
   final int currentPage = controller.currentPage;
   final int totalPages = controller.totalPages;
 
@@ -686,7 +753,9 @@ List<Widget> _buildPageNumbers(HomeController controller) {
       GestureDetector(
         onTap: () {
           controller.currentPage = page;
-          controller.allpaginsections(page: page);
+          
+          controller.allpaginsections(//context,
+          page: page);
           controller.update();
         },
         child: Container(

@@ -1,29 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutterwallet/Applinks.dart';
+import 'package:flutterwallet/app/modules/home/Applinks.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
-import 'package:flutterwallet/app/modules/home/modules/wallet.dart';
-import 'package:flutterwallet/app/modules/home/views/addgroup.showdialog.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
-import 'package:flutterwallet/app/modules/home/views/containerforaskques.dart';
 import 'package:flutterwallet/app/modules/home/views/containerformanagecenter.dart';
-import 'package:flutterwallet/app/modules/home/views/grouphasstudents.dart';
 import 'package:flutterwallet/app/modules/home/views/stable_app_bar.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'dart:ui' as ui;
-
-import 'package:path/path.dart';
-
 import 'studentsingroup.dart';
 
 class managecenter extends StatelessWidget {
-  final HomeController controller = HomeController();
 
   @override
   Widget build(BuildContext context) {
                    
 
-
+     final screenWidth = MediaQuery.of(context).size.width;
+final isDesktop = screenWidth >= 1200;
+  // final screenWidth = MediaQuery.of(context).size.width;
+  final isMobile = screenWidth < 650;
+  final istablet = screenWidth < 1024;
             
     return Scaffold(
       drawer: Drawer(
@@ -82,26 +77,32 @@ class managecenter extends StatelessWidget {
                   ),
                 ),
               ),
-          Container(
-                width: 280,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
+     (isMobile&&controller.isoptionselect)||(istablet&&controller.isoptionselecttablet)||(!isMobile&&!istablet)
+?Positioned(
+            top: 0, // Align at the top
+         right: 0, // Align to the right
+            child: Container(
+              width: 280, // Fixed width
+              height: 1445, // Fixed height
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(24),
-                    bottomLeft: Radius.circular(24),
+                    bottomLeft: Radius.circular(24)),
+                color:
+                    Color.fromARGB(240, 6, 69, 152), // Sidebar background color
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 10,
+                    spreadRadius: 2,
                   ),
-                  color: Color.fromARGB(240, 6, 69, 152),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      blurRadius: 10,
-                      spreadRadius: 2,
-                    ),
-                  ],
-                ),
-                child: rightbar(),
+                ],
               ),
-            ],
+              child: rightbar(),
+            ),
+          )
+  :Container()
+        ],
           );
         },
       ),
@@ -181,7 +182,7 @@ Text('السنتر '),
             builder: (context) => Studentsingroup(course:course),
           ),
         );
-controller.Studentsbycourse(course.id.toString());
+controller.Studentsbycourse(context,course.id.toString());
 
       },
       child: _buildItem(
@@ -268,8 +269,8 @@ var outputFormat = DateFormat('hh:mm a');
                '${controller.coursereserv[index].students?['phoneNum'].toString()}'
            ,     '${controller.coursereserv[index].course?['month_by_year']}'
 ,
-                '${outputFormat.format(DateTime.parse( new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(controller.coursereserv[index].start_date.toString()??'').toString()??''))}',  
-               '${controller.coursereserv[index].place.toString()??''}',
+                '${outputFormat.format(DateTime.parse( new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(controller.coursereserv[index].start_date??'').toString()))}',  
+               '${controller.coursereserv[index].place??''}',
 
                 '+(02)${controller.coursereserv[index].students?['customernum'].toString()??''}'
               // },
@@ -329,50 +330,6 @@ Expanded(child:
                 Image.asset('icons/add-square.png', height: 24, width: 24),
               ],
             ),)
-          ),
-          Text(
-            'انشاء مجموعات',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-  Widget _buildHeader2() {
-    return Container(
-      height: 40,
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ElevatedButton(
-            onPressed: () {
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              side: BorderSide(color: Color.fromARGB(206, 6, 69, 152)),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-            child: Row(
-              children: [
-                Text(
-                  'اضف مجموعة',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
-                    color: Color.fromARGB(206, 6, 69, 152),
-                  ),
-                ),
-                SizedBox(width: 4),
-                Image.asset('icons/add-square.png', height: 24, width: 24),
-              ],
-            ),
           ),
           Text(
             'انشاء مجموعات',
@@ -477,14 +434,14 @@ Expanded(child:
           Row(
             children: [
               Text('جنيه'+num1, style: TextStyle(fontSize: 16)),
-              // Text(
-              //   price,
-              //   style: TextStyle(
-              //     fontWeight: FontWeight.bold,
-              //     fontSize: 16,
-              //     color: Color.fromARGB(202, 6, 69, 152),
-              //   ),
-              // ),
+              Text(
+                price,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Color.fromARGB(202, 6, 69, 152),
+                ),
+              ),
             ],
           ),
            Row(
@@ -504,14 +461,14 @@ Expanded(child:
           Row(
             children: [
               Text(num2, style: TextStyle(fontSize: 16)),
-              // Text(
-              //   price,
-              //   style: TextStyle(
-              //     fontWeight: FontWeight.bold,
-              //     fontSize: 16,
-              //     color: Color.fromARGB(202, 6, 69, 152),
-              //   ),
-              // ),
+              Text(
+                price,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Color.fromARGB(202, 6, 69, 152),
+                ),
+              ),
             ],
           ),
            
@@ -548,14 +505,14 @@ Expanded(child:
       Row(
             children: [
               Text(priceLabel, style: TextStyle(fontSize: 16)),
-              // Text(
-              //   price,
-              //   style: TextStyle(
-              //     fontWeight: FontWeight.bold,
-              //     fontSize: 16,
-              //     color: Color.fromARGB(202, 6, 69, 152),
-              //   ),
-              // ),
+              Text(
+                price,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Color.fromARGB(202, 6, 69, 152),
+                ),
+              ),
             ],
           ),
          

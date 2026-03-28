@@ -1,5 +1,5 @@
 
-import 'file.dart';
+// import 'file.dart';
 
 
 
@@ -23,7 +23,7 @@ final String?assigncardimg;
  });
 
   factory Assignments.fromJson(Map<String, dynamic> json) {
-print('json'+json['id'].toString());
+// print('json'+json['id'].toString());
     return Assignments(
       
       id: json['id'] as int?,

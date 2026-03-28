@@ -253,7 +253,8 @@ final List<Color> colors=[
             shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(8),) ,
             backgroundColor: Color.fromARGB(255, 6, 69, 152)),
           onPressed: (){
-controller.updatePasword();
+controller.updatePasword(context
+);
 
           }, child: Text('حفظ',style: TextStyle(color: Colors.white),))
         
@@ -325,7 +326,8 @@ controller.updatePasword();
           style: TextButton.styleFrom(
             shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(8),) ,
             backgroundColor: Color.fromARGB(255, 6, 69, 152)),
-          onPressed: (){controller.deleteaccount();}, child: Text('مسح الحساب',style: TextStyle(color: Colors.white),))
+          onPressed: (){controller.deleteaccount(context
+          );}, child: Text('مسح الحساب',style: TextStyle(color: Colors.white),))
         
                  ,
            TextButton(onPressed: (){}, child:

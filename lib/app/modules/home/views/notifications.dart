@@ -311,11 +311,11 @@ Text('المجموعات',style: TextStyle(fontSize: 32,fontWeight: FontWeight.w
                                                             newValue??"";
 controller.update();
 
-                                                            controller.fetchcoursedata3(controller.selectedmonth_by_year);
+                                                            // controller.fetchcoursedata3(context,controller.selectedmonth_by_year);
                                                       },
                                                         onTap: ()=>{
-                                                        controller.fetchcoursedata3(controller.selectedtype)
-                                                        ,controller.update()
+                                                        // controller.fetchcoursedata3(context,controller.selectedtype)
+                                                        // ,controller.update()
                                                       },
                                                     ),
                                                   ),SizedBox(width: 4,),
@@ -392,11 +392,11 @@ controller.update();
                                                             newValue??"";
 controller.update();
 
-                                                            controller.fetchcoursedata3(controller.selectedmonth_by_year);
+                                                            // controller.fetchcoursedata3(context,controller.selectedmonth_by_year);
                                                       },
                                                         onTap: ()=>{
-                                                        controller.fetchcoursedata3(controller.selectedtype)
-                                                        ,controller.update()
+                                                        // controller.fetchcoursedata3(context,controller.selectedtype)
+                                                        // ,controller.update()
                                                       },
                                                     ),
                                                   ),
@@ -524,11 +524,11 @@ Text('المجموعات',style: TextStyle(fontSize: 32,fontWeight: FontWeight.w
                                                             newValue??"";
 controller.update();
 
-                                                            controller.fetchcoursedata3(controller.selectedmonth_by_year);
+                                                            // controller.fetchcoursedata3(context,controller.selectedmonth_by_year);
                                                       },
                                                         onTap: ()=>{
-                                                        controller.fetchcoursedata3(controller.selectedtype)
-                                                        ,controller.update()
+                                                        // controller.fetchcoursedata3(context,controller.selectedtype)
+                                                        // ,controller.update()
                                                       },
                                                     ),
                                                   ),SizedBox(width: 4,),
@@ -605,11 +605,11 @@ controller.update();
                                                             newValue??"";
 controller.update();
 
-                                                            controller.fetchcoursedata3(controller.selectedmonth_by_year);
+                                                            // controller.fetchcoursedata3(context,controller.selectedmonth_by_year);
                                                       },
                                                         onTap: ()=>{
-                                                        controller.fetchcoursedata3(controller.selectedtype)
-                                                        ,controller.update()
+                                                        // controller.fetchcoursedata3(context,controller.selectedtype)
+                                                        // ,controller.update()
                                                       },
                                                     ),
                                                   ),

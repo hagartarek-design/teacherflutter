@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:ui' as ui;
 
 class ImagePickerDemo extends StatefulWidget {
   const ImagePickerDemo({super.key});

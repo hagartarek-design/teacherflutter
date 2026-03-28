@@ -17,7 +17,6 @@ void main() async {
 
   await initializeDateFormatting('ar', null);
 
-  // وضع Controller
   final controller = Get.put(HomeController());
   print(' HomeController جاهز');
 

@@ -113,7 +113,6 @@ class _rightbarState extends State<rightbar> {
   // required String r/oute,
   // bool isActive = false,
 }) {
-  final HomeController controller = Get.find<HomeController>();
   
   return SizedBox(
     width: 247.0,
@@ -196,69 +195,35 @@ class _rightbarState extends State<rightbar> {
     }
   }
   
-  Future<void> _handleLogout() async {
-    print('👤 بدء عملية الخروج');
+ void handleLogout(BuildContext context) async {
+
     
-    Get.defaultDialog(
-      title: 'تأكيد الخروج',
-      middleText: 'هل أنت متأكد من الخروج من التطبيق؟',
-      textConfirm: 'نعم، أخرج',
-      textCancel: 'إلغاء',
-      confirmTextColor: Colors.white,
-      onConfirm: () async {
-        Get.back();
-        print('✅ المستخدم أكد الخروج');
-        await controller.logout();
-      },
-      onCancel: () {
-        print('🚫 إلغاء الخروج');
-      },
-    );
-  }
-Future<void> _navigateWithTokenCheck(String routeName,  setStateCallback) async {
-  try {
-    print('🔄 الانتقال إلى: $routeName');
-    
-    final currentRoute = Get.currentRoute;
-    print('📍 أنت في: $currentRoute');
-    
-    if (mounted) {
-      setState(setStateCallback);
-    }
-    
-    // await controller.smartNavigateWithCheck(routeName);
-    
-    print('✅ تم الانتقال');
-    
-  } catch (e) {
-    print('❌ خطأ: $e');
-  }
-}
-Future<String> _getSafeCurrentRoute() async {
-  try {
-    String route = Get.currentRoute;
-    if (route.isNotEmpty) return route;
-    
-    await Future.delayed(Duration(milliseconds: 100));
-    route = Get.currentRoute;
-    return route;
-  } catch (e) {
-    print('⚠️ خطأ في الحصول على المسار الحالي: $e');
-    return '';
-  }
-} void handleLogout(BuildContext context) async {
-    controller.isDashboardOpen.value = false;
-    
-    await Future.delayed(Duration(milliseconds: 100));
-    
-    await controller.logout();
+    await controller.logout2();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+       final screenWidth = MediaQuery.of(context).size.width;
+  final isMobile = screenWidth < 650;
+  final isTablet = screenWidth < 1024;
+    return Drawer(
+      backgroundColor: Colors.blue[900],
+      child:  Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Container(child: InkWell(child: Icon(Icons.close),
+        onTap: () {
+  if (isMobile) {
+    controller.isoptionselect = false;
+    print('n');
+  } else if (isTablet) {
+  print('l');    controller.isoptionselecttablet = false;
+  }
+   print('o'); controller.update();
+
+        
+        },
+        ),),
         Container(
           width: 280,
           height: 157,
@@ -1008,7 +973,7 @@ Future<String> _getSafeCurrentRoute() async {
             ],
           ),
         ),
-      ],
+      ],)
     );
   }
 }

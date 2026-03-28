@@ -1,25 +1,13 @@
-import 'dart:typed_data';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterwallet/Applinks.dart';
+import 'package:flutterwallet/app/modules/home/Applinks.dart';
+import 'package:flutterwallet/app/modules/home/controllers/fileuploader.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
-import 'package:flutterwallet/app/modules/home/views/dropdown.dart';
 import 'package:flutterwallet/app/modules/home/views/mypage.dart';
 import 'package:get/get.dart';import 'dart:ui';
 import 'dart:ui' as ui;
-import 'package:intl/intl.dart';
-import 'package:path/path.dart';
 
 class Homescreen extends StatelessWidget {
-  final HomeController controller = HomeController();
-
-  // final String dropdownValue = 'Option 1';
-  // final List<String> list = ['Option 1', 'Option 2', 'Option 3'];
-String selectedFile = '';
-
-Uint8List? image;
-
+ 
 // void _selectFile() async {
 
 // final FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -138,8 +126,11 @@ child: controller.users.image == null
                             borderRadius: BorderRadius.circular(8),)),
                                                     ),
                                                       onPressed:(){
-                                                        controller.  pickAndUploadImage();
-                                                      controller.users_info();
+                                                        Fileuploader file =Fileuploader();
+                                                        file.  pickAndUploadImage(context
+                                                        );
+                                                      controller.users_info(//context
+                                                  context    );
 
                                                       // controller.update()
 // // _selectFile();  
@@ -192,7 +183,8 @@ child: Text(
                             borderRadius: BorderRadius.circular(8),)),
                                                     ),
                                                     onPressed: () {
-                                                      controller.uploadInfo();
+                                                      controller.uploadInfo(context
+                                                      );
                                                     },
                                                     child: Row(
                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -376,8 +368,11 @@ mainAxisAlignment: MainAxisAlignment.center,
                         
                                                                        
                         ElevatedButton(onPressed: (){
-                    controller.  pickAndUploadImage();
-                                                      controller.users_info();                                                                              
+                          Fileuploader file=Fileuploader();
+                    file.  pickAndUploadImage(context
+                    );
+                                                      controller.users_info(//context
+                                                    context  );                                                                              
                        },style: ButtonStyle(
                           shape: MaterialStateProperty.
                           all<RoundedRectangleBorder>(
@@ -402,17 +397,24 @@ mainAxisAlignment: MainAxisAlignment.center,
                                      ,SizedBox(height: 20,)    
                                      ,Container(
                                       child: 
-                      Row(
+             ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),child:       SingleChildScrollView(scrollDirection: Axis.horizontal, child:    Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Column(children: [
-                            Row( children: [
+                            Wrap( children: [
 
                               Column(children: [
                             Container( width: 184,height: 24,child:Container(
                               width: 24,height: 24,
                             child:
-                           Row(children:[
+                           Wrap(children:[
                               Image.asset('assets/close-circl.png',height: 24,width: 24,),])  ) ),
                         //  Padding(padding: )   ),
 Image.asset('assets/Frame 1597882589.png')
@@ -428,16 +430,19 @@ Image.asset('assets/Frame 1597882589.png')
                             TextButton(onPressed: (){
                               // print('${controller.images[index].id}');
                               // controller.findoneimg('${controller.images[index].id}');
-                              controller.deleteimage(controller.images[index].id.toString());
-                              controller.allimages();
+                              controller.deleteimage(context,
+                              controller.images[index].id.toString());
+                              controller.allimages(//context
+                              );
                           }, child:  Image.asset('assets/close-circl.png',height: 24,width: 24,),)
                              ])  ) ),
                         //  Padding(padding: )   ),
                         
                     Row(children: [
 Image.network(
-                        'http://localhost:3300/${controller.images[index].url}')])
-        ]);})
+                        '${Applinks.baseurl}/${controller.images[index].url}')])
+        ]);}) 
+
 //                             , ...List.generate(
 //                     controller.images.length,
 //                     (index){  return  Column( children: [
@@ -461,7 +466,7 @@ Image.network(
         ])
                                  ],)
                                                          ]   ) 
-                                                                  )   ])
+                                                                  )  ) )])
                                                      ,   
                                                          Column(
                                                         children: [ 
@@ -473,7 +478,10 @@ Image.network(
                                                             
                         
                                                                        
-                        ElevatedButton(onPressed:() {  controller.pickVideoWeb()  ;controller.uploadVideo();  }                            
+                        ElevatedButton(onPressed:() { 
+                          
+                          Fileuploader file =Fileuploader();
+                           file.pickVideoWeb()  ;file.uploadVideo();  }                            
                        ,style: ButtonStyle(
                           shape: MaterialStateProperty.
                           all<RoundedRectangleBorder>(

@@ -1,11 +1,10 @@
 // dialog_wrapper.dart
 import 'package:flutter/material.dart';
-import 'package:flutterwallet/app/modules/home/views/addgroup.showdialog.dart';
-import 'package:flutterwallet/app/modules/home/views/dialog_assignments.dart';
-import 'package:flutterwallet/app/modules/home/views/dialog_quizes.dart';
+import 'package:flutterwallet/app/modules/home/views/dialogs/addgroup.showdialog.dart';
+// import 'package:flutterwallet/app/modules/home/views/dialog_assignments.dart';
+// import 'package:flutterwallet/app/modules/home/views/dialog_quizes.dart';
 import 'package:flutterwallet/app/modules/home/views/tokenservice.dart';
 
-import '../controllers/tokens.dart';
 
 class Containerformanagecenter extends StatefulWidget {
   const Containerformanagecenter({super.key});

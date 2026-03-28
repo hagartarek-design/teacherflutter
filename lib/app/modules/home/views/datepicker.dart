@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
-import 'package:flutterwallet/app/modules/home/views/table.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class calendarpicker extends StatefulWidget {
@@ -60,9 +59,10 @@ class _calender1State extends State<calendarpicker> {
 
       //  controller.   dailytable();
           // Format the selected date and call the API
-          final selectedDateString = controller. formatDate(newSelectedDay)??'';
+          final selectedDateString = controller. formatDate(newSelectedDay);
 
-       controller.   dailytable(coursetabledate:selectedDateString);
+       controller.   dailytable(//context,
+       coursetabledate:selectedDateString);
 
 
      Navigator.of(context).pop();

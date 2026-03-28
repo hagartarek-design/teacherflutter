@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterwallet/Applinks.dart';
+import 'package:flutterwallet/app/modules/home/Applinks.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
 import 'package:flutterwallet/app/modules/home/views/popup.dart';
@@ -33,10 +33,11 @@ class _StudentsState extends State<Students> {
 
 
   void search(String query) async {
-    final result = await controller.searchStudentss(query);
+    final result = await controller.searchStudentss(//context,
+    query);
     setState(() {
-      controller.students = result;
-      print('mm${controller.students}');
+      // controller.students = result;
+      // print('mm${controller.students}');
     });
   }
 
@@ -127,8 +128,8 @@ class _StudentsState extends State<Students> {
                                                 vertical: 24),
                                         child: Column(children: [
                                          Container(
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.end,
+  child: Wrap(
+    alignment: WrapAlignment.end,
     children: [
       Container(
         margin: EdgeInsets.symmetric(horizontal: 24),
@@ -158,7 +159,7 @@ class _StudentsState extends State<Students> {
                   onTap: () {
                     setState(() {
                       
-                    controller.courseStudentType('center');
+                    // controller.courseStudentType(context,'center');
                     });
                   },
                   child: Row(
@@ -191,7 +192,7 @@ class _StudentsState extends State<Students> {
                 onTap: () {
                   setState(() {
                     
-                  controller.courseStudentType('online');
+                  // controller.courseStudentType(context,'online');
                   });
                 },
                 child: Container(
@@ -246,7 +247,7 @@ class _StudentsState extends State<Students> {
                   onTap: () {
                       
                     setState(() {
-                    controller.courseStudentType('all');
+                    // controller.courseStudentType(context,'all');
                     });
                   },
                   child: Row(
@@ -289,7 +290,7 @@ class _StudentsState extends State<Students> {
                                                       ? screenWidth * 0.8
                                                       : screenWidth * 0.9,
                                               child: Column(children: [
-                                                Row(
+                                                Wrap(
                                                   children: [
                                                     Container(
                                                       width: isDesktop
@@ -324,7 +325,7 @@ class _StudentsState extends State<Students> {
                                                         : isTablet
                                                             ? screenWidth * 0.8
                                                             : screenWidth * 0.9,
-                                                    child: Row(
+                                                    child: Wrap(
                                                       children: [
                                                         Container(
                                                           decoration: BoxDecoration(
@@ -471,11 +472,12 @@ class _StudentsState extends State<Students> {
                                                           child: TextField(
                                                             controller: searchController,
                                                             onChanged: (value) {
-                                                              // query = value;
-                                                             controller.searchStudents(value
+                                                              query = value;
+                                                             controller.searchStudents(value,
                                                              );
                                                               if (value.isEmpty) {
-                                                                controller.allstudents();
+                                                                controller.allstudents(//context
+                                                                );
                                                               } else {
                                                                 search(value);
                                                               }
@@ -515,32 +517,31 @@ class _StudentsState extends State<Students> {
                                                         SizedBox(
                                                           width: 10,
                                                         ),
-                                                        Text(
-                                                          'الطلاب (${controller.students.length})',
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontSize: 18,
-                                                              height: 1.125),
-                                                          textAlign:
-                                                              TextAlign.right,
-                                                        )
+                                                        // Text(
+                                                        //   'الطلاب (${controller.students.length})',
+                                                        //   style: TextStyle(
+                                                        //       fontWeight:
+                                                        //           FontWeight
+                                                        //               .w500,
+                                                        //       fontSize: 18,
+                                                        //       height: 1.125),
+                                                        //   textAlign:
+                                                        //       TextAlign.right,
+                                                        // )
                                                       ],
                                                     ),
                                                   ))),
-                                          SingleChildScrollView(
-                                              child: Container(
+                                         Container(
                                                   width: 1030,
                                                   height: 450,
                                                   child: Column(children: [
-                                                    Row(
-                                                      children: [title()],
+                                                    Wrap(
+                                                      children: [  SingleChildScrollView(scrollDirection: Axis.horizontal,
+                                              child: title())],
                                                     ),
                                                     Expanded(
                                                         child:
-                                                            SingleChildScrollView(
-                                                      child: Column(
+                                                           Column(
                                                         spacing: 8,
                                                         children: [
                                                           ...List.generate(
@@ -558,7 +559,8 @@ int lessonPercent(int index) {
 
 
 
-                                                            return InkWell(
+                                                            return  SingleChildScrollView(scrollDirection: Axis.horizontal,
+                                                      child:InkWell(
                                                                 onTap: () {
                                                                   Navigator.push(
                                                                       context,
@@ -568,13 +570,13 @@ int lessonPercent(int index) {
                                                                             
                                                                             print('num${controller.students[index].id}');
                                                                            String name= controller.students[index].name.toString();
-                                                                  controller.fetchStudent('${controller.students[index].id}');
+                                                                  controller.fetchStudent(context,'${controller.students[index].id}');
                                                                              return Studentsdetails(name:name,studentId:controller.students[index].id);
                                                                              }));
                                                                     controller  .findonestudent(
-                                                                          '${controller.students[index].id}');
+                                                                        context,  '${controller.students[index].id}');
                                                                 },
-                                                                child:
+                                                                child: 
                                                                     Container(
                                                                         width:
                                                                             1010,
@@ -752,12 +754,12 @@ int lessonPercent(int index) {
                                                                                 height: 8,
                                                                               )
                                                                             ]//)
-                                                                            )));
+                                                                            ))));
                                                                             // );
                                                           }),
                                                         ],
                                                       ),
-                                                    )),
+                                                    )]),),
                                              Container(
     width: 1030,
     height: 67,
@@ -851,8 +853,9 @@ int lessonPercent(int index) {
   )
                                             
                                                     // _buildPagination(controller)
-                                                  ]))),
-                                        ]))
+                                                  ]
+                                                  ))//),
+                                        
                                   ]))),
                     ],
                   ),
@@ -981,28 +984,29 @@ int lessonPercent(int index) {
                     textAlign: TextAlign.start,
                   ),
                   SizedBox(width: 8),
-                  Text(
+//                   Text(
                 
-  '${controller.students.isEmpty 
-  ? "0.00" 
-  : ((controller.students.where((e) => e.attendance == true).length / controller.students.length) * 100)
-}%'
-,
+//   '${controller.students.isEmpty 
+//   ? "0.00" 
+//   : ((controller.students.where((e) => e.attendance == true).length / controller.students.length) * 100)
+// }%'
+// ,
 
-//+'${(n.attendance == false)}%',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 39, 114, 83),
-                      fontSize: 32,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.right,
-                  ),
-                ],
+// //+'${(n.attendance == false)}%',
+//                     style: TextStyle(
+//                       color: Color.fromARGB(255, 39, 114, 83),
+//                       fontSize: 32,
+//                       fontWeight: FontWeight.w500,
+//                     ),
+//                     textAlign: TextAlign.right,
+//                   ),
+
+],
               ),
             ),
           ],
         ));
-  }
+  } 
 
 List<Widget> _buildPageNumbers(HomeController controller) {
   final currentPage = controller.currentPage;
@@ -1117,15 +1121,15 @@ List<Widget> _buildPageNumbers(HomeController controller) {
                   ),
                   SizedBox(width: 8),
                   
-                  Text(
-                    '${controller.student.id.toString().length+1??0}',
-                    style: TextStyle(
-                      color: Color.fromARGB(218, 6, 69, 152),
-                      fontSize: 32,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.right,
-                  ),
+                  // Text(
+                  //   '${controller.student.id.toString().length+1??0}',
+                  //   style: TextStyle(
+                  //     color: Color.fromARGB(218, 6, 69, 152),
+                  //     fontSize: 32,
+                  //     fontWeight: FontWeight.w500,
+                  //   ),
+                  //   textAlign: TextAlign.right,
+                  // ),
                 ],
               ),
             ),

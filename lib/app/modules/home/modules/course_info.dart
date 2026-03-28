@@ -49,8 +49,8 @@ final dynamic course;
       course_name:json['course_name'] as String?,
       question_date:json['question_date'] as String?,
       code:json['code'] as int?,
-      students:json['students'] as dynamic?,
-      course:json['course'] as dynamic?,
+      students:json['students'] as dynamic??{},
+      course:json['course'] as dynamic??{},
     //   examplace: json['examplace']as String?,
     //   examprice:json['examprice'] as int?
     //   ,totaldegree: json['totaldegree'] as String?

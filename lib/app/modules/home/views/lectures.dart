@@ -1,16 +1,10 @@
-import 'dart:math';
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
-import 'package:flutterwallet/app/modules/home/modules/lessons.dart';
-import 'package:flutterwallet/app/modules/home/views/askquestion.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
 import 'package:flutterwallet/app/modules/home/views/containerforaskques.dart';
 import 'package:flutterwallet/app/modules/home/views/stable_app_bar.dart';
 import 'package:get/get.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'dart:ui' as ui;
 
 
 class Lectures extends StatefulWidget {
@@ -38,17 +32,9 @@ class _LecturesState extends State<Lectures> {
   Widget build(BuildContext context) {
     var  lessonid;
         double screenWidth = MediaQuery.of(context).size.width;
-HomeController homeController =HomeController();
 double screenHeight = MediaQuery.of(context).size.height;
         screenHeight * 0.15;
-    double gap = screenWidth * 0.03;
-
-  final List<String> items = [
-    'سؤال مقالي',
-    'سؤال اكمل',
-    'سؤال اختار',
-    'سؤال صح/غلط',
-  ];
+  
 
     bool isDesktop = screenWidth > 1200;
     bool isTablet = screenWidth > 768 && screenWidth <= 1200;
@@ -193,12 +179,13 @@ spacing: 16,
                             ),SizedBox(height: 16,)
 ,
 
-...List.generate(controller.lessons.questions?.length ?? 0, (index) {
-  print('llesson${controller.lessons.questions?.length }');
+// ...List.generate(controller.lessons.questions?.length ?? 0, (index) {
+//   print('llesson${controller.lessons.questions?.length }');
  
     
     
-    return                Row(
+    // return  
+                  Row(
 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
@@ -235,10 +222,10 @@ Container(
 
   children: [ 
 
-    Text('${ controller.lessons.questions?[index]['name']}',style: TextStyle(
-    fontWeight: FontWeight.w400,
-    fontSize: 16),
-    textAlign: TextAlign.right,),
+    // Text('${ controller.lessons.questions?[index]['name']}',style: TextStyle(
+    // fontWeight: FontWeight.w400,
+    // fontSize: 16),
+    // textAlign: TextAlign.right,),
     SizedBox(width: 16,),
     Image.asset('icons/questions.png',width: 24,height: 24,),
     SizedBox(width: 16,),
@@ -252,7 +239,8 @@ Container(
 )
 ,
                           
-                          )],);}),
+                          )],)//;//})
+                          ,
                           SizedBox(height: 16,)
                           
                       
@@ -395,7 +383,7 @@ Column(
       InkWell(onTap: (){
        lessonid=  controller.lesson[index].id.toString();
        print(lessonid);
-controller.lessonquestions(controller.lesson[index].id.toString());
+// controller.lessonquestions(context,controller.lesson[index].id.toString());
 // print ();
        },child:         Container( width: 264,//color: Color.fromARGB(255, 235, 239, 249),
           padding: EdgeInsets.fromLTRB(16, 14, 16, 14),
@@ -406,7 +394,8 @@ controller.lessonquestions(controller.lesson[index].id.toString());
               InkWell(
                 
            onTap: () async {
-    await controller.deleteLesson(controller.lesson[index].id.toString());
+    await controller.deleteLesson(context,
+    controller.lesson[index].id.toString());
     
     // Remove the item from the list locally
     controller.lesson.removeAt(index);
@@ -459,7 +448,8 @@ controller.lessonquestions(controller.lesson[index].id.toString());
                 ),
               ),
               onPressed: () {
-controller.addLesson();
+controller.addLesson(//context
+);
 
               },
               child: Row(
