@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
@@ -56,7 +58,15 @@ class _Assignments2State extends State<Assignments2> {
     Expanded(
       flex: 1, // Reduced to 50% width (you can adjust the value further)
       child:
-    SingleChildScrollView(child: 
+    ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(child: 
       
        Column(
         children: [
@@ -755,7 +765,7 @@ Image.asset('assets/Group (8).png',height: 24,width: 24,)],))
       ,)
   ],)  ),),
     // Sidebar
-    Container(
+   ), Container(
       
           
       width: 280, // Fixed width for the sidebar

@@ -1,4 +1,6 @@
 // dialog_wrapper.dart
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/views/dialogs/dialog_assignments.dart';
 // import 'package:flutterwallet/app/modules/home/views/dialog_assignments.dart';
@@ -37,8 +39,16 @@ class _dialogforassignmentsState extends State<dialogforassignments> {
   
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return  ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(
       child: DialogAssignments(),
-    );
+    ));
   }
 }

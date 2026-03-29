@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutterwallet/app/modules/home/views/borderright.dart';
@@ -63,7 +65,15 @@ class studentQuestion2 extends StatelessWidget {
             children: [
               
               Expanded(
-                child: SingleChildScrollView(
+                child: ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(
                   child: Column(
                     children: [
                       Container(
@@ -282,7 +292,7 @@ fontSize: 15)))
 
 ])),
 
-                  ],)]))),   if (!isMobile)
+                  ],)])))),   if (!isMobile)
                 Container(
                   width: 280,
                   height: double.infinity,

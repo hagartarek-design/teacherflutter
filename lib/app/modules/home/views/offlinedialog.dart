@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/fileuploader.dart';
@@ -30,7 +32,15 @@ class _dialogquizesState extends State<dialogoffline> {
           return Container(
             padding: EdgeInsets.fromLTRB(18, 18, 18, 40),
             width: dialogWidth,
-            child: SingleChildScrollView(
+            child: ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -249,7 +259,7 @@ file.uploadcard3offline(context,);
                 ],
               ),
             ),
-          );
+           ) );
         },
       ),
     );

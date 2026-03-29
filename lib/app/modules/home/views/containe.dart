@@ -1,4 +1,6 @@
 // dialog_wrapper.dart
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/views/dialogs/dialog_quizes.dart';
 // import 'package:flutterwallet/app/modules/home/views/dialog_quizes.dart';
@@ -20,7 +22,6 @@ class _DialogWrapperState extends State<DialogWrapper> {
     super.initState();
     print('📱 DialogWrapper - بدء التشغيل');
     
-    // Start token monitoring for dialog
     _tokenService.startTokenMonitoringForDialog();
   }
   
@@ -36,8 +37,16 @@ class _DialogWrapperState extends State<DialogWrapper> {
   
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(
       child: dialogquizes(),
-    );
+    ));
   }
 }

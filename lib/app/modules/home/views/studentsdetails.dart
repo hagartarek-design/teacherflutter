@@ -50,7 +50,15 @@ double totalAttendance = 0;
           return Row(
             children: [
               Expanded(
-                  child: SingleChildScrollView(
+                  child: ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(
                 child: Column(children: [
                   Container(
                     color: Colors.white,
@@ -1096,7 +1104,15 @@ LinearProgressIndicator(
                   ),
                   SizedBox(
                     height: 20,
-                  ),SingleChildScrollView(child: 
+                  ),ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(child: 
                   Container(
                     padding: EdgeInsets.all(24),
                     width: 1032,
@@ -1217,7 +1233,15 @@ LinearProgressIndicator(
                                 ],
                               ),
                             )),
-                    SingleChildScrollView(child:     Container(
+                    ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(child:     Container(
                           width: 984, //height: 702,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
@@ -1845,7 +1869,7 @@ print('Absent: $absentCount');
                       
                           ),
                     ))
-                     ,  Container(
+                    ) ,  Container(
     width: 1030,
     height: 67,
     decoration: const BoxDecoration(
@@ -1956,8 +1980,9 @@ print('Absent: $absentCount');
                    
                   ,                    
                                            
-                    ]),
-              ))
+   ) ]),
+              )
+                  ))
             ],
           );
         },

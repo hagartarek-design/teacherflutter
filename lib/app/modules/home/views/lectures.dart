@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
@@ -70,7 +72,15 @@ double screenHeight = MediaQuery.of(context).size.height;
             children: [
               
               Expanded(
-                child: SingleChildScrollView(
+                child: ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(
                   child: Column(
                     spacing: 16,
                     children: [
@@ -552,7 +562,7 @@ controller.addLesson(//context
      
           
             
-     ]))),
+     ])))),
      if (!isMobile)
                 Container(
                   width: 280,

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/Applinks.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
@@ -79,7 +81,15 @@ class _StudentsState extends State<Students> {
           return Row(
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(
                   child: Column(
                     children: [
                       Container(
@@ -850,7 +860,7 @@ class _StudentsState extends State<Students> {
                     ],
                   ),
                 ),
-              ),
+                )  ),
               if (!isMobile)
                 Container(
                   width: 280,

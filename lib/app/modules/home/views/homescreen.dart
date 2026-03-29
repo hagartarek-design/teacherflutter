@@ -47,7 +47,15 @@ class Homescreen extends StatelessWidget {
           return Row(
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(
                   child: Column(
                     children: [
                       Container(
@@ -527,7 +535,7 @@ Image.asset('assets/Frame 1597882589.png')
                       ],
                       ) ,))
                        ]),
-           )) ],
+           ))) ],
           );
         },
       ),

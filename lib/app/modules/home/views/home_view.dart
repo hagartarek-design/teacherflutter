@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutterwallet/app/modules/home/views/login.dart';
 import 'package:flutterwallet/app/modules/home/views/mainscreen.dart';
 import 'dart:ui' as ui;
@@ -56,7 +58,15 @@ class HomeView extends GetView<HomeController> {
               return Stack(
                 children: [
                   Center(
-                    child: SingleChildScrollView(
+                    child: ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(
                       child: Container(
                         width: constraints.maxWidth > 960 ? 960 : constraints.maxWidth * 0.9,
                         height: constraints.maxHeight > 600 ? 600 : constraints.maxHeight * 0.9,
@@ -123,7 +133,7 @@ class HomeView extends GetView<HomeController> {
                         ),
                       ),
                     ),
-                  ),
+                     )   ),
                   _buildBackgroundElements(),
                 ],
               );

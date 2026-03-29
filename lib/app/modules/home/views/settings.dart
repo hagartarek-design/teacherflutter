@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
@@ -59,7 +61,15 @@ class _SettingsState extends State<Settings> {
             children: [
               
               Expanded(
-                child: SingleChildScrollView(
+                child: ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(
                   child: Column(
                     children: [
                       Container(
@@ -310,7 +320,7 @@ controller.updatePasword(context
              )
             
                     ])          ,
-               ))]))))]))),
+               ))]))))])))),
      if (!isMobile)
                 Container(
                   width: 280,

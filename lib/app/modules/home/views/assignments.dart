@@ -515,7 +515,15 @@ class Assignments extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
             ),
             child:isMobile?
-            SingleChildScrollView(scrollDirection: Axis.horizontal,child:  Row(spacing: 10,
+           ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(scrollDirection: Axis.horizontal,child:  Row(spacing: 10,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                
@@ -646,7 +654,7 @@ borderRadius: BorderRadius.circular(8),
               
               ],
             )
-                )    :
+                )   ) :
              Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

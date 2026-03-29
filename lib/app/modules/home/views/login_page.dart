@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
@@ -51,7 +53,15 @@ class Login_Screen extends StatelessWidget {
             children: [
               
               Expanded(
-                child: SingleChildScrollView(
+                child: ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(
                   child: Column(
                     children: [
     
@@ -546,7 +556,7 @@ Column(
      
           
             
-     ]))),
+     ])))),
      if (!isMobile)
                 Container(
                   width: 280,

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -199,7 +201,15 @@ showDialog( context: context, builder: (context){
       String localResult = result;
 return StatefulBuilder( builder: (context,setStateDialog){
   
-  return Dialog(child:SingleChildScrollView(child:   Container(//height: 484,
+  return Dialog(child: ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(child:   Container(//height: 484,
   decoration: BoxDecoration(borderRadius: BorderRadius.circular(16),color: Colors.white,),
   padding: EdgeInsets.fromLTRB(18, 18, 18, 40),
 
@@ -397,7 +407,7 @@ onPressed: localResult.isNotEmpty
 
 ],),
 
-)));
+))));
 
 });
 

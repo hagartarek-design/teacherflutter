@@ -58,7 +58,15 @@ class groupHasStudents extends StatelessWidget {
           return Row(
             children: [
               Expanded(
-                  child: SingleChildScrollView(
+                  child:ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(
                 child: Column(children: [
                 
                   SizedBox(
@@ -709,7 +717,7 @@ Text('+(02)1125134370',style: TextStyle(  color: Colors.grey ),)
                   )
                 ]),
               ))
-            ],
+           ) ],
           );
         },
       ),

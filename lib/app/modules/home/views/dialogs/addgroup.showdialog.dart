@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutterwallet/app/modules/home/views/assignments%20copy.dart';
@@ -106,7 +108,15 @@ class _dialogquizesState extends State<addgroupdialog> {
 
             padding: EdgeInsets.fromLTRB(18, 18, 18, 40),
             width: 1032,height: 460,
-            child:Center(child:  SingleChildScrollView(
+            child:Center(child:  ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -353,7 +363,7 @@ Text('ميعاد الدرس',style: TextStyle(fontSize: 16,fontWeight: FontWeigh
                 ],
               ),
             ),
-          ]))));
+          ])))));
         },
       ),
     );

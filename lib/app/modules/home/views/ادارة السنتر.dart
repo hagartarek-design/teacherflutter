@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/Applinks.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
@@ -53,7 +55,15 @@ class managecenter extends StatelessWidget {
             children: [
               Expanded(
                 flex: 1,
-                child: SingleChildScrollView(
+                child: ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(
                   child: Column(
                     children: [
                       Container(
@@ -75,7 +85,7 @@ class managecenter extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
+               ) ),
      (isMobile&&controller.isoptionselect)||(istablet&&controller.isoptionselecttablet)||(!isMobile&&!istablet)
 ?Positioned(
             top: 0, // Align at the top
@@ -300,11 +310,19 @@ return Row(
   children: [ 
     
 Expanded(child:   
-  SingleChildScrollView(child: 
+ ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(child: 
  
       Containerformanagecenter()
 
-    ))]);
+    )))]);
       });
               
       },

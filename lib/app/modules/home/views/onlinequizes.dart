@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutterwallet/app/modules/home/views/quizes.dart';
@@ -347,8 +349,16 @@ return Column(
   mainAxisAlignment:MainAxisAlignment.center,
   children: [ 
     
-Expanded(child:     SingleChildScrollView(child: 
-    dialogoffline()))]);
+Expanded(child:    ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(child: 
+    dialogoffline())))]);
       });
             },
             style: ElevatedButton.styleFrom(

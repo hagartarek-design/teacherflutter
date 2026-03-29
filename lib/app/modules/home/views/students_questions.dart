@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutterwallet/app/modules/home/controllers/home_controller.dart';
 import 'package:flutterwallet/app/modules/home/studentQuestion2.dart';
@@ -55,7 +57,15 @@ class StudentsQuestions extends StatelessWidget {
             children: [
               
               Expanded(
-                child: SingleChildScrollView(
+                child: ScrollConfiguration(
+  behavior: const ScrollBehavior().copyWith(
+    dragDevices: {
+      PointerDeviceKind.mouse,
+      PointerDeviceKind.touch,
+      PointerDeviceKind.trackpad,
+    },
+  ),
+  child: SingleChildScrollView(
                   child: Column(
                     children: [
                       Container(
@@ -526,7 +536,7 @@ SizedBox(width:24 ,),
   
   ]))
                    
-                          ])])))      ,
+                          ])]))))      ,
      if (!isMobile)
                 Container(
                   width: 280,
